@@ -20,8 +20,18 @@ async function login(){
     let password = await hashPassword(document.getElementById("password").value.trim());
     let user = signin(account, password);
     if (!user) {
-        alert(password);
+        alert("Tài khoản hoặc mật khẩu không chính xác");
     }else{
+        const user = {
+            account: "ADM001",
+            role: "ADMIN"
+        };
+
+
+        sessionStorage.setItem(
+            "user",
+            JSON.stringify(user)
+        );
         window.location.replace("./dashboard.html");
     }
 };
