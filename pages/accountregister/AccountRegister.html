@@ -6,15 +6,23 @@
     <title>Register Function</title>
     <link href="style.css" rel="stylesheet"> 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
- <div class="ScreenName w-[100vw] h-[80px]">
+<div class="w-[100vw] px-[20px] flex justify-between content-center items-center">
+    <div class="ScreenName h-[80px]">
     <p class="font-bold text-blue-900 text-[20px]"> Đăng ký nhân viên </p>
     <p> Thêm mới thông tin nhân viên vào hệ thống </p>
- </div>
+    </div>
+    <div class="user-info flex items-center content-center gap-[8px]">
+                    <i class="fas fa-bell"></i>
+                    <img src="https://placehold.co/40x40" alt="User profile picture" class="rounded-full h-[40px] w-[40px] object-cover overflow-hidden">
+                    <span class="font-bold text-blue-500">Nguyễn Văn A</span>
+    </div>
+</div>
 
- <div class="InfoTab h-[40px] border border-y-grey-200 flex">
-    <div class="text-bold text-blue-600 px-[20px] border-b-4 border-b-blue-900 content-center text-center">
+ <div class="InfoTab h-[40px] px-[20px] flex justify-start">
+    <div class="text-bold text-blue-600 px-[20px] border-2 border-b-4 border-b-blue-900 content-center text-center">
     <p> Thông tin cá nhân </p>
     </div>
     <div class="text-bold text-slate-600 px-[20px] h-[40px] border-2 content-center text-center">
@@ -29,14 +37,15 @@
 
 </div>
 
-<div class="TopInfo w-[100vw] flex gap-[10px] my-[25px]">
+<div class="TopInfo w-[100vw] px-[20px] flex gap-[10px] my-[25px]">
     <div class="InfoBox my-[5px] w-[70vw]">
         <div class="flex gap-[2px]">
         <img src="iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin cá nhân </p>
         </div>
-        <div class="InfoGrid grid grid-cols-3 border-2 border-slate-300 my-[20px] py-[30px] mx-auto">
-            <div class="Infocol1 w-[25vw]">
+        <div class="flex w-[70vw]">
+            <div class="InfoGrid justify-center grid grid-cols-3 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] w-[100%] p-[10px]">
+                <div class="Infocol1">
                 <div>
                  <p class="font-bold text-blue-900"> Họ và tên <span class="text-red-900">*</span></p>
                  <input type="text" placeholder="   Nhập họ và tên" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
@@ -49,9 +58,9 @@
                 <p class="font-bold text-blue-900"> Ngày cấp </p>
                 <input type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
                 </div>
-            </div>
+                </div>
 
-            <div class="Infocol2 w-[25vw]"> 
+                <div class="Infocol2"> 
                 <div>
                 <p class="font-bold text-blue-900"> Ngày sinh <span class="text-red-900">*</span></p>
                 <input type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
@@ -64,9 +73,9 @@
                 <p class="font-bold text-blue-900"> Nơi cấp</p>
                 <input type="text" placeholder="   Nhập nơi cấp" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
                 </div>
-            </div>
+                </div>
 
-            <div class="Infocol3 w-[25vw]">
+                <div class="Infocol3 items-end">
                 <div>
                     <p class="font-bold text-blue-900"> Giới tính <span class="text-red-900">*</span></p>
                     <select class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
@@ -83,10 +92,10 @@
                     <p class="font-bold text-blue-900"> Quốc tịch</p>
                     <input type="text" placeholder="   Nhập Quốc tịch" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
                     </div>
+                </div>
             </div>
         </div>
-
-        <div class="AddressBox w-[70vw] grid grid-cols-2 border-2 border-slate-300 my-[20px] py-[30px]">
+        <div class="AddressBox w-[70vw] grid grid-cols-2 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] p-[10px]">
             <div>
              <p class="font-bold text-blue-900 mb-[5px]"> Địa chỉ thường trú </p>
              <input type="text" placeholder ="   Nhập địa chỉ thường trú" class="mb-[10px] h-[50px] w-[30vw] border rounded-xl border-slate-400">
@@ -99,12 +108,12 @@
         </div>
     </div>
 
-    <div class="AvatarBox w-[30vw] border-2 border-slate-300 my-[20px] py-[30px] flex flex-col">
+    <div class="AvatarBox w-[30vw] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
         <div class="flex gap-[2px]">
         <img src="iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Ảnh đại diện </p>
         </div>
-        <div class="w-[90%] h-[90%] border-2 border-slate-300 m-[15px] flex flex-col justify-center text-center items-center gap-[8px]">
+        <div class="w-[90%] h-[90%] border-2 rounded-xl border-slate-300 m-[15px] flex flex-col justify-center text-center items-center gap-[8px]">
             <img src="uploadicon.png" class="w-[40px] h-[40px]"/>
             <p class="text-slate-500 font-bold"> Kéo thả ảnh vào đây hoặc </p>
             <button class="border-2 rounded-xl border-blue-800 text-blue-800 w-[100px] h-[50px]"> Chọn ảnh </button>
@@ -114,25 +123,26 @@
 
 </div>
 
-<div class="BottomInfo w-[100vw] grid grid-cols-3"> 
-    <div>
-    <div>
-        <img>
+<div class="flex justify-center px-[20px]">
+    <div class="BottomInfo w-[100%] grid grid-cols-3 gap-[20px]"> 
+    <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
+    <div class="flex mb-[5px] gap-[5px]">
+        <img src="contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin liên hệ khẩn cấp </p>
     </div>
-    <div>
+    <div class="flex gap-[10px]">
         <div>
             <p class="font-bold text-blue-900"> Họ tên người liên hệ </p>
-            <input type="text" placeholder="   Nhập họ tên" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+            <input type="text" placeholder="   Nhập họ tên" class="mb-[10px] border rounded-full border-slate-400">
         </div>
         <div>
             <p class="font-bold text-blue-900"> Số điện thoại </p>
-            <input type="text" placeholder="   Số điện thoại" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+            <input type="text" placeholder="   Số điện thoại" class="mb-[10px] border rounded-full border-slate-400">
         </div>
     </div>
     <div>
         <p class="font-bold text-blue-900"> Mối quan hệ </p>
-        <select>
+        <select class="mb-[10px] px-[5px] border rounded-full border-slate-400">
             <option> Chọn mối quan hệ </option>
             <option> Vợ/chồng </option>
             <option> Bố/mẹ đẻ </option>
@@ -147,47 +157,47 @@
     </div>
     </div>
       
-    <div>
-        <div>
-            <img>
+    <div class="border border-2 rounded-xl border-slate-300 px-[20px]">
+        <div class="flex mb-[5px] gap-[5px] my-[10px]">
+            <img src="account-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
             <p class="text-lg font-bold text-blue-900"> Thông tin tài khoản </p>
         </div>
-        <div class="grid grid-cols-2 grid-rows-2">
+        <div class="grid grid-cols-2 grid-rows-2 my-[5px]">
             <div>
                 <p class="font-bold text-blue-900"> Tên đăng nhập </p>
-                <input type="text" placeholder="   Nhập tên đăng nhập" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                <input type="text" placeholder="   Nhập tên đăng nhập" class="mb-[10px] border rounded-full border-slate-400">
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Email đăng nhập </p>
-                <input type="text" placeholder="   Nhập email" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                <input type="text" placeholder="   Nhập email" class="mb-[10px] border rounded-full border-slate-400">
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Mật khẩu tạm </p>
                 <div>
-                    <input type="text" placeholder="   Nhập mật khẩu tạm" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                    <input type="text" placeholder="   Nhập mật khẩu tạm" class="mb-[10px] border rounded-full border-slate-400">
                     <img>
                 </div>
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Xác nhận mật khẩu </p>
                 <div>
-                    <input type="text" placeholder="   Nhập lại mật khẩu" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                    <input type="text" placeholder="   Nhập lại mật khẩu" class="mb-[10px] border rounded-full border-slate-400">
                     <img>
                 </div>
             </div>
         </div>
-        <p> Mật khẩu phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt</p>
+        <p class="text-[15px] px-[5px]"> Mật khẩu phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt</p>
     </div>
 
-    <div>
-        <div>
-            <img>
+    <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
+        <div class="flex mb-[5px] gap-[5px] my-[10px]">
+            <img src="information-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
             <p class="text-lg font-bold text-blue-900"> Thông tin bổ sung </p>
         </div>
         <div class="grid grid-cols-2">
             <div>
                 <p class="font-bold text-blue-900"> Trình độ học vấn </p>
-                <select>
+                <select class="mb-[10px] px-[5px] border rounded-full border-slate-400">
                     <option> Chọn trình độ </option>
                     <option> THPT </option>
                     <option> Cao đẳng/Đại học </option>
@@ -196,32 +206,32 @@
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Ngoại ngữ </p>
-                <input type="text" placeholder="   Nhập ngoại ngữ" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                <input type="text" placeholder="   Nhập ngoại ngữ" class="mb-[10px] border rounded-full border-slate-400">
             </div>
         </div>
         <div>
             <p class="font-bold text-blue-900"> Kỹ năng </p>
-            <input type="text" placeholder="Nhập kỹ năng (cách nhau bởi dấu phẩy)" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+            <input type="text" placeholder="Nhập kỹ năng (cách nhau bởi dấu phẩy)" class="mb-[10px] border rounded-full border-slate-400 w-[90%]">
         </div>
         <div>
             <p class="font-bold text-blue-900"> Ghi chú</p>
-            <input type="text" placeholder="Nhập ghi chú" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+            <input type="text" placeholder="Nhập ghi chú" class="mb-[10px] border rounded-full border-slate-400 w-[90%]">
         </div>
     </div>
+    </div>
 </div>
-
-<div class="ButtonRow flex">
+<div class="ButtonRow flex bottom-[100px] my-[100px] flex justify-center gap-[20px] ml-[20px]">
     <div> 
         <img>
-        <button class="border rounded-xl border-blue-500 px-[10px] py-[20px]"> Hủy bỏ </button>
+        <button class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500"> Hủy bỏ </button>
     </div>
     <div> 
         <img>
-        <button class="border rounded-xl border-blue-500 px-[10px] py-[20px]"> Lưu nháp </button>
+        <button class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500"> Lưu nháp </button>
     </div>
     <div> 
         <img>
-        <button class="border rounded-xl border-blue-500 px-[10px] py-[20px]"> Tiếp tục </button>
+        <button class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500"> Tiếp tục </button>
     </div>
 </div>
 
