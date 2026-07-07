@@ -136,11 +136,11 @@
               >
                 <li>
                   <a
-                    data-href="pages/employee-management/admin.html"
+                    data-href="pages/employee-management/account-management.html"
                     data-nav-id="admin"
                     class="flex items-center rounded-base px-2 py-2 pl-10 text-white hover:bg-[#0F4EA0]"
                   >
-                    Admin
+                    Quản lý tài khoản
                   </a>
                 </li>
                 <li>
@@ -149,7 +149,7 @@
                     data-nav-id="employees"
                     class="flex items-center rounded-base px-2 py-2 pl-10 text-white hover:bg-[#0F4EA0]"
                   >
-                    Nhân viên
+                    Hồ sơ nhân viên
                   </a>
                 </li>
                 <li>
@@ -172,13 +172,12 @@
             </li>
 
             <li>
-              <button
-                type="button"
-                class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]"
-                aria-controls="dropdown-projects-management"
-                data-collapse-toggle="dropdown-projects-management"
-              >
-                <svg
+               <a
+                    data-href="pages/projects-management/projects.html"
+                    data-nav-id="projects"
+                    class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]"
+                  >
+                   <svg
                   class="h-5 w-5 shrink-0"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
@@ -194,50 +193,8 @@
                     d="M6 11.5C6 9.567 7.567 8 9.5 8S13 9.567 13 11.5 11.433 15 9.5 15 6 13.433 6 11.5ZM4 20c0-2.2091 1.79086-4 4-4h3c2.2091 0 4 1.7909 4 4 0 1.1046-.8954 2-2 2H6c-1.10457 0-2-.8954-2-2Z"
                   />
                 </svg>
-                <span class="min-w-0 flex-1 text-left whitespace-nowrap">
-                  Quản lý dự án
-                </span>
-                <svg
-                  class="h-5 w-5 shrink-0"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m19 9-7 7-7-7"
-                  />
-                </svg>
-              </button>
-
-              <ul
-                id="dropdown-projects-management"
-                class="hidden py-2 space-y-2"
-              >
-                <li>
-                  <a
-                    href="#"
-                    class="flex items-center rounded-base px-2 py-2 pl-10 text-white hover:bg-[#0F4EA0]"
-                  >
-                    Tạo dự án
+                    Quản lý dự án
                   </a>
-                </li>
-                <li>
-                  <a
-                    data-href="pages/projects-management/projects.html"
-                    data-nav-id="projects"
-                    class="flex items-center rounded-base px-2 py-2 pl-10 text-white hover:bg-[#0F4EA0]"
-                  >
-                    Danh sách dự án
-                  </a>
-                </li>
-              </ul>
             </li>
 
             <li>
@@ -344,7 +301,7 @@
                   />
                 </svg>
                 <span class="min-w-0 flex-1 whitespace-nowrap"
-                  >&#272;&#259;ng xu&#7845;t</span
+                  >Đăng xuất</span
                 >
               </a>
             </li>

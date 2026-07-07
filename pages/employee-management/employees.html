@@ -1,6 +1,6 @@
 ﻿<!doctype html>
 <html lang="en">
-  <head>
+  <>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản lý nhân viên</title>
@@ -12,18 +12,22 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+    </style>
   </head>
   <body data-base-path="../../">
     <div data-layout="sidebar"></div>
 
-    <div class="p-4 sm:ml-64">
+    <div class="p-4 sm:ml-64 min-h-full">
       <div
-        class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
+        class="relative min-h-full overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default grid-rows-9 gap-4"
       >
-        <div class="mx-8 my-2 font-bold text-xl">Danh sách admin</div>
+        <div class="mx-8 my-2 font-bold text-xl row-span-2">Danh sách nhân viên</div>
 
-        <div class="p-4 flex items-center justify-between space-x-4">
+        <div class="p-4 flex items-center justify-between space-x-4 row-span-2">
           <label for="input-group-1" class="sr-only">Search</label>
           <div class="relative">
             <div
@@ -56,8 +60,8 @@
 
           <!-- Thêm admin -->
           <button
-            data-modal-target="add-admin"
-            data-modal-toggle="add-admin"
+            data-modal-target="add-employee"
+            data-modal-toggle="add-employee"
             class="flex items-center text-white bg-blue-500 rounded-md text-[14px] sm:text-sm text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
             type="button"
           >
@@ -83,7 +87,7 @@
 
           <!-- Main modal -->
           <div
-            id="add-admin"
+            id="add-employee"
             tabindex="-1"
             aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full h-full bg-black/50 backdrop-blur-sm"
@@ -100,12 +104,12 @@
                   class="flex items-center justify-between border-b border-default pb-4 md:pb-5"
                 >
                   <h3 class="text-lg font-medium text-heading">
-                    Tạo tài khoản nhân viên
+                    Thêm nhân viên
                   </h3>
                   <button
                     type="button"
                     class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
-                    data-modal-hide="add-admin"
+                    data-modal-hide="add-employee"
                   >
                     <svg
                       class="w-5 h-5"
@@ -141,7 +145,7 @@
                         name="name"
                         id="name"
                         class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                        placeholder="Employee Name"
+                        placeholder="Admin Name"
                         required
                       />
                     </div>
@@ -176,16 +180,16 @@
                     </div>
                     <div>
                       <label
-                        for="password"
+                        for="department"
                         class="block mb-2.5 text-sm font-medium text-heading"
-                        >Mật khẩu</label
+                        >Phòng ban</label
                       >
                       <input
-                        type="password"
-                        name="password"
-                        id="password"
+                        type="text"
+                        name="department"
+                        id="department"
                         class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                        placeholder="Mật khẩu"
+                        placeholder="Phòng ban"
                         required
                       />
                     </div>
@@ -217,7 +221,7 @@
                       Thêm
                     </button>
                     <button
-                      data-modal-hide="add-admin"
+                      data-modal-hide="add-employee"
                       type="button"
                       class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
                     >
@@ -230,18 +234,19 @@
           </div>
         </div>
         <div
-          class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
+          class="relative min-h-[70vh] overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
         >
           <table class="w-full text-sm text-left rtl:text-right text-body">
             <thead
               class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium"
             >
               <tr>
-                <th scope="col" class="px-6 py-3">ID</th>
+                <th scope="col" class="px-6 py-3">Mã nhân viên</th>
                 <th scope="col" class="px-6 py-3">Họ và tên</th>
-                <th scope="col" class="px-6 py-3">Email</th>
+                <th scope="col" class="px-6 py-3">Phòng ban</th>
+                <th scope="col" class="px-6 py-3">Chức vụ</th>
                 <th scope="col" class="px-6 py-3">Trạng thái</th>
-                <th scope="col" class="px-6 py-3">Action</th>
+                <th scope="col" class="px-6 py-3">Thao tác</th>
               </tr>
             </thead>
             <tbody>
@@ -252,22 +257,23 @@
                   scope="row"
                   class="px-6 py-4 font-medium text-heading whitespace-nowrap"
                 >
-                  EMP001
+                  EMPBE001
                 </td>
                 <td class="px-6 py-4">Lương Văn Thanh</td>
-                <td class="px-6 py-4">thanh@example.com</td>
+                <td class="px-6 py-4">Backend</td>
+                <td class="px-6 py-4">Developer</td>
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div
                       class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"
                     ></div>
-                    Active
+                    Hoạt động
                   </div>
                 </td>
                 <td class="px-6 py-4">
                   <div class="flex">
                     <div class="relative group">
-                      <a href="./employee-detail.html" class="text-blue-500">
+                      <a href="../accountedit/AccountEdit.html" class="text-blue-500">
                         <svg
                           class="w-6 h-6 text-gray-800 dark:text-white"
                           aria-hidden="true"
@@ -295,7 +301,7 @@
                     </div>
 
                     <div class="relative group">
-                      <a href="./employee-detail.html" class="text-blue-500">
+                      <a href="../accountedit/AccountEdit.html" class="text-blue-500">
                         <svg
                           class="w-6 h-6 text-gray-800 dark:text-white"
                           aria-hidden="true"
@@ -331,20 +337,21 @@
                   scope="row"
                   class="px-6 py-4 font-medium text-heading whitespace-nowrap"
                 >
-                  EMP002
+                  EMPIT001
                 </td>
                 <td class="px-6 py-4">Nguyễn Hữu Linh</td>
-                <td class="px-6 py-4">linh@example.com</td>
+                <td class="px-6 py-4">IT</td>
+                <td class="px-6 py-4">IT Support</td>
                 <td class="px-6 py-4">
                   <div class="flex items-center">
                     <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
-                    Inactive
+                    Mất hiệu lực
                   </div>
                 </td>
                 <td class="px-6 py-4">
                   <div class="flex">
                     <div class="relative group">
-                      <a href="./employee-detail.html" class="text-blue-500">
+                      <a href="../accountedit/AccountEdit.html" class="text-blue-500">
                         <svg
                           class="w-6 h-6 text-gray-800 dark:text-white"
                           aria-hidden="true"
@@ -372,7 +379,7 @@
                     </div>
 
                     <div class="relative group">
-                      <a href="./employee-detail.html" class="text-blue-500">
+                      <a href="../accountedit/AccountEdit.html" class="text-blue-500">
                         <svg
                           class="w-6 h-6 text-gray-800 dark:text-white"
                           aria-hidden="true"
@@ -403,7 +410,9 @@
               </tr>
             </tbody>
           </table>
-          <nav
+
+        </div>
+                  <nav
             class="flex items-center flex-column flex-wrap md:flex-row justify-between p-4"
             aria-label="Table navigation"
           >
@@ -465,7 +474,6 @@
               </li>
             </ul>
           </nav>
-        </div>
       </div>
     </div>
       <script src="../../assets/js/layout.js"></script>
