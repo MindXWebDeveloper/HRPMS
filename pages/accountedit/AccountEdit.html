@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Function</title>
-    <link href="style.css" rel="stylesheet"> 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-<div class="w-[100vw] px-[20px] flex justify-between content-center items-center">
+<body data-base-path="../../">
+
+<div data-layout="sidebar" class="fixed w-64 h-screen"></div>
+
+<div class="ml-64 min-h-screen">
+<div class=" px-[20px] flex justify-between content-center items-center">
     <div class="ScreenName h-[80px]">
     <p class="font-bold text-blue-900 text-[20px]"> Cập nhật nhân viên </p>
     <p> Thay đổi thông tin nhân viên </p>
@@ -37,48 +40,48 @@
 
 </div>
 
-<div class="TopInfo w-[100vw] px-[20px] flex gap-[10px] my-[25px]">
-    <div class="InfoBox my-[5px] w-[70vw]">
+<div class="TopInfo w-ml-64 px-[20px] flex gap-[10px] my-[25px] justify-between">
+    <div class="InfoBox my-[5px] w-[70%]">
         <div class="flex gap-[2px]">
         <img src="iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin cá nhân </p>
         </div>
-        <div class="flex w-[70vw]">
+        <div class="flex">
             <div class="InfoGrid justify-center grid grid-cols-3 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] w-[100%] p-[10px]">
                 <div class="Infocol1">
                 <div>
                  <p class="font-bold text-blue-900"> Họ và tên <span class="text-red-900">*</span></p>
-                 <input type="text" placeholder="   Nhập họ và tên" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                 <input type="text" placeholder="   Nhập họ và tên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
                  <p class="font-bold text-blue-900"> Số điện thoại <span class="text-red-900">*</span></p>
-                 <input type="text" placeholder="   Nhập số điện thoại" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                 <input type="text" placeholder="   Nhập số điện thoại" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Ngày cấp </p>
-                <input type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                <input type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 </div>
 
                 <div class="Infocol2"> 
                 <div>
                 <p class="font-bold text-blue-900"> Ngày sinh <span class="text-red-900">*</span></p>
-                <input type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                <input type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Email <span class="text-red-900">*</span> </p>
-                <input type="text" placeholder="   Nhập email" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                <input type="text" placeholder="   Nhập email" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Nơi cấp</p>
-                <input type="text" placeholder="   Nhập nơi cấp" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                <input type="text" placeholder="   Nhập nơi cấp" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 </div>
 
                 <div class="Infocol3 items-end">
                 <div>
                     <p class="font-bold text-blue-900"> Giới tính <span class="text-red-900">*</span></p>
-                    <select class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                    <select class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                         <option>Chọn giới tính </option>
                         <option>Nam</option>
                         <option> Nữ</option>
@@ -86,29 +89,29 @@
                 </div>
                 <div>
                     <p class="font-bold text-blue-900"> Số CCCD <span class="text-red-900">*</span> </p>
-                    <input type="text" placeholder="   Nhập số CCCD" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                    <input type="text" placeholder="   Nhập số CCCD" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                     <div>
                     <p class="font-bold text-blue-900"> Quốc tịch</p>
-                    <input type="text" placeholder="   Nhập Quốc tịch" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+                    <input type="text" placeholder="   Nhập Quốc tịch" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="AddressBox w-[70vw] grid grid-cols-2 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] p-[10px]">
+        <div class="AddressBox grid grid-cols-2 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] p-[10px] w-[25]">
             <div>
              <p class="font-bold text-blue-900 mb-[5px]"> Địa chỉ thường trú </p>
-             <input type="text" placeholder ="   Nhập địa chỉ thường trú" class="mb-[10px] h-[50px] w-[30vw] border rounded-xl border-slate-400">
+             <input type="text" placeholder ="   Nhập địa chỉ thường trú" class="mb-[10px] h-[50px] w-[90%] border rounded-xl border-slate-400">
             </div>
 
             <div>
             <p class="font-bold text-blue-900 mb-[5px]"> Địa chỉ hiện tại </p>
-            <input type="text" placeholder ="   Nhập địa chỉ hiện tại" class="mb-[10px] h-[50px] w-[30vw] border rounded-xl border-slate-400">
+            <input type="text" placeholder ="   Nhập địa chỉ hiện tại" class="mb-[10px] h-[50px] w-[90%] border rounded-xl border-slate-400">
             </div>
         </div>
     </div>
 
-    <div class="AvatarBox w-[30vw] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
+    <div class="AvatarBox w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
         <div class="flex gap-[2px]">
         <img src="iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Ảnh đại diện </p>
@@ -231,9 +234,9 @@
         <button class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500"> Tiếp tục </button>
     </div>
 </div>
+</div>
 
-
-    
+<script src="../../assets/js/layout.js?v=2"></script>    
 </body>
 </html>
 
