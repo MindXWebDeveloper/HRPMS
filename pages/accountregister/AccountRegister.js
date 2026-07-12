@@ -4,7 +4,79 @@ const btnBack = document.getElementById('btnBack');
 const btnConfirm = document.getElementById('btnConfirm');
 const avatarInput = document.getElementById('Avatar');
 const uploadBtn = document.getElementById('AvatarUploadBtn');
+const fieldIds = [
+    "HoTen",
+    "SoDienThoai",
+    "NgayCap",
+    "NgaySinh",
+    "DcEmail",
+    "NoiCap",
+    "GioiTinh",
+    "SoCccd",
+    "QuocTich",
+    "DCTtru",
+    "DCHtai",
+    "NgLienHe",
+    "SDTNgLienHe",
+    "QuanHe",
+    "DCNgLienHe",
+    "TenDangNhap",
+    "EmailDangNhap",
+    "MatKhauTam",
+    "NhapLaiMK",
+    "HocVan",
+    "NgoaiNgu",
+    "KyNang",
+    "GhiChu"
+];
+
 let avatarUrl ="";
+let isValid = true;
+const togglePasswordBtn = document.querySelector('button[aria-label="Hiện mật khẩu"]');
+    if (togglePasswordBtn) {
+        togglePasswordBtn.addEventListener('click', function() {
+            const passInput = document.getElementById('MatKhauTam');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                this.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22" />
+                    </svg>
+                `;
+            } else {
+                passInput.type = 'password';
+                this.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                `;
+            }
+        });
+    }
+
+const togglePasswordBtn1 = document.querySelector('button[aria-label="Hiện mật khẩu1"]');
+    if (togglePasswordBtn1) {
+        togglePasswordBtn1.addEventListener('click', function() {
+            const passInput = document.getElementById('NhapLaiMK');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                this.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22" />
+                    </svg>
+                `;
+            } else {
+                passInput.type = 'password';
+                this.innerHTML = `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                `;
+            }
+        });
+    }
 
 uploadBtn.addEventListener ('click',()=>
 {avatarInput.click();
@@ -21,8 +93,68 @@ avatarInput.addEventListener('change',()=>{
     preview.hidden =false;
 });
 
+const message = 'Không được để trống';
+
+function showError(id,message) {
+        const input = document.getElementById(id);
+        input.classList.remove('border-slate-400');
+        input.classList.add('border-red-500', 'focus:border-red-500');
+        
+        const container = input.closest('.relative') ? input.closest('.relative').parentNode : input.parentNode;
+        
+        let errorSpan = container.querySelector('.error-msg');
+        if (!errorSpan) {
+            errorSpan = document.createElement('span');
+            errorSpan.className = 'error-msg text-xs text-rose2 mt-1 block';
+            container.appendChild(errorSpan);
+        }
+        errorSpan.innerText = message; 
+    }
+
+
+function clearError(id) {
+        const input = document.getElementById(id);
+        input.classList.remove('border-red-500', 'focus:border-red-500');
+        input.classList.add('border-slate-400');
+        
+        const container = input.closest('.relative') ? input.closest('.relative').parentNode : input.parentNode;
+        const errorSpan = container.querySelector('.error-msg');
+        if (errorSpan) {
+            errorSpan.remove()}; 
+        }
+
+
+
 btnTiepTuc.addEventListener ('click',()=>
-{modal.style.display = "flex";
+{
+    for (const id of fieldIds){ 
+    const element = document.getElementById(id);
+  
+    if (!element) continue;
+    if (element.tagName === "INPUT"){
+    
+        if (element.value.trim() === "") {
+            showError(id,message);
+            isValid = false;}
+    else {
+        clearError(id);
+    }}
+    if (element.tagName === "SELECT") {
+        if (element.selectedIndex === 0) {
+            showError(id,message);
+            isValid = false;
+        } else
+        {clearError(id);}
+    }
+}
+
+    if (!isValid) {
+        return;
+    }
+
+    
+
+    {modal.style.display = "flex";
 const HoTen1 = document.getElementById('HoTen').value; 
 const SoDienThoai1 = document.getElementById('SoDienThoai').value;
 const NgayCap1 = document.getElementById('NgayCap').value;
@@ -72,5 +204,9 @@ document.getElementById('Re_KyNang').textContent = KyNang1 || "Chưa nhập";
 document.getElementById('Re_GhiChu').textContent = GhiChu1 || "Chưa nhập";
 document.getElementById('Re_Avatar').src = avatarUrl || "Chưa có avatar";
 
+}
 });
-btnBack.addEventListener('click',()=>{modal.style.display= "none";});
+
+btnBack.addEventListener('click',()=>{
+    isValid = true;
+    modal.style.display= "none";});
