@@ -14,6 +14,9 @@ const fieldIds = [
     "GioiTinh",
     "SoCccd",
     "QuocTich",
+    "MaNhanVien",
+    "Level",
+    "PhongBan",
     "DCTtru",
     "DCHtai",
     "NgLienHe",
@@ -164,6 +167,9 @@ const NoiCap1 = document.getElementById('NoiCap').value;
 const GioiTinh1 = document.getElementById('GioiTinh').value;
 const SoCccd1 = document.getElementById('SoCccd').value;
 const QuocTich1 = document.getElementById('QuocTich').value;
+const MaNhanVien1 = document.getElementById('MaNhanVien').value;
+const Level1 = document.getElementById('Level').value;
+const PhongBan1 = document.getElementById('PhongBan').value;
 const DCTtru1 = document.getElementById('DCTtru').value;
 const DCHtai1 = document.getElementById('DCHtai').value;
 const NgLienHe1 = document.getElementById('NgLienHe').value;
@@ -188,6 +194,9 @@ document.getElementById('Re_NoiCap').textContent = NoiCap1 || "Chưa nhập";
 document.getElementById('Re_GioiTinh').textContent = GioiTinh1 || "Chưa nhập";
 document.getElementById('Re_SoCccd').textContent = SoCccd1 || "Chưa nhập";
 document.getElementById('Re_QuocTich').textContent = QuocTich1 || "Chưa nhập";
+document.getElementById('Re_MaNhanVien').textContent = MaNhanVien1 || "Chưa nhập";
+document.getElementById('Re_Level').textContent = Level1 || "Chưa nhập";
+document.getElementById('Re_PhongBan').textContent = PhongBan1 || "Chưa nhập";
 document.getElementById('Re_DCTtru').textContent = DCTtru1 || "Chưa nhập";
 document.getElementById('Re_DCHtai').textContent = DCHtai1 || "Chưa nhập";
 document.getElementById('Re_NgLienHe').textContent = NgLienHe1 || "Chưa nhập";
@@ -210,3 +219,8 @@ document.getElementById('Re_Avatar').src = avatarUrl || "Chưa có avatar";
 btnBack.addEventListener('click',()=>{
     isValid = true;
     modal.style.display= "none";});
+
+btnConfirm.addEventListener('click',() =>{
+    RegisterEmployee();
+    modal.style.display="none";
+})

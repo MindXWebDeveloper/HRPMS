@@ -61,6 +61,10 @@
                 <p class="font-bold text-blue-900"> Ngày cấp </p>
                 <input id="NgayCap" type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
+                <div>
+                <p class="font-bold text-blue-900"> Mã Nhân viên </p>
+                <input id="MaNhanVien" type="text" placeholder="   Nhập mã nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                </div>
                 </div>
 
                 <div class="Infocol2"> 
@@ -75,6 +79,10 @@
                 <div>
                 <p class="font-bold text-blue-900"> Nơi cấp</p>
                 <input id="NoiCap" type="text" placeholder="   Nhập nơi cấp" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                </div>
+                <div>
+                <p class="font-bold text-blue-900"> Cấp bậc </p>
+                <input id="Level" type="text" placeholder="   Nhập cấp bậc nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 </div>
 
@@ -95,6 +103,10 @@
                     <p class="font-bold text-blue-900"> Quốc tịch</p>
                     <input id="QuocTich" type="text" placeholder="   Nhập Quốc tịch" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                     </div>
+                <div>
+                <p class="font-bold text-blue-900"> Phòng ban </p>
+                <input id="PhongBan" type="text" placeholder="   Nhập phòng ban" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                </div>
                 </div>
             </div>
         </div>
@@ -273,6 +285,10 @@
                 <p class="font-bold text-blue-900"> Ngày cấp </p>
                 <p class="font-bold"><span id="Re_NgayCap"></span></p>
                 </div>
+                <div>
+                <p class="font-bold text-blue-900"> Mã Nhân viên </p>
+                <p class="font-bold"><span id="Re_MaNhanVien"></span></p>
+                </div>
                 </div>
 
                 <div class="Infocol2"> 
@@ -288,6 +304,10 @@
                 <p class="font-bold text-blue-900"> Nơi cấp</p>
                 <p class="font-bold"><span id="Re_NoiCap"></span></p>
                 </div>
+                <div>
+                <p class="font-bold text-blue-900"> Cấp bậc </p>
+                <p class="font-bold"><span id="Re_Level"></span></p>
+                </div>
                 </div>
 
                 <div class="Infocol3 items-end">
@@ -298,11 +318,15 @@
                 <div>
                     <p class="font-bold text-blue-900"> Số CCCD  </p>
                     <p class="font-bold"><span id="Re_SoCccd"></span></p>
-                    </div>
-                    <div>
+                </div>
+                <div>
                     <p class="font-bold text-blue-900"> Quốc tịch</p>
                     <p class="font-bold"><span id="Re_QuocTich"></span></p>
-                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-blue-900"> Phòng ban </p>
+                    <p class="font-bold"><span id="Re_PhongBan"></span></p>
+                </div>
                 </div>
             </div>
         </div>
@@ -420,6 +444,7 @@
 
 
 <script src="AccountRegister.js"></script>
+<script src="../../database/employeeregis.js"></script>
 <script src="../../assets/js/layout.js?v=2"></script>   
 </body>
 </html>
