@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -51,9 +51,9 @@
           </a>
 
           <ul class="space-y-2 font-medium">
-            <li>
+            <li data-role="all">
               <a
-                data-href="pages/dashboard.html"
+                data-href="pages/accountdashboard/accountdashboard.html"
                 data-nav-id="dashboard"
                 class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]"
               >
@@ -85,7 +85,7 @@
               </a>
             </li>
 
-            <li>
+            <li data-role="admin">
               <button
                 type="button"
                 class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]"
@@ -171,7 +171,7 @@
               </ul>
             </li>
 
-            <li>
+            <li data-role="all">
                <a
                     data-href="pages/projects-management/projects.html"
                     data-nav-id="projects"
@@ -197,7 +197,7 @@
                   </a>
             </li>
 
-            <li>
+            <li data-role="admin">
               <button
                 type="button"
                 class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]"
@@ -278,11 +278,11 @@
           <ul
             class="mt-auto space-y-2 border-t border-white/20 pt-4 font-medium"
           >
-            <li class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]">Lương Văn Thanh</li>
-            <li class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]">Hồ sơ của tôi</li>
-            <li>
-              <a
-                data-href="pages/signin.html"
+            <li data-role="all" id="fullName" class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0] capitalize">Lương Văn Thanh</li>
+            <li data-role="all" class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]">Hồ sơ của tôi</li>
+            <li data-role="all">
+              <button
+                id="btnLogout"
                 class="flex w-full items-center gap-3 rounded-base px-2 py-2 text-white hover:bg-[#0F4EA0]"
               >
                 <svg
@@ -302,10 +302,8 @@
                     d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
                   />
                 </svg>
-                <span class="min-w-0 flex-1 whitespace-nowrap"
-                  >Đăng xuất</span
-                >
-              </a>
+                Đăng xuất
+              </button>
             </li>
           </ul>
         </nav>

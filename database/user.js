@@ -1,32 +1,81 @@
-import {
-   hashPassword
-} from "../assets/js/cryptoService.js";
-const KEY = "user";
+﻿import { USERS } from "../assets/js/common/storageKeys.js";
 
-let defaultUsers = [{
-    id: "AD001",
-    name: "Lương Văn Thanh",
-    account: "ADM001",
-    //password: "Admin1",
-    password: "0afb00138d8e73348ec1fe41fd3d3a8fcbd90156b263bfa5791ba0e095f42cfc",
-    role: "Admin"
-}]
+let defaultUsers = [
+    {
+        id: "ad001",
+
+        account: "adm001",
+        password: "admin1234567",
+        role: "admin",
+        status: "active",
+
+        profile: {
+            fullName: "lương văn thanh",
+            email: "thanh.lv10041999@gmail.com",
+            phone: "0912345678",
+            avatar: "assets/images/avatar/default-avatar.png",
+
+            dateOfBirth: "1999-04-10",
+            gender: "male",
+
+            citizenId: "079099001234",
+            issueDate: "2021-05-10",
+            issuePlace: "cục cảnh sát qlhc về ttxh",
+
+            nationality: "việt nam",
+
+            permanentAddress: "123 nguyễn huệ, quận 1, tp. hồ chí minh",
+            currentAddress: "25 lê lợi, quận 1, tp. hồ chí minh",
+
+            emergencyContact: {
+                fullName: "lương văn a",
+                phone: "0909123456",
+                relationship: "cha",
+                address: "123 nguyễn huệ, quận 1, tp. hồ chí minh"
+            },
+
+            education: "đại học",
+
+            languages: [
+                "tiếng việt",
+                "tiếng anh"
+            ],
+
+            skills: [
+                "html",
+                "css",
+                "javascript",
+                "tailwind css",
+                "git",
+                "responsive design"
+            ],
+
+            note: "quản trị viên hệ thống."
+        },
+
+        createdAt: "2026-07-10T09:00:00",
+        updatedAt: "2026-07-10T09:00:00"
+    }
+];
 
 // Khởi tạo data
 function initUsers() {
-    if(!localStorage.key(KEY)) {
-        localStorage.setItem(KEY, JSON.stringify(defaultUsers));
+    const storedUsers = getAll();
+
+    if (!Array.isArray(storedUsers) || storedUsers.length === 0) {
+        localStorage.setItem(USERS, JSON.stringify(defaultUsers));
+        return;
     }
 }
 
 //Lấy all data từ localStorage
 function getAll() {
-    return JSON.parse(localStorage.getItem(KEY));
+    return JSON.parse(localStorage.getItem(USERS));
 }
 
 //save new user
 function saveUsers(users) {
-    return localStorage.setItem(KEY, users);
+    return localStorage.setItem(USERS, JSON.stringify(users));
 }
 
 //find user
@@ -60,11 +109,12 @@ function updateUser(id, data) {
         ...users[index],
         ...data
     };
+    saveUsers(users);
 }
 
 //sigin
-function signin(account, password){
-    const users = getAll();
+async function findUserSignin(account, password){
+    const users = getAll() || [];
 
     return users.find(user => user.account === account && user.password === password);
 }
@@ -76,5 +126,5 @@ export {
     findByName,
     insertUser,
     updateUser,
-    signin
+    findUserSignin
 };

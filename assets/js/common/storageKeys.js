@@ -1,0 +1,5 @@
+﻿const USERS = "USERS";
+const CURRENT_USER = "CURRENT_USER";
+const PROJECTS = "PROJECTS";
+
+export { USERS, CURRENT_USER, PROJECTS };

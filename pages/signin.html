@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,18 +7,18 @@
     <link rel="icon" type="image/png" href="../assets/images/logo.png" />
     <link rel="stylesheet" href="../assets/css/login.css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script type="module" src="../assets/js/sigin.js"></script>
+    <script type="module" src="./assets/js/sigin.js"></script>
   </head>
 
-  <body class="flex min-h-screen items-center justify-center" onload="init()">
+  <body class="flex min-h-screen items-center justify-center p-4">
     <div
-      class="flex flex-col justify-center px-6 py-12 lg:px-8 bg-white rounded-xl"
+      class="flex w-[560px] aspect-square max-w-[92vw] flex-col justify-center rounded-3xl bg-white px-10 py-12 shadow-lg lg:px-12"
     >
-      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <img
           src="../assets/images/logo.png"
           alt="Your Company"
-          class="mx-auto h-50 w-auto"
+          class="mx-auto h-44 w-auto"
         />
         <h2
           class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-500"
@@ -27,22 +27,22 @@
         </h2>
       </div>
 
-      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6">
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+        <form class="space-y-6" id="login-form">
           <div>
             <label
               for="account"
               class="block text-sm/6 font-medium"
               >Tài khoản</label
             >
-            <div class="mt-2">
+            <div class="mt-2 input">
               <input
                 id="account"
                 type="text"
                 name="account"
-                required
                 class="block w-full rounded-md border border-slate-300 bg-white/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
               />
+              <span class="error-msg text-xs text-rose2 mt-1 block text-[red]"></span>
             </div>
           </div>
 
@@ -61,7 +61,7 @@
                 >
               </div>
             </div>
-            <div class="mt-2">
+            <div class="mt-2 input">
               <input
                 id="password"
                 type="password"
@@ -70,14 +70,14 @@
                 autocomplete="current-password"
                 class="block w-full rounded-md border border-slate-300 bg-white/5 px-3 py-1.5 text-base outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
               />
+              <span class="error-msg text-xs text-rose2 mt-1 block"></span>
             </div>
           </div>
 
           <div>
               <button
-                type="button"
+                type="submit"
                 class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                onclick="login()"
                 >
                 Sign in
               </button>
@@ -85,5 +85,6 @@
         </form>
       </div>
     </div>
+    <script type="module" src="../assets/js/sigin.js"></script>
   </body>
 </html>

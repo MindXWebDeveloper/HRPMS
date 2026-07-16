@@ -1,5 +1,10 @@
+﻿import { getCurrentUser, clearCurrentUser } from "./services/authService.js";
+import { getAuthorContext, applyRoleGuards } from "./common/author.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
+  const authorContext = getAuthorContext();
   const sidebarHost = document.querySelector("[data-layout='sidebar']");
+  applyRoleGuards(document, authorContext);
 
   if (!sidebarHost) {
     return;
@@ -28,6 +33,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       : sidebarHtml;
 
     resolveSidebarPaths(sidebarHost, basePath);
+    applyRoleGuards(sidebarHost, authorContext);
+    applyRoleGuards(document, authorContext); // cho toàn trang
     setActiveSidebarItem(sidebarHost);
 
     if (typeof window.initFlowbite === "function") {
@@ -38,7 +45,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     sidebarHost.innerHTML =
       '<p class="p-4 text-sm text-red-600">Kh&#244;ng t&#7843;i &#273;&#432;&#7907;c sidebar.</p>';
   }
+
+  const btnLogout = document.getElementById("btnLogout");
+  const fullName = document.getElementById("fullName");
+
+  if (btnLogout) {
+    btnLogout.addEventListener("click", function () {
+      clearCurrentUser();
+      window.location.href = "../../sigin.html";
+    });
+  }
+
+  if (fullName) {
+    fullName.innerText = getCurrentUser()?.fullName || "Người dùng";
+  }
+  
 });
+
+document.addEventListener("click", () => {});
 
 function resolveSidebarPaths(root, basePath) {
   root.querySelectorAll("[data-href]").forEach((link) => {
@@ -71,3 +95,4 @@ function setActiveSidebarItem(root) {
 function normalizePath(path) {
   return path.replace(/\\/g, "/").replace(/^\/+/, "");
 }
+
