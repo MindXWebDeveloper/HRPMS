@@ -50,37 +50,45 @@
             <div class="InfoGrid justify-center grid grid-cols-3 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] w-[100%] p-[10px]">
                 <div class="Infocol1">
                 <div>
-                 <p class="font-bold text-blue-900"> Họ và tên <span class="text-red-900">*</span></p>
+                 <p class="font-bold text-blue-900"> Họ và tên </p>
                  <input id="HoTen" type="text" placeholder="   Nhập họ và tên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
-                 <p class="font-bold text-blue-900"> Số điện thoại <span class="text-red-900">*</span></p>
+                 <p class="font-bold text-blue-900"> Số điện thoại </p>
                  <input id="SoDienThoai" type="text" placeholder="   Nhập số điện thoại" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Ngày cấp </p>
                 <input id="NgayCap" type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
+                <div>
+                <p class="font-bold text-blue-900"> Mã Nhân viên </p>
+                <input id="MaNhanVien" type="text" placeholder="   Nhập mã nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                </div>
                 </div>
 
                 <div class="Infocol2"> 
                 <div>
-                <p class="font-bold text-blue-900"> Ngày sinh <span class="text-red-900">*</span></p>
+                <p class="font-bold text-blue-900"> Ngày sinh </p>
                 <input id="NgaySinh" type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
-                <p class="font-bold text-blue-900"> Email <span class="text-red-900">*</span> </p>
+                <p class="font-bold text-blue-900"> Email  </p>
                 <input id="DcEmail" type="text" placeholder="   Nhập email" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Nơi cấp</p>
                 <input id="NoiCap" type="text" placeholder="   Nhập nơi cấp" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
+                <div>
+                <p class="font-bold text-blue-900"> Cấp bậc </p>
+                <input id="Level" type="text" placeholder="   Nhập cấp bậc nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                </div>
                 </div>
 
                 <div class="Infocol3 items-end">
                 <div>
-                    <p class="font-bold text-blue-900"> Giới tính <span class="text-red-900">*</span></p>
+                    <p class="font-bold text-blue-900"> Giới tính </p>
                     <select id="GioiTinh" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                         <option>Chọn giới tính </option>
                         <option>Nam</option>
@@ -88,13 +96,17 @@
                     </select>
                 </div>
                 <div>
-                    <p class="font-bold text-blue-900"> Số CCCD <span class="text-red-900">*</span> </p>
+                    <p class="font-bold text-blue-900"> Số CCCD  </p>
                     <input id="SoCccd" type="text" placeholder="   Nhập số CCCD" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                     <div>
                     <p class="font-bold text-blue-900"> Quốc tịch</p>
                     <input id="QuocTich" type="text" placeholder="   Nhập Quốc tịch" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                     </div>
+                <div>
+                <p class="font-bold text-blue-900"> Phòng ban </p>
+                <input id="PhongBan" type="text" placeholder="   Nhập phòng ban" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                </div>
                 </div>
             </div>
         </div>
@@ -178,16 +190,26 @@
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Mật khẩu tạm </p>
-                <div>
-                    <input id="MatKhauTam" type="text" placeholder="   Nhập mật khẩu tạm" class="mb-[10px] border rounded-full border-slate-400">
-                    <img>
+                <div class="flex relative">
+                    <input id="MatKhauTam" type="password" placeholder="   Nhập mật khẩu tạm" class="mb-[10px] border rounded-full border-slate-400">
+                    <button type="button" id="togglePasswordBtn" aria-label="Hiện mật khẩu" class="toggle-password">
+                    <svg class="w-[18px] h-[18px] fill-none stroke-current stroke-[1.8] absolute top-1/2 -translate-y-1/2" viewBox="0 0 24 24" >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    </button>
                 </div>
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Xác nhận mật khẩu </p>
-                <div>
-                    <input id="NhapLaiMK" type="text" placeholder="   Nhập lại mật khẩu" class="mb-[10px] border rounded-full border-slate-400">
-                    <img>
+                <div class="flex relative">
+                    <input id="NhapLaiMK" type="password" placeholder="   Nhập lại mật khẩu" class="mb-[10px] border rounded-full border-slate-400">
+                    <button type="button" id="togglePasswordBtn1" aria-label="Hiện mật khẩu1" class="toggle-password">
+                    <svg class="w-[18px] h-[18px] fill-none stroke-current stroke-[1.8] absolute top-1/2 -translate-y-1/2" viewBox="0 0 24 24" >
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -252,47 +274,59 @@
             <div class="InfoGrid justify-center grid grid-cols-3 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] w-[100%] p-[10px]">
                 <div class="Infocol1">
                 <div>
-                 <p class="font-bold text-blue-900"> Họ và tên <span class="text-red-900">*</span></p>
+                 <p class="font-bold text-blue-900"> Họ và tên </p>
                  <p class="font-bold"><span id="Re_HoTen"></span></p>
                 </div>
                 <div>
-                 <p class="font-bold text-blue-900"> Số điện thoại <span class="text-red-900">*</span></p>
+                 <p class="font-bold text-blue-900"> Số điện thoại </p>
                  <p class="font-bold"><span id="Re_SoDienThoai"></span></p>
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Ngày cấp </p>
                 <p class="font-bold"><span id="Re_NgayCap"></span></p>
                 </div>
+                <div>
+                <p class="font-bold text-blue-900"> Mã Nhân viên </p>
+                <p class="font-bold"><span id="Re_MaNhanVien"></span></p>
+                </div>
                 </div>
 
                 <div class="Infocol2"> 
                 <div>
-                <p class="font-bold text-blue-900"> Ngày sinh <span class="text-red-900">*</span></p>
+                <p class="font-bold text-blue-900"> Ngày sinh </p>
                 <p class="font-bold"><span id="Re_NgaySinh"></span></p>
                 </div>
                 <div>
-                <p class="font-bold text-blue-900"> Email <span class="text-red-900">*</span> </p>
+                <p class="font-bold text-blue-900"> Email  </p>
                 <p class="font-bold"><span id="Re_DcEmail"></span></p>
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Nơi cấp</p>
                 <p class="font-bold"><span id="Re_NoiCap"></span></p>
                 </div>
+                <div>
+                <p class="font-bold text-blue-900"> Cấp bậc </p>
+                <p class="font-bold"><span id="Re_Level"></span></p>
+                </div>
                 </div>
 
                 <div class="Infocol3 items-end">
                 <div>
-                    <p class="font-bold text-blue-900"> Giới tính <span class="text-red-900">*</span></p>
+                    <p class="font-bold text-blue-900"> Giới tính </p>
                     <p class="font-bold"><span id="Re_GioiTinh"></span></p>
                 </div>
                 <div>
-                    <p class="font-bold text-blue-900"> Số CCCD <span class="text-red-900">*</span> </p>
+                    <p class="font-bold text-blue-900"> Số CCCD  </p>
                     <p class="font-bold"><span id="Re_SoCccd"></span></p>
-                    </div>
-                    <div>
+                </div>
+                <div>
                     <p class="font-bold text-blue-900"> Quốc tịch</p>
                     <p class="font-bold"><span id="Re_QuocTich"></span></p>
-                    </div>
+                </div>
+                <div>
+                    <p class="font-bold text-blue-900"> Phòng ban </p>
+                    <p class="font-bold"><span id="Re_PhongBan"></span></p>
+                </div>
                 </div>
             </div>
         </div>
@@ -401,7 +435,7 @@
     </div>
 </div>
      </div>
-    <div class="modal-actions flex justify-center mt-[50px]">
+    <div class="modal-actions flex justify-center mt-[50px gap-[20px]">
       <button id="btnBack" type="button" class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500">Quay lại sửa</button>
       <button id="btnConfirm" type="button" class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500">Xác nhận gửi</button>
     </div>
@@ -410,7 +444,8 @@
 
 
 <script src="AccountRegister.js"></script>
-<script type="module" src="../../assets/js/layout.js?v=2"></script>   
+<script src="../../database/employeeregis.js"></script>
+<script src="../../assets/js/layout.js?v=2"></script>   
 </body>
 </html>
 
