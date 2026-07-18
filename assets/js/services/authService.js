@@ -1,11 +1,14 @@
 ﻿import { getAll, findUserSignin } from "../../../database/user.js";
 import { CURRENT_USER } from "../common/storageKeys.js";
+import { findEmployeeByMaNV } from "../../../database/employeedata.js";
 
 function saveCurrentUser(user) {
+  const employee = findEmployeeByMaNV(user.MaNhanVien);
   const data = {
     account: user.account,
-    fullName: user.profile.fullName,
-    role: (user.role || "EMPLOYEE").toLowerCase()
+    fullName: employee ? employee.HoTen: "",
+    role: (user.role || "EMPLOYEE").toLowerCase(),
+    MaNhanVien: user.MaNhanVien,
   };
   localStorage.setItem(CURRENT_USER, JSON.stringify(data));
 }

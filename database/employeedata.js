@@ -1,11 +1,13 @@
-const employees = [
+import { EMPLOYEES } from "../assets/js/common/storageKeys.js";
+
+export const employees = [
 
 {
-    HoTen: "Nguyễn Văn An",
+    HoTen: "Lương Văn Thanh",
     NgaySinh: "1995-03-15",
     SoDienThoai: "0901234567",
     NgayCap: "2020-05-12",
-    DcEmail: "an.nguyen@company.com",
+    DcEmail: "thanh.luong@company.com",
     NoiCap: "Cục CSQLHC về TTXH",
     GioiTinh: "Nam",
     SoCccd: "001095123456",
@@ -25,15 +27,18 @@ const employees = [
     NgoaiNgu: "Tiếng Anh (IELTS 6.5)",
     KyNang: "HTML, CSS, JavaScript",
     GhiChu: "",
-    Avatar: "assets/avatar/EMP001.jpg"
+    Avatar: "assets/avatar/EMP001.jpg",
+    Vaitro: "admin",
+    ChucVu: "Developer",
+    TrangThai:"Hoạt động"
 },
 
 {
-    HoTen: "Trần Thị Bình",
+    HoTen: "Nguyễn Hữu Linh",
     NgaySinh: "1997-07-22",
     SoDienThoai: "0902345678",
     NgayCap: "2021-03-18",
-    DcEmail: "binh.tran@company.com",
+    DcEmail: "linh.nguyen@company.com",
     NoiCap: "Công an TP Hà Nội",
     GioiTinh: "Nữ",
     SoCccd: "001097654321",
@@ -53,7 +58,11 @@ const employees = [
     NgoaiNgu: "Tiếng Anh (TOEIC 850)",
     KyNang: "Manual Test, SQL, Postman",
     GhiChu: "",
-    Avatar: "assets/avatar/EMP002.jpg"
+    Avatar: "assets/avatar/EMP002.jpg",
+    Vaitro: "user",
+    ChucVu: "IT Support",
+    TrangThai:"Hoạt động"
+
 },
 
 {
@@ -81,7 +90,10 @@ const employees = [
     NgoaiNgu: "Tiếng Anh, Tiếng Nhật N3",
     KyNang: "Java, Spring Boot, SQL Server",
     GhiChu: "Team Leader dự án HRM",
-    Avatar: "assets/avatar/EMP003.jpg"
+    Avatar: "assets/avatar/EMP003.jpg",
+    ChucVu: "Frontend Dev",
+    Vaitro: "user",
+    TrangThai:"Hoạt động"
 },
 
 {
@@ -109,7 +121,10 @@ const employees = [
     NgoaiNgu: "Tiếng Anh",
     KyNang: "Agile, UML, Jira, Figma",
     GhiChu: "",
-    Avatar: "assets/avatar/EMP004.jpg"
+    Avatar: "assets/avatar/EMP004.jpg",
+    Vaitro: "user",
+    ChucVu: "Developer",
+    TrangThai:"Hoạt động"
 },
 
 {
@@ -137,7 +152,48 @@ const employees = [
     NgoaiNgu: "Tiếng Anh (IELTS 7.5)",
     KyNang: "Project Management, Scrum, Power BI",
     GhiChu: "Quản lý nhiều dự án nội bộ",
-    Avatar: "assets/avatar/EMP005.jpg"
+    Avatar: "assets/avatar/EMP005.jpg",
+    Vaitro: "user",
+    ChucVu: "Project Manager",
+    TrangThai:" Ngưng hoạt động"
 }
 
 ];
+
+
+
+function initEmployees() {
+    const data = JSON.parse(localStorage.getItem(EMPLOYEES));
+
+    if (!Array.isArray(data) || data.length === 0) {
+        localStorage.setItem(EMPLOYEES, JSON.stringify(employees));
+    }}
+function getAllEmployees() {
+    return JSON.parse(localStorage.getItem(EMPLOYEES)) || [];
+}
+
+function findEmployeeByMaNV(maNhanVien) { 
+    return employees.find(emp => emp.MaNhanVien === maNhanVien);
+}
+
+function updateEmployee(updatedEmployee){
+
+    const index = employees.findIndex(
+        emp => emp.MaNhanVien === updatedEmployee.MaNhanVien
+    );
+
+    if(index !== -1){
+
+        employees[index] = updatedEmployee;
+
+        localStorage.setItem(
+            "EMPLOYEES",
+            JSON.stringify(employees)
+        );
+
+    }
+
+}
+export {
+    findEmployeeByMaNV, initEmployees, getAllEmployees, updateEmployee
+};
