@@ -7,6 +7,13 @@ import { employees } from "../../database/employeedata.js";
 import { upsertProjectEmployee } from "../../database/project-employees.js";
 import { CURRENT_USER } from "./common/storageKeys.js";
 
+const PAGE_SIZE = 10;
+let currentSearchKeyword = "";
+let currentPage = 1;
+
+const paginationSummary = document.getElementById("project-pagination-summary");
+const paginationControls = document.getElementById("project-pagination-controls");
+
 document.addEventListener("render", initializeProjectPage);
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,7 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function initializeProjectPage() {
   initProjects();
-  renderProjects();
+  bindPaginationControls();
+  renderProjectList();
   applyCreateProjectPermission();
   bindLeadNameAutocomplete();
   bindProjectSearch();
@@ -36,8 +44,9 @@ function bindProjectSearch() {
   }
 
   const runSearch = () => {
-    const keyword = String(searchInput.value || "").trim();
-    renderProjects(keyword);
+    currentSearchKeyword = String(searchInput.value || "").trim();
+    currentPage = 1;
+    renderProjectList();
   };
 
   searchButton.addEventListener("click", runSearch);
@@ -50,6 +59,124 @@ function bindProjectSearch() {
     event.preventDefault();
     runSearch();
   });
+}
+
+function renderProjectList() {
+  const pagination =
+    renderProjects(currentSearchKeyword, { page: currentPage, pageSize: PAGE_SIZE }) || {};
+
+  const nextPage = Number(pagination.currentPage || 1);
+  const totalPages = Number(pagination.totalPages || 1);
+  const totalRecords = Number(pagination.totalRecords || 0);
+
+  currentPage = Math.min(Math.max(1, nextPage), Math.max(1, totalPages));
+
+  updatePaginationSummary(totalRecords, currentPage, PAGE_SIZE);
+  renderPaginationControls(totalPages, currentPage);
+}
+
+function bindPaginationControls() {
+  if (!paginationControls) {
+    return;
+  }
+
+  paginationControls.addEventListener("click", (event) => {
+    const actionButton = event.target.closest("button[data-page-action]");
+
+    if (!actionButton) {
+      return;
+    }
+
+    const action = String(actionButton.dataset.pageAction || "").trim();
+    const value = Number(actionButton.dataset.pageValue || "");
+
+    if (action === "previous") {
+      currentPage = Math.max(1, currentPage - 1);
+      renderProjectList();
+      return;
+    }
+
+    if (action === "next") {
+      currentPage = currentPage + 1;
+      renderProjectList();
+      return;
+    }
+
+    if (action === "page" && Number.isFinite(value) && value > 0) {
+      currentPage = value;
+      renderProjectList();
+    }
+  });
+}
+
+function updatePaginationSummary(totalRecords, page, pageSize) {
+  if (!paginationSummary) {
+    return;
+  }
+
+  const total = Math.max(0, Number(totalRecords) || 0);
+
+  if (total === 0) {
+    paginationSummary.textContent = "Hiển thị 0-0 of 0";
+    return;
+  }
+
+  const start = (Math.max(1, page) - 1) * pageSize + 1;
+  const end = Math.min(total, start + pageSize - 1);
+
+  paginationSummary.textContent = `Hiển thị ${start}-${end} of ${total}`;
+}
+
+function renderPaginationControls(totalPages, page) {
+  if (!paginationControls) {
+    return;
+  }
+
+  paginationControls.innerHTML = "";
+
+  const safeTotalPages = Math.max(1, Number(totalPages) || 1);
+  const safeCurrentPage = Math.min(Math.max(1, Number(page) || 1), safeTotalPages);
+
+  paginationControls.appendChild(
+    createPaginationItem("Previous", "previous", safeCurrentPage === 1, false),
+  );
+
+  for (let pageNumber = 1; pageNumber <= safeTotalPages; pageNumber += 1) {
+    paginationControls.appendChild(
+      createPaginationItem(String(pageNumber), "page", false, pageNumber === safeCurrentPage, pageNumber),
+    );
+  }
+
+  paginationControls.appendChild(
+    createPaginationItem("Next", "next", safeCurrentPage === safeTotalPages, false),
+  );
+}
+
+function createPaginationItem(label, action, isDisabled, isActive, pageValue) {
+  const li = document.createElement("li");
+  const button = document.createElement("button");
+
+  button.type = "button";
+  button.textContent = label;
+  button.dataset.pageAction = action;
+
+  if (pageValue) {
+    button.dataset.pageValue = String(pageValue);
+  }
+
+  if (isDisabled) {
+    button.disabled = true;
+  }
+
+  const baseClass = "flex items-center justify-center box-border border border-default-medium font-medium text-sm h-9 focus:outline-none";
+  const activeClass = "text-fg-brand bg-brand-softer hover:bg-brand-soft px-3";
+  const normalClass = "text-body bg-neutral-secondary-medium hover:bg-neutral-tertiary-medium hover:text-heading px-3";
+  const disabledClass = "opacity-50 cursor-not-allowed";
+
+  button.className = `${baseClass} ${isActive ? activeClass : normalClass} ${isDisabled ? disabledClass : ""}`.trim();
+
+  li.appendChild(button);
+  return li;
 }
 
 function handleCreateProject(event) {
@@ -129,8 +256,8 @@ function handleCreateProject(event) {
   }
 
   const searchInput = document.getElementById("input-group-1");
-  const activeKeyword = String(searchInput?.value || "").trim();
-  renderProjects(activeKeyword);
+  currentSearchKeyword = String(searchInput?.value || "").trim();
+  renderProjectList();
   event.currentTarget.reset();
   leadCodeInput.value = "";
   hideLeadNameSuggestions();

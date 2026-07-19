@@ -5,21 +5,38 @@ import { USERS, EMPLOYEES } from "../../assets/js/common/storageKeys.js";
 const tbody = document.getElementById("accountTableBody");
 const searchInput = document.getElementById("account-search-input");
 const searchButton = document.getElementById("account-search-btn");
+const paginationSummary = document.getElementById("account-pagination-summary");
+const paginationControls = document.getElementById("account-pagination-controls");
+const PAGE_SIZE = 10;
 let currentSearchKeyword = "";
+let currentPage = 1;
 
 bindAddAccountModal();
 bindEditAccountModal();
 bindSearchAccountByName();
+bindPaginationControls();
 
 function renderAccounts() {
   initUsers();
   initEmployees();
   const users = getAll() || [];
   const filteredUsers = filterUsersByName(users, currentSearchKeyword);
+  const totalRecords = filteredUsers.length;
+  const totalPages = Math.max(1, Math.ceil(totalRecords / PAGE_SIZE));
+
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
+
+  if (currentPage < 1) {
+    currentPage = 1;
+  }
+
+  const visibleUsers = paginateUsers(filteredUsers, currentPage, PAGE_SIZE);
 
     tbody.innerHTML = "";
 
-  filteredUsers.forEach(user => {
+  visibleUsers.forEach(user => {
       const employee = findEmployeeByMaNV(user.MaNhanVien);
       const fullName = employee?.HoTen || user.MaNhanVien || "-";
 
@@ -87,6 +104,9 @@ function renderAccounts() {
 
     });
 
+  updatePaginationSummary(totalRecords, currentPage, PAGE_SIZE);
+  renderPaginationControls(totalPages, currentPage);
+
 }
 
 renderAccounts();
@@ -98,6 +118,7 @@ function bindSearchAccountByName() {
 
   const triggerSearch = () => {
     currentSearchKeyword = String(searchInput.value || "").trim().toLowerCase();
+    currentPage = 1;
     renderAccounts();
   };
 
@@ -109,6 +130,120 @@ function bindSearchAccountByName() {
       triggerSearch();
     }
   });
+}
+
+function bindPaginationControls() {
+  if (!paginationControls) {
+    return;
+  }
+
+  paginationControls.addEventListener("click", (event) => {
+    const actionButton = event.target.closest("button[data-page-action]");
+
+    if (!actionButton) {
+      return;
+    }
+
+    const action = String(actionButton.dataset.pageAction || "").trim();
+    const value = Number(actionButton.dataset.pageValue || "");
+
+    if (action === "previous") {
+      currentPage = Math.max(1, currentPage - 1);
+      renderAccounts();
+      return;
+    }
+
+    if (action === "next") {
+      currentPage = currentPage + 1;
+      renderAccounts();
+      return;
+    }
+
+    if (action === "page" && Number.isFinite(value) && value > 0) {
+      currentPage = value;
+      renderAccounts();
+    }
+  });
+}
+
+function paginateUsers(users, page, pageSize) {
+  const safeUsers = Array.isArray(users) ? users : [];
+  const safePage = Math.max(1, Number(page) || 1);
+  const safePageSize = Math.max(1, Number(pageSize) || PAGE_SIZE);
+  const start = (safePage - 1) * safePageSize;
+  const end = start + safePageSize;
+
+  return safeUsers.slice(start, end);
+}
+
+function updatePaginationSummary(totalRecords, page, pageSize) {
+  if (!paginationSummary) {
+    return;
+  }
+
+  const total = Math.max(0, Number(totalRecords) || 0);
+
+  if (total === 0) {
+    paginationSummary.textContent = "Hiển thị 0-0 of 0";
+    return;
+  }
+
+  const start = (Math.max(1, page) - 1) * pageSize + 1;
+  const end = Math.min(total, start + pageSize - 1);
+
+  paginationSummary.textContent = `Hiển thị ${start}-${end} of ${total}`;
+}
+
+function renderPaginationControls(totalPages, page) {
+  if (!paginationControls) {
+    return;
+  }
+
+  paginationControls.innerHTML = "";
+
+  const safeTotalPages = Math.max(1, Number(totalPages) || 1);
+  const safeCurrentPage = Math.min(Math.max(1, Number(page) || 1), safeTotalPages);
+
+  paginationControls.appendChild(
+    createPaginationItem("Previous", "previous", safeCurrentPage === 1, false),
+  );
+
+  for (let pageNumber = 1; pageNumber <= safeTotalPages; pageNumber += 1) {
+    paginationControls.appendChild(
+      createPaginationItem(String(pageNumber), "page", false, pageNumber === safeCurrentPage, pageNumber),
+    );
+  }
+
+  paginationControls.appendChild(
+    createPaginationItem("Next", "next", safeCurrentPage === safeTotalPages, false),
+  );
+}
+
+function createPaginationItem(label, action, isDisabled, isActive, pageValue) {
+  const li = document.createElement("li");
+  const button = document.createElement("button");
+
+  button.type = "button";
+  button.textContent = label;
+  button.dataset.pageAction = action;
+
+  if (pageValue) {
+    button.dataset.pageValue = String(pageValue);
+  }
+
+  if (isDisabled) {
+    button.disabled = true;
+  }
+
+  const baseClass = "flex items-center justify-center box-border border border-default-medium font-medium text-sm h-9 focus:outline-none";
+  const activeClass = "text-fg-brand bg-brand-softer hover:bg-brand-soft px-3";
+  const normalClass = "text-body bg-neutral-secondary-medium hover:bg-neutral-tertiary-medium hover:text-heading px-3";
+  const disabledClass = "opacity-50 cursor-not-allowed";
+
+  button.className = `${baseClass} ${isActive ? activeClass : normalClass} ${isDisabled ? disabledClass : ""}`.trim();
+
+  li.appendChild(button);
+  return li;
 }
 
 function filterUsersByName(users, keyword) {

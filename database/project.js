@@ -83,17 +83,35 @@ function nextProjectCode(projects) {
   return `PRJ${String(nextNumber + 1).padStart(3, "0")}`;
 }
 
-function renderProjects(keyword = "") {
+function renderProjects(keyword = "", options = {}) {
   const tbody = document.getElementById("project-table-body");
+  const requestedPage = Math.max(1, Number(options?.page) || 1);
+  const pageSize = Math.max(1, Number(options?.pageSize) || 10);
+  const projects = getFilteredProjectsByName(keyword);
+  const totalRecords = projects.length;
+  const totalPages = Math.max(1, Math.ceil(totalRecords / pageSize));
+  const currentPage = Math.min(requestedPage, totalPages);
+  const paginatedProjects = paginateItems(projects, currentPage, pageSize);
+
+  const startRecord = totalRecords === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const endRecord = totalRecords === 0 ? 0 : Math.min(totalRecords, startRecord + pageSize - 1);
+
+  const paginationResult = {
+    totalRecords,
+    totalPages,
+    currentPage,
+    pageSize,
+    startRecord,
+    endRecord,
+  };
 
   if (!tbody) {
-    return;
+    return paginationResult;
   }
 
-  const projects = getFilteredProjectsByName(keyword);
   tbody.innerHTML = "";
 
-  if (projects.length === 0) {
+  if (paginatedProjects.length === 0) {
     const emptyRow = document.createElement("tr");
     emptyRow.className =
       "bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium";
@@ -105,12 +123,24 @@ function renderProjects(keyword = "") {
 
     emptyRow.appendChild(emptyCell);
     tbody.appendChild(emptyRow);
-    return;
+    return paginationResult;
   }
 
-  projects.forEach((project) => {
+  paginatedProjects.forEach((project) => {
     tbody.appendChild(createProjectRow(project));
   });
+
+  return paginationResult;
+}
+
+function paginateItems(items, page, pageSize) {
+  const list = Array.isArray(items) ? items : [];
+  const safePage = Math.max(1, Number(page) || 1);
+  const safePageSize = Math.max(1, Number(pageSize) || 10);
+  const start = (safePage - 1) * safePageSize;
+  const end = start + safePageSize;
+
+  return list.slice(start, end);
 }
 
 function getFilteredProjectsByName(keyword) {
