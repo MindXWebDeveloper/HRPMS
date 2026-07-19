@@ -2,14 +2,16 @@
 import { initTasks } from "./task.js";
 import { initProjectTasks, getTasksByProjectId } from "./projet_task.js";
 import { initProjectPhases } from "./project_phase.js";
-import { initProjectEmployees } from "./project-employees.js";
+import { initProjectEmployees, getAllProjectEmployees } from "./project-employees.js";
+import { employees } from "./employeedata.js";
+import { CURRENT_USER } from "../assets/js/common/storageKeys.js";
 
 const DEFAULT_PROJECTS = [
   {
     id: "prj-001",
     projectCode: "PRJ001",
     projectName: "HRPMS",
-    leadName: "Trần Văn Nghĩa",
+    leadId: "EMP001",
     memberCount: 5,
     status: "Hoàn thành",
     createdAt: "2026-07-10T09:00:00",
@@ -20,7 +22,7 @@ const DEFAULT_PROJECTS = [
     id: "prj-002",
     projectCode: "PRJ002",
     projectName: "Mobile App",
-    leadName: "Lê Thị Hồng",
+    leadId: "EMP002",
     memberCount: 5,
     status: "Tạm dừng",
     createdAt: "2026-07-10T09:00:00",
@@ -56,7 +58,7 @@ function getAll() {
 }
 
 function saveProjects(projects) {
-  localStorage.setItem(PROJECTS, JSON.stringify(projects.map(normalizeProjectRecord)));
+  localStorage.setItem(PROJECTS, JSON.stringify(projects.map(toStoredProjectRecord)));
 }
 
 function insertProject(project) {
@@ -79,14 +81,14 @@ function nextProjectCode(projects) {
   return `PRJ${String(nextNumber + 1).padStart(3, "0")}`;
 }
 
-function renderProjects() {
+function renderProjects(keyword = "") {
   const tbody = document.getElementById("project-table-body");
 
   if (!tbody) {
     return;
   }
 
-  const projects = getAll();
+  const projects = getFilteredProjectsByName(keyword);
   tbody.innerHTML = "";
 
   if (projects.length === 0) {
@@ -107,6 +109,62 @@ function renderProjects() {
   projects.forEach((project) => {
     tbody.appendChild(createProjectRow(project));
   });
+}
+
+function getFilteredProjectsByName(keyword) {
+  const projects = getVisibleProjectsForCurrentUser();
+  const query = normalizeKeyword(keyword);
+
+  if (!query) {
+    return projects;
+  }
+
+  return projects.filter((project) => normalizeKeyword(project.projectName).includes(query));
+}
+
+function getVisibleProjectsForCurrentUser() {
+  const projects = getAll();
+  const currentUser = getCurrentUser();
+
+  if (!currentUser) {
+    return projects;
+  }
+
+  const role = String(currentUser.role || "").toUpperCase().trim();
+
+  if (role === "ADMIN") {
+    return projects;
+  }
+
+  const currentEmployeeCode = String(
+    currentUser.employeeCode || currentUser.MaNhanVien || currentUser.maNhanVien || "",
+  ).trim();
+
+  if (!currentEmployeeCode) {
+    return [];
+  }
+
+  const assignedProjectIds = new Set(
+    getAllProjectEmployees()
+      .filter((link) => String(link.employeeCode || "").trim() === currentEmployeeCode)
+      .map((link) => link.projectId),
+  );
+
+  return projects.filter((project) => assignedProjectIds.has(project.id));
+}
+
+function getCurrentUser() {
+  try {
+    const rawCurrentUser = localStorage.getItem(CURRENT_USER);
+
+    if (!rawCurrentUser) {
+      return null;
+    }
+
+    return JSON.parse(rawCurrentUser);
+  } catch {
+    return null;
+  }
 }
 
 function createProjectRow(project) {
@@ -228,7 +286,7 @@ function createProject(projectJson) {
     id: projectJson.id || `prj-${Date.now()}`,
     projectCode: projectJson.projectCode || nextProjectCode(projects),
     projectName: projectJson.projectName,
-    leadName: projectJson.leadName,
+    leadId: projectJson.leadId,
     memberCount: projectJson.memberCount,
     status: projectJson.status,
     createdAt: startDate,
@@ -312,13 +370,66 @@ function getProjectDetailFromQuery(search = window.location.search) {
 function normalizeProjectRecord(project) {
   const createdAt = project.createdAt || new Date().toISOString();
   const endDate = project.endDate || addDays(createdAt, 30);
+  const matchedLead = findLeadEmployee(project.leadId, project.leadName);
+  const normalizedLeadId = String(matchedLead?.MaNhanVien || project.leadId || "").trim();
+  const normalizedLeadName = String(matchedLead?.HoTen || project.leadName || "").trim();
 
   return {
     ...project,
+    leadId: normalizedLeadId,
+    leadName: normalizedLeadName,
     createdAt,
     endDate,
     progress: calculateProjectProgress(createdAt, endDate),
   };
+}
+
+function toStoredProjectRecord(project) {
+  const normalized = normalizeProjectRecord(project);
+
+  return {
+    id: normalized.id,
+    projectCode: normalized.projectCode,
+    projectName: normalized.projectName,
+    leadId: normalized.leadId,
+    memberCount: normalized.memberCount,
+    status: normalized.status,
+    createdAt: normalized.createdAt,
+    endDate: normalized.endDate,
+    updatedAt: normalized.updatedAt,
+  };
+}
+
+function findLeadEmployee(leadId, leadName) {
+  const normalizedLeadId = String(leadId || "").trim();
+
+  if (normalizedLeadId) {
+    const byId = employees.find(
+      (employee) => String(employee.MaNhanVien || "").trim() === normalizedLeadId,
+    );
+
+    if (byId) {
+      return byId;
+    }
+  }
+
+  const normalizedLeadName = normalizeKeyword(leadName);
+
+  if (!normalizedLeadName) {
+    return null;
+  }
+
+  return (
+    employees.find((employee) => normalizeKeyword(employee.HoTen) === normalizedLeadName) || null
+  );
+}
+
+function normalizeKeyword(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .trim();
 }
 
 function calculateProjectProgress(startDateValue, endDateValue, currentDateValue = new Date()) {

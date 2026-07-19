@@ -18,12 +18,38 @@ function initializeProjectPage() {
   renderProjects();
   applyCreateProjectPermission();
   bindLeadNameAutocomplete();
+  bindProjectSearch();
 
   const projectForm = document.getElementById("project-form");
 
   if (projectForm) {
     projectForm.addEventListener("submit", handleCreateProject);
   }
+}
+
+function bindProjectSearch() {
+  const searchInput = document.getElementById("input-group-1");
+  const searchButton = document.getElementById("project-search-btn");
+
+  if (!searchInput || !searchButton) {
+    return;
+  }
+
+  const runSearch = () => {
+    const keyword = String(searchInput.value || "").trim();
+    renderProjects(keyword);
+  };
+
+  searchButton.addEventListener("click", runSearch);
+
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter") {
+      return;
+    }
+
+    event.preventDefault();
+    runSearch();
+  });
 }
 
 function handleCreateProject(event) {
@@ -60,7 +86,6 @@ function handleCreateProject(event) {
 
   if (
     !projectName ||
-    !leadName ||
     !memberCountValue ||
     !projectStatus ||
     Number.isNaN(memberCount) ||
@@ -86,7 +111,7 @@ function handleCreateProject(event) {
 
   const createdProject = createNewProject({
     projectName,
-    leadName,
+    leadId: leadCode,
     memberCount,
     status: projectStatus,
   });
@@ -95,7 +120,9 @@ function handleCreateProject(event) {
     upsertProjectEmployee(createdProject.id, leadCode, "Project Manager");
   }
 
-  renderProjects();
+  const searchInput = document.getElementById("input-group-1");
+  const activeKeyword = String(searchInput?.value || "").trim();
+  renderProjects(activeKeyword);
   event.currentTarget.reset();
   leadCodeInput.value = "";
   hideLeadNameSuggestions();

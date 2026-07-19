@@ -2,6 +2,12 @@
 import { getAuthorContext, applyRoleGuards } from "./common/author.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+  const basePath = document.body.dataset.basePath || "";
+
+  if (!ensureAuthenticated(basePath)) {
+    return;
+  }
+
   const authorContext = getAuthorContext();
   const sidebarHost = document.querySelector("[data-layout='sidebar']");
   applyRoleGuards(document, authorContext);
@@ -9,8 +15,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!sidebarHost) {
     return;
   }
-
-  const basePath = document.body.dataset.basePath || "";
 
   try {
     const response = await fetch(`${basePath}pages/components/sidebar.html`, {
@@ -52,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (btnLogout) {
     btnLogout.addEventListener("click", function () {
       clearCurrentUser();
-      window.location.href = "../../sigin.html";
+      window.location.href = `${basePath}pages/signin.html`;
     });
   }
 
@@ -63,6 +67,44 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 document.addEventListener("click", () => {});
+
+function ensureAuthenticated(basePath) {
+  const currentUser = getCurrentUser();
+
+  if (currentUser) {
+    return true;
+  }
+
+  renderBlankPage();
+
+  const signinPath = `${basePath}pages/signin.html`;
+
+  // Wait for paint so the native alert appears over a blank page.
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      alert("Vui lòng đăng nhập.");
+      window.location.replace(signinPath);
+    });
+  });
+
+  return false;
+}
+
+function renderBlankPage() {
+  const body = document.body;
+  const html = document.documentElement;
+
+  if (body) {
+    body.innerHTML = "";
+    body.style.background = "#ffffff";
+    body.style.margin = "0";
+    body.style.minHeight = "100vh";
+  }
+
+  if (html) {
+    html.style.background = "#ffffff";
+  }
+}
 
 function resolveSidebarPaths(root, basePath) {
   root.querySelectorAll("[data-href]").forEach((link) => {

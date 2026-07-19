@@ -112,6 +112,11 @@ document.getElementById("login-form").addEventListener("submit", async function(
         saveCurrentUser(foundUser);
         // Chuyển hướng đến trang chính hoặc trang dashboard
         window.location.href = "../pages/accountdashboard/accountdashboard.html";
+         btn.disabled = true; // Tắt submit sau khi xử lý xong
+    }else{
+        showError("account", "Tài khoản hoặc mật khẩu không chính xác");
+         btn.disabled = false; // Kích hoạt lại nút submit sau khi xử lý xong
     }
+   
 
 });

@@ -20,6 +20,7 @@ import { employees } from "../../database/employeedata.js";
 import {
   addProjectEmployee,
   getProjectEmployeeDetails,
+  findProjectEmployeesByProjectId,
   removeProjectEmployee,
   upsertProjectEmployee,
 } from "../../database/project-employees.js";
@@ -36,7 +37,12 @@ function initializeProjectDetailPage() {
   const projectDetail = getProjectDetailFromQuery(window.location.search);
 
   if (!projectDetail) {
-    renderProjectNotFound();
+    showUnauthorizedProjectAlertAndRedirect();
+    return;
+  }
+
+  if (!canAccessProjectDetail(projectDetail.id)) {
+    showUnauthorizedProjectAlertAndRedirect();
     return;
   }
 
@@ -705,13 +711,12 @@ function bindEditProjectModal() {
     }
 
     const projectName = String(document.getElementById("editProjectNameInput")?.value || "").trim();
-    const leadName = String(document.getElementById("editLeadNameInput")?.value || "").trim();
     const leadCode = String(document.getElementById("editLeadCodeInput")?.value || "").trim();
     const createdAtDate = String(document.getElementById("editCreatedAtInput")?.value || "").trim();
     const endDateValue = String(document.getElementById("editEndDateInput")?.value || "").trim();
     const status = String(document.getElementById("editStatusInput")?.value || "Đang tiến hành").trim();
 
-    if (!projectName || !leadName || !createdAtDate || !endDateValue) {
+    if (!projectName || !createdAtDate || !endDateValue) {
       alert("Vui long nhap day du thong tin hop le.");
       return;
     }
@@ -738,7 +743,7 @@ function bindEditProjectModal() {
 
     const updatedProject = updateProjectById(currentProjectDetail.id, {
       projectName,
-      leadName,
+      leadId: leadCode,
       createdAt,
       endDate,
       status,
@@ -777,13 +782,13 @@ function fillEditProjectForm(project) {
     return;
   }
 
-  const matchedLead = employees.find(
-    (employee) => normalizeKeyword(employee.HoTen) === normalizeKeyword(project.leadName),
-  );
+  const matchedLead =
+    employees.find((employee) => employee.MaNhanVien === project.leadId) ||
+    employees.find((employee) => normalizeKeyword(employee.HoTen) === normalizeKeyword(project.leadName));
 
   nameInput.value = project.projectName || "";
-  leadInput.value = project.leadName || "";
-  leadCodeInput.value = matchedLead?.MaNhanVien || "";
+  leadInput.value = matchedLead?.HoTen || project.leadName || "";
+  leadCodeInput.value = project.leadId || matchedLead?.MaNhanVien || "";
   createdAtInput.value = formatDateForInput(project.createdAt);
   endDateInput.value = formatDateForInput(project.endDate);
   progressPreviewInput.value = `${normalizeProgress(project.progress)}%`;
@@ -1639,6 +1644,44 @@ function canManageProjectDetail() {
   return getCurrentUserRoleUpper() === "ADMIN";
 }
 
+function canAccessProjectDetail(projectId) {
+  if (!projectId) {
+    return false;
+  }
+
+  if (canManageProjectDetail()) {
+    return true;
+  }
+
+  const currentEmployeeCode = getCurrentUserEmployeeCode();
+
+  if (!currentEmployeeCode) {
+    return false;
+  }
+
+  return findProjectEmployeesByProjectId(projectId).some(
+    (item) => String(item.employeeCode || "").trim() === currentEmployeeCode,
+  );
+}
+
+function getCurrentUserEmployeeCode() {
+  try {
+    const rawCurrentUser = localStorage.getItem(CURRENT_USER);
+
+    if (!rawCurrentUser) {
+      return "";
+    }
+
+    const currentUser = JSON.parse(rawCurrentUser);
+
+    return String(
+      currentUser?.employeeCode || currentUser?.MaNhanVien || currentUser?.maNhanVien || "",
+    ).trim();
+  } catch {
+    return "";
+  }
+}
+
 function getCurrentUserRoleUpper() {
   try {
     const rawCurrentUser = localStorage.getItem(CURRENT_USER);
@@ -1662,5 +1705,32 @@ function applyProjectDetailPermission() {
   document.querySelectorAll("button").forEach((button) => {
     button.classList.add("hidden");
     button.setAttribute("aria-hidden", "true");
+  });
+}
+
+function showUnauthorizedProjectAlertAndRedirect() {
+  const body = document.body;
+  const html = document.documentElement;
+  const redirectPath = "../accountdashboard/accountdashboard.html";
+
+  if (body) {
+    body.innerHTML = "";
+    body.style.background = "#ffffff";
+    body.style.margin = "0";
+    body.style.minHeight = "100vh";
+  }
+
+  if (html) {
+    html.style.background = "#ffffff";
+  }
+
+  const showAlertThenRedirect = () => {
+    alert("Bạn không phải là nhân viên thuộc dự án này.");
+    window.location.replace(redirectPath);
+  };
+
+  // Let the browser paint the blank body before showing native alert.
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(showAlertThenRedirect);
   });
 }

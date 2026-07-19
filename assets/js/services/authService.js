@@ -1,11 +1,16 @@
 ﻿import { getAll, findUserSignin } from "../../../database/user.js";
 import { CURRENT_USER } from "../common/storageKeys.js";
+import { findEmployeeByMaNV } from "../../../database/employeedata.js";
 
 function saveCurrentUser(user) {
+  const employeeCode = String(user?.MaNhanVien || user?.employeeCode || "").trim();
+  const employee = employeeCode ? findEmployeeByMaNV(employeeCode) : null;
   const data = {
+    id: user?.id || "",
     account: user.account,
-    fullName: user.profile.fullName,
-    role: (user.role || "EMPLOYEE").toLowerCase()
+    fullName: employee ? employee.HoTen: "",
+    role: (user.role || "EMPLOYEE").toLowerCase(),
+    maNhanVien: employeeCode
   };
   localStorage.setItem(CURRENT_USER, JSON.stringify(data));
 }

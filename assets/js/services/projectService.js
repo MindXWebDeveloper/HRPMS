@@ -7,7 +7,7 @@
 function createNewProject(values) {
   return createProject({
     projectName: values.projectName,
-    leadName: values.leadName,
+    leadId: values.leadId,
     memberCount: values.memberCount,
     status: values.status,
     createdAt: values.createdAt,
