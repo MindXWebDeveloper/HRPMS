@@ -10,7 +10,7 @@ function saveCurrentUser(user) {
     account: user.account,
     fullName: employee ? employee.HoTen: "",
     role: (user.role || "EMPLOYEE").toLowerCase(),
-    maNhanVien: employeeCode
+    MaNhanVien: employeeCode
   };
   localStorage.setItem(CURRENT_USER, JSON.stringify(data));
 }
