@@ -2,11 +2,19 @@
    initUsers
 } from "../../database/user.js";
 import {
+   getCurrentUser,
    saveCurrentUser,
    signinUser
 } from "./services/authService.js";
 
 document.addEventListener("DOMContentLoaded", function() {
+    const currentUser = getCurrentUser();
+
+    if (currentUser) {
+        window.location.replace("./accountdashboard/accountdashboard.html");
+        return;
+    }
+
     initUsers();
 });
 // async function login(){

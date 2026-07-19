@@ -28,40 +28,49 @@
         <div class="mx-8 my-2 font-bold text-xl row-span-2">Danh sách tài khoản</div>
 
         <div class="p-4 flex items-center justify-between space-x-4 row-span-2">
-          <label for="input-group-1" class="sr-only">Search</label>
-          <div class="relative">
-            <div
-              class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-            >
-              <svg
-                class="w-4 h-4 text-body"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
+          <label for="account-search-input" class="sr-only">Search</label>
+          <div class="flex items-center gap-2">
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
               >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-width="2"
-                  d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-                />
-              </svg>
+                <svg
+                  class="w-4 h-4 text-body"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="account-search-input"
+                class="block w-full max-w-96 ps-9 pe-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                placeholder="Tìm theo họ và tên"
+              />
             </div>
-            <input
-              type="text"
-              id="input-group-1"
-              class="block w-full max-w-96 ps-9 pe-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
-              placeholder="Search"
-            />
+
+            <button
+              id="account-search-btn"
+              type="button"
+              class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Search
+            </button>
           </div>
 
           <!-- Thêm tài khoản -->
-          <a href="../accountregister/AccountRegister.html"> <button
-            data-modal-target="add-account"
-            data-modal-toggle="add-account"
+          <button
+            id="open-add-account-modal-btn"
             class="flex items-center text-white bg-blue-500 rounded-md text-[14px] sm:text-sm text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
             type="button"
           >
@@ -83,7 +92,7 @@
               />
             </svg>
             Thêm tài khoản
-          </button></a>
+          </button>
          
         </div>
         <div
@@ -102,166 +111,115 @@
                 <th scope="col" class="px-6 py-3">Thao tác</th>
               </tr>
             </thead>
-            <tbody id="accountTableBody">
-              <tr
-                class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium"
-              >
-                <td
-                  scope="row"
-                  class="px-6 py-4 font-medium text-heading whitespace-nowrap"
-                >
-                  EMP001
-                </td>
-                <td class="px-6 py-4">Lương Văn Thanh</td>
-                <td class="px-6 py-4">thanh@example.com</td>
-                <td class="px-6 py-4">Nhân viên</td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center">                               
-                    Hoạt động
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex">
-                    <div class="relative group" data-role="admin">
-                      <a href="../accountedit/AccountEdit.html" class="text-blue-500">
-                        <svg
-                          class="w-6 h-6 text-gray-800 dark:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                          />
-                        </svg>
-                      </a>
-
-                      <div
-                        class="absolute left-1/2 -translate-x-1/2 mt-2 hidden group-hover:block rounded bg-gray-800 px-2 py-1 text-sm text-white whitespace-nowrap"
-                      >
-                        Edit
-                      </div>
-                    </div>
-
-                    <div class="relative group">
-                      <a href="../accountedit/accountview.html" class="text-blue-500">
-                        <svg
-                          class="w-6 h-6 text-gray-800 dark:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 9h3m-3 3h3m-3 3h3m-6 1c-.306-.613-.933-1-1.618-1H7.618c-.685 0-1.312.387-1.618 1M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
-                          />
-                        </svg>
-                      </a>
-
-                      <div
-                        class="absolute left-1/2 -translate-x-1/2 mt-2 hidden group-hover:block rounded bg-gray-800 px-2 py-1 text-sm text-white whitespace-nowrap"
-                      >
-                        View
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr
-                class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium"
-              >
-                <td
-                  scope="row"
-                  class="px-6 py-4 font-medium text-heading whitespace-nowrap"
-                >
-                  ADM002
-                </td>
-                <td class="px-6 py-4">Nguyễn Hữu Linh</td>
-                <td class="px-6 py-4">linh@example.com</td>
-                <td class="px-6 py-4">Admin</td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center">
-                    <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
-                    Ngưng hoạt động
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex">
-                    <div class="relative group" data-role="admin">
-                      <a href="../accountedit/AccountEdit.html" class="text-blue-500">
-                        <svg
-                          class="w-6 h-6 text-gray-800 dark:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                          />
-                        </svg>
-                      </a>
-
-                      <div
-                        class="absolute left-1/2 -translate-x-1/2 mt-2 hidden group-hover:block rounded bg-gray-800 px-2 py-1 text-sm text-white whitespace-nowrap"
-                      >
-                        Edit
-                      </div>
-                    </div>
-
-                    <div class="relative group">
-                      <a href="../accountedit/AccountEdit.html" class="text-blue-500">
-                        <svg
-                          class="w-6 h-6 text-gray-800 dark:text-white"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M15 9h3m-3 3h3m-3 3h3m-6 1c-.306-.613-.933-1-1.618-1H7.618c-.685 0-1.312.387-1.618 1M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
-                          />
-                        </svg>
-                      </a>
-
-                      <div
-                        class="absolute left-1/2 -translate-x-1/2 mt-2 hidden group-hover:block rounded bg-gray-800 px-2 py-1 text-sm text-white whitespace-nowrap"
-                      >
-                        View
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="accountTableBody"></tbody>
           </table>
 
         </div>
+
+        <div id="add-account-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+          <div class="w-full max-w-lg rounded-xl bg-white shadow-xl">
+            <div class="flex items-center justify-between border-b px-5 py-4">
+              <h3 class="text-lg font-semibold">Thêm tài khoản</h3>
+              <button id="close-add-account-modal-btn" type="button" class="rounded-md p-1 text-gray-500 hover:bg-gray-100">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                  <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <form id="add-account-form" class="space-y-4 px-5 py-4">
+              <div>
+                <label for="new-account-full-name" class="mb-1 block text-sm font-medium text-gray-700">Họ và tên</label>
+                <input id="new-account-full-name" type="text" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập họ và tên" required />
+              </div>
+
+              <div>
+                <label for="new-account-email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                <input id="new-account-email" type="email" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập email" required />
+              </div>
+
+              <div>
+                <label for="new-account-role" class="mb-1 block text-sm font-medium text-gray-700">Vai trò</label>
+                <select id="new-account-role" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" required>
+                  <option value="employee">Nhân viên</option>
+                  <option value="hr_manager">Quản lý nhân sự</option>
+                  <option value="project_manager">Quản lý dự án</option>
+                </select>
+              </div>
+
+              <p class="text-xs text-gray-500">Tên tài khoản và mã nhân viên sẽ được tự động sinh khi bấm Lưu.</p>
+
+              <div class="flex justify-end gap-3 border-t pt-4">
+                <button id="cancel-add-account-btn" type="button" class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Hủy</button>
+                <button type="submit" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Lưu</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="edit-account-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+          <div class="w-full max-w-lg rounded-xl bg-white shadow-xl">
+            <div class="flex items-center justify-between border-b px-5 py-4">
+              <h3 class="text-lg font-semibold">Chỉnh sửa tài khoản</h3>
+              <button id="close-edit-account-modal-btn" type="button" class="rounded-md p-1 text-gray-500 hover:bg-gray-100">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                  <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <form id="edit-account-form" class="space-y-4 px-5 py-4">
+              <input id="edit-account-id" type="hidden" />
+
+              <div>
+                <label for="edit-account-name" class="mb-1 block text-sm font-medium text-gray-700">Tên tài khoản</label>
+                <input id="edit-account-name" type="text" class="w-full rounded-lg border border-gray-300 px-3 py-2 bg-gray-100 text-gray-700" readonly />
+              </div>
+
+              <div>
+                <label for="edit-account-full-name" class="mb-1 block text-sm font-medium text-gray-700">Họ và tên</label>
+                <input id="edit-account-full-name" type="text" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập họ và tên" required />
+                <p id="edit-account-full-name-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                <input id="edit-account-email" type="email" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập email" required />
+                <p id="edit-account-email-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-role" class="mb-1 block text-sm font-medium text-gray-700">Vai trò</label>
+                <select id="edit-account-role" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" required>
+                  <option value="employee">Nhân viên</option>
+                  <option value="hr_manager">Quản lý nhân sự</option>
+                  <option value="project_manager">Quản lý dự án</option>
+                </select>
+                <p id="edit-account-role-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-password" class="mb-1 block text-sm font-medium text-gray-700">Mật khẩu</label>
+                <input id="edit-account-password" type="password" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập mật khẩu mới" required />
+                <p id="edit-account-password-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-confirm-password" class="mb-1 block text-sm font-medium text-gray-700">Xác nhận mật khẩu</label>
+                <input id="edit-account-confirm-password" type="password" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập lại mật khẩu" required />
+                <p id="edit-account-confirm-password-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <p class="text-xs text-gray-500">Mật khẩu tối thiểu 12 ký tự, có ít nhất 1 chữ in hoa, 1 số, 1 ký tự đặc biệt và không chứa khoảng trắng.</p>
+
+              <div class="flex justify-end gap-3 border-t pt-4">
+                <button id="cancel-edit-account-btn" type="button" class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Hủy</button>
+                <button type="submit" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Lưu</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
                   <nav
             class="flex items-center flex-column flex-wrap md:flex-row justify-between p-4"
             aria-label="Table navigation"

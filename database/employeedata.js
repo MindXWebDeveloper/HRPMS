@@ -172,7 +172,25 @@ function getAllEmployees() {
 }
 
 function findEmployeeByMaNV(maNhanVien) { 
-    return employees.find(emp => emp.MaNhanVien === maNhanVien);
+    const employeeCode = String(maNhanVien || "").trim();
+
+    if (!employeeCode) {
+        return null;
+    }
+
+    const storedEmployees = getAllEmployees();
+
+    if (Array.isArray(storedEmployees) && storedEmployees.length > 0) {
+        const foundInStorage = storedEmployees.find(
+            emp => String(emp?.MaNhanVien || "").trim() === employeeCode
+        );
+
+        if (foundInStorage) {
+            return foundInStorage;
+        }
+    }
+
+    return employees.find(emp => String(emp?.MaNhanVien || "").trim() === employeeCode) || null;
 }
 
 function updateEmployee(updatedEmployee){

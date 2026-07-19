@@ -50,11 +50,15 @@ function initializeProjectDetailPage() {
   bindProjectDetail(projectDetail);
   const canEdit = canEditProjectDetail();
   const canManageEmployees = canManageProjectEmployees();
+  const canViewTask = canViewProjectTask();
 
   if (canEdit) {
     bindEditProjectModal();
     bindCreatePhaseModal();
     bindCreateTaskModal();
+  }
+
+  if (canViewTask) {
     bindViewTaskModal();
   }
 
@@ -1462,7 +1466,7 @@ function renderProjectPhases(projectDetail) {
   }
 
   const phases = findProjectPhasesByProjectId(projectDetail.id);
-  const canManage = canEditProjectDetail();
+  const canViewTask = canViewProjectTask();
 
   if (phases.length === 0) {
     phaseListElement.innerHTML = `
@@ -1473,21 +1477,54 @@ function renderProjectPhases(projectDetail) {
     return;
   }
 
-  const tasks = Array.isArray(projectDetail.tasks) ? projectDetail.tasks : [];
+  const allTasks = Array.isArray(projectDetail.tasks) ? projectDetail.tasks : [];
+  const tasks = getVisibleTasksByRole(allTasks);
 
   phaseListElement.innerHTML = phases
     .map((phase, index) => {
       const phaseTasks = tasks.filter((task) => task.phaseId === phase.id);
-      return createPhaseCard(phase, phaseTasks, index + 1, canManage);
+      return createPhaseCard(phase, phaseTasks, index + 1, canViewTask);
     })
     .join("");
 
-  if (canManage) {
+  if (canViewTask) {
     bindTaskViewButtons();
   }
 }
 
-function createPhaseCard(phase, tasks, orderNumber, canManage) {
+function getVisibleTasksByRole(tasks) {
+  if (!Array.isArray(tasks)) {
+    return [];
+  }
+
+  if (getCurrentUserRoleLower() !== "employee") {
+    return tasks;
+  }
+
+  const currentEmployeeCode = getCurrentUserEmployeeCode();
+
+  if (!currentEmployeeCode) {
+    return [];
+  }
+
+  const currentEmployee = employees.find(
+    (employee) => String(employee.MaNhanVien || "").trim() === currentEmployeeCode,
+  );
+  const currentEmployeeName = normalizeKeyword(currentEmployee?.HoTen || "");
+
+  return tasks.filter((task) => {
+    const assigneeCode = String(task?.assigneeCode || "").trim();
+
+    if (assigneeCode) {
+      return assigneeCode === currentEmployeeCode;
+    }
+
+    const assigneeName = normalizeKeyword(task?.assigneeName || "");
+    return Boolean(currentEmployeeName) && assigneeName === currentEmployeeName;
+  });
+}
+
+function createPhaseCard(phase, tasks, orderNumber, canViewTask) {
   const progress = calculatePhaseProgress(tasks);
   const totalTasks = tasks.length;
   const colorClasses = getPhaseColorClasses(phase.color);
@@ -1522,7 +1559,7 @@ function createPhaseCard(phase, tasks, orderNumber, canManage) {
                 </span>
               </td>
               <td class="text-center">${
-                canManage
+                canViewTask
                   ? `<button
                   type="button"
                   class="rounded-md border border-blue-200 px-3 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50"
@@ -1646,6 +1683,11 @@ function escapeHtml(value) {
 
 function canEditProjectDetail() {
   return getCurrentUserRoleLower() === "project_manager";
+}
+
+function canViewProjectTask() {
+  const role = getCurrentUserRoleLower();
+  return role === "employee" || role === "project_manager" || role === "hr_manager";
 }
 
 function canManageProjectEmployees() {
