@@ -149,7 +149,7 @@
                         required
                       />
                     </div>
-                    <div>
+                    <div class="relative">
                       <label
                         for="leadName"
                         class="block mb-2.5 text-sm font-medium text-heading"
@@ -162,6 +162,11 @@
                         placeholder="Tên quản lý"
                         required
                       />
+                      <input id="leadCode" type="hidden" />
+                      <div
+                        id="lead-name-suggest-list"
+                        class="absolute z-10 mt-1 hidden max-h-56 w-full overflow-auto rounded-lg border bg-white shadow"
+                      ></div>
                     </div>
                     <div>
                       <label

@@ -1,4 +1,8 @@
 ﻿import { PROJECTS } from "../assets/js/common/storageKeys.js";
+import { initTasks } from "./task.js";
+import { initProjectTasks, getTasksByProjectId } from "./projet_task.js";
+import { initProjectPhases } from "./project_phase.js";
+import { initProjectEmployees } from "./project-employees.js";
 
 const DEFAULT_PROJECTS = [
   {
@@ -7,9 +11,9 @@ const DEFAULT_PROJECTS = [
     projectName: "HRPMS",
     leadName: "Trần Văn Nghĩa",
     memberCount: 5,
-    progress: 100,
     status: "Hoàn thành",
     createdAt: "2026-07-10T09:00:00",
+    endDate: "2026-08-10T09:00:00",
     updatedAt: "2026-07-10T09:00:00",
   },
   {
@@ -18,33 +22,41 @@ const DEFAULT_PROJECTS = [
     projectName: "Mobile App",
     leadName: "Lê Thị Hồng",
     memberCount: 5,
-    progress: 70,
     status: "Tạm dừng",
     createdAt: "2026-07-10T09:00:00",
+    endDate: "2026-08-25T09:00:00",
     updatedAt: "2026-07-10T09:00:00",
   },
 ];
 
 function initProjects() {
+  initTasks();
+  initProjectTasks();
+  initProjectPhases();
+  initProjectEmployees();
+
   const storedProjects = getAll();
 
   if (storedProjects.length === 0) {
     saveProjects(DEFAULT_PROJECTS);
+    return;
   }
+
+  saveProjects(storedProjects);
 }
 
 function getAll() {
   try {
     const storedProjects = JSON.parse(localStorage.getItem(PROJECTS));
 
-    return Array.isArray(storedProjects) ? storedProjects : [];
+    return Array.isArray(storedProjects) ? storedProjects.map(normalizeProjectRecord) : [];
   } catch {
     return [];
   }
 }
 
 function saveProjects(projects) {
-  localStorage.setItem(PROJECTS, JSON.stringify(projects));
+  localStorage.setItem(PROJECTS, JSON.stringify(projects.map(normalizeProjectRecord)));
 }
 
 function insertProject(project) {
@@ -110,7 +122,7 @@ function createProjectRow(project) {
   row.appendChild(createCell(String(project.memberCount ?? 0), "px-6 py-4"));
   row.appendChild(createCell(`${project.progress ?? 0}%`, "px-6 py-4"));
   row.appendChild(createStatusCell(project.status));
-  row.appendChild(createActionCell());
+  row.appendChild(createActionCell(project));
 
   return row;
 }
@@ -147,25 +159,20 @@ function createStatusCell(status) {
   return cell;
 }
 
-function createActionCell() {
+function createActionCell(project) {
   const cell = document.createElement("td");
   cell.className = "px-6 py-4";
 
   const actions = document.createElement("div");
   actions.className = "flex";
+  const projectIdParam = encodeURIComponent(project?.id || "");
+  const detailHref = `./project-detail.html?projectId=${projectIdParam}`;
 
   actions.appendChild(
     createActionLink(
       "Edit",
-      "./project-detail.html",
+      detailHref,
       "m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z",
-    ),
-  );
-  actions.appendChild(
-    createActionLink(
-      "View",
-      "./project-detail.html",
-      "M15 9h3m-3 3h3m-3 3h3m-6 1c-.306-.613-.933-1-1.618-1H7.618c-.685 0-1.312.387-1.618 1M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z",
     ),
   );
 
@@ -214,24 +221,150 @@ function getStatusDotClass(status) {
 function createProject(projectJson) {
   const projects = getAll();
   const now = new Date().toISOString();
+  const startDate = projectJson.createdAt || now;
+  const endDate = projectJson.endDate || addDays(startDate, 30);
 
-  const newProject = {
+  const newProject = normalizeProjectRecord({
     id: projectJson.id || `prj-${Date.now()}`,
     projectCode: projectJson.projectCode || nextProjectCode(projects),
     projectName: projectJson.projectName,
     leadName: projectJson.leadName,
     memberCount: projectJson.memberCount,
-    progress: projectJson.progress ?? 0,
     status: projectJson.status,
-    createdAt: projectJson.createdAt || now,
+    createdAt: startDate,
+    endDate,
     updatedAt: projectJson.updatedAt || now,
-  };
+  });
 
   insertProject(newProject);
   return newProject;
 }
 
+function updateProjectById(projectId, updatedData) {
+  const projects = getAll();
+  const projectIndex = projects.findIndex((project) => project.id === projectId);
+
+  if (projectIndex === -1) {
+    return null;
+  }
+
+  const currentProject = projects[projectIndex];
+
+  const updatedProject = normalizeProjectRecord({
+    ...currentProject,
+    ...updatedData,
+    updatedAt: new Date().toISOString(),
+  });
+
+  projects[projectIndex] = updatedProject;
+  saveProjects(projects);
+
+  return updatedProject;
+}
+
+function findProjectById(projectId) {
+  return getAll().find((project) => project.id === projectId) || null;
+}
+
+function findProjectByCode(projectCode) {
+  const normalizedProjectCode = String(projectCode || "").trim().toLowerCase();
+
+  if (!normalizedProjectCode) {
+    return null;
+  }
+
+  return (
+    getAll().find(
+      (project) => String(project.projectCode || "").trim().toLowerCase() === normalizedProjectCode,
+    ) || null
+  );
+}
+
+function getProjectByReference(projectReference) {
+  if (!projectReference) {
+    return null;
+  }
+
+  return findProjectById(projectReference) || findProjectByCode(projectReference);
+}
+
+function getProjectDetail(projectReference) {
+  const project = getProjectByReference(projectReference);
+
+  if (!project) {
+    return null;
+  }
+
+  return {
+    ...project,
+    tasks: getTasksByProjectId(project.id),
+  };
+}
+
+function getProjectDetailFromQuery(search = window.location.search) {
+  const params = new URLSearchParams(search || "");
+  const projectId = params.get("projectId");
+  const projectCode = params.get("projectCode");
+
+  return getProjectDetail(projectId || projectCode);
+}
+
+function normalizeProjectRecord(project) {
+  const createdAt = project.createdAt || new Date().toISOString();
+  const endDate = project.endDate || addDays(createdAt, 30);
+
+  return {
+    ...project,
+    createdAt,
+    endDate,
+    progress: calculateProjectProgress(createdAt, endDate),
+  };
+}
+
+function calculateProjectProgress(startDateValue, endDateValue, currentDateValue = new Date()) {
+  const startDate = new Date(startDateValue);
+  const endDate = new Date(endDateValue);
+  const currentDate = new Date(currentDateValue);
+
+  if (
+    Number.isNaN(startDate.getTime()) ||
+    Number.isNaN(endDate.getTime()) ||
+    Number.isNaN(currentDate.getTime())
+  ) {
+    return 0;
+  }
+
+  const totalDuration = endDate.getTime() - startDate.getTime();
+
+  if (totalDuration <= 0) {
+    return currentDate.getTime() >= endDate.getTime() ? 100 : 0;
+  }
+
+  if (currentDate.getTime() <= startDate.getTime()) {
+    return 0;
+  }
+
+  if (currentDate.getTime() >= endDate.getTime()) {
+    return 100;
+  }
+
+  const elapsedDuration = currentDate.getTime() - startDate.getTime();
+  return Math.round((elapsedDuration / totalDuration) * 100);
+}
+
+function addDays(dateValue, days) {
+  const date = new Date(dateValue);
+
+  if (Number.isNaN(date.getTime())) {
+    return new Date().toISOString();
+  }
+
+  date.setDate(date.getDate() + days);
+  return date.toISOString();
+}
+
 export {
+  calculateProjectProgress,
   initProjects,
   getAll,
   saveProjects,
@@ -239,6 +372,12 @@ export {
   nextProjectCode,
   renderProjects,
   createProject,
+  updateProjectById,
+  findProjectById,
+  findProjectByCode,
+  getProjectByReference,
+  getProjectDetail,
+  getProjectDetailFromQuery,
   getStatusDotClass,
   DEFAULT_PROJECTS,
 };

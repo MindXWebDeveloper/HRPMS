@@ -10,7 +10,8 @@ function createNewProject(values) {
     leadName: values.leadName,
     memberCount: values.memberCount,
     status: values.status,
-    progress: values.progress ?? 0,
+    createdAt: values.createdAt,
+    endDate: values.endDate,
   });
 }
 

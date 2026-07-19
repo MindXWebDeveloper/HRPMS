@@ -141,3 +141,5 @@ const employees = [
 }
 
 ];
+
+export { employees };
