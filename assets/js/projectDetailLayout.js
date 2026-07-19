@@ -77,14 +77,14 @@ function bindProjectDetail(project) {
   setTextById("detail-project-name", project.projectName || "Chi tiet du an");
   setTextById(
     "detail-project-description",
-    `Ma du an ${project.projectCode || "N/A"}. Quan ly: ${project.leadName || "N/A"}.`,
+    `Mã dự án ${project.projectCode || "N/A"}. Tên quản lý: ${project.leadName || "N/A"}.`,
   );
   setTextById("detail-project-code", project.projectCode || "N/A");
   setTextById("detail-project-manager", project.leadName || "N/A");
   setTextById("detail-project-start-date", formatDate(project.createdAt));
   setTextById("detail-project-end-date", formatDate(project.endDate));
   setTextById("detail-project-progress-value", `${normalizeProgress(project.progress)}%`);
-  setTextById("detail-project-status-inline", `● ${project.status || "Dang tien hanh"}`);
+  setTextById("detail-project-status-inline", `● ${project.status || "Đang tiến hành"}`);
 
   updateStatusPill(project.status);
   updateProgressBar(project.progress);
@@ -132,7 +132,7 @@ function updateMemberCount(memberCount) {
   const count = Number(memberCount);
   const safeCount = Number.isNaN(count) ? 0 : count;
 
-  titleElement.textContent = `Danh sach nhan vien (${safeCount})`;
+  titleElement.textContent = `Danh sách nhân viên (${safeCount})`;
 }
 
 function updateStatusPill(status) {
@@ -187,10 +187,10 @@ function formatDate(dateValue) {
 }
 
 function renderProjectNotFound() {
-  setTextById("detail-project-name", "Khong tim thay du an");
+  setTextById("detail-project-name", "Không tìm thấy dự án");
   setTextById(
     "detail-project-description",
-    "Khong co du lieu phu hop voi du an duoc chon. Vui long quay lai danh sach du an.",
+    "Không có dữ liệu phù hợp với dự án được chọn. Vui lòng quay lại danh sách dự án.",
   );
   setTextById("detail-project-code", "N/A");
   setTextById("detail-project-manager", "N/A");
@@ -261,7 +261,7 @@ function bindCreatePhaseModal() {
     const phaseColor = String(phaseColorInput?.value || "blue").trim();
 
     if (!phaseName) {
-      alert("Vui long nhap ten giai doan.");
+      alert("Vui lòng nhập tên giai đoạn.");
       return;
     }
 
@@ -381,14 +381,14 @@ function bindAddProjectEmployeeModal() {
     const role = String(roleInput.value || "").trim() || "Member";
 
     if (!employeeCode) {
-      alert("Vui long chon nhan vien tu goi y.");
+      alert("Vui lòng chọn nhân viên từ danh sách gợi ý.");
       return;
     }
 
     const createdLink = addProjectEmployee(currentProjectDetail.id, employeeCode, role);
 
     if (!createdLink) {
-      alert("Khong the them nhan vien. Co the nhan vien da ton tai trong du an.");
+      alert("Không thể thêm nhân viên. Có thể nhân viên đã tồn tại trong dự án.");
       return;
     }
 
@@ -423,7 +423,7 @@ function showEmployeeSuggestions(keyword) {
     .slice(0, 8);
 
   if (matchedEmployees.length === 0) {
-    suggestionBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Khong tim thay nhan vien phu hop.</div>`;
+    suggestionBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Không tìm thấy nhân viên phù hợp.</div>`;
     suggestionBox.classList.remove("hidden");
     return;
   }
@@ -499,7 +499,7 @@ function renderProjectEmployees(projectId, keyword = "") {
   if (filteredEmployees.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="3" class="px-2 py-6 text-center text-sm text-gray-500">Khong co nhan vien phu hop.</td>
+        <td colspan="3" class="px-2 py-6 text-center text-sm text-gray-500">Không có nhân viên phù hợp.</td>
       </tr>
     `;
     return;
@@ -725,19 +725,19 @@ function bindEditProjectModal() {
     const status = String(document.getElementById("editStatusInput")?.value || "Đang tiến hành").trim();
 
     if (!projectName || !createdAtDate || !endDateValue) {
-      alert("Vui long nhap day du thong tin hop le.");
+      alert("Vui lòng nhập đầy đủ thông tin hợp lệ.");
       return;
     }
 
     if (!leadCode) {
-      alert("Vui long chon quan ly du an tu danh sach nhan vien.");
+      alert("Vui lòng chọn quản lý dự án từ danh sách nhân viên.");
       return;
     }
 
     const leadIsValid = employees.some((employee) => employee.MaNhanVien === leadCode);
 
     if (!leadIsValid) {
-      alert("Quan ly du an khong hop le.");
+      alert("Quản lý dự án không hợp lệ. Vui lòng chọn từ danh sách nhân viên.");
       return;
     }
 
@@ -745,7 +745,7 @@ function bindEditProjectModal() {
     const endDate = new Date(`${endDateValue}T23:59:59`).toISOString();
 
     if (new Date(endDate).getTime() <= new Date(createdAt).getTime()) {
-      alert("Ngay ket thuc phai lon hon ngay bat dau.");
+      alert("Ngày kết thúc phải lớn hơn ngày bắt đầu.");
       return;
     }
 
@@ -758,7 +758,7 @@ function bindEditProjectModal() {
     });
 
     if (!updatedProject) {
-      alert("Khong cap nhat duoc du an.");
+      alert("Không cập nhật được dự án.");
       return;
     }
 
@@ -824,7 +824,7 @@ function showProjectManagerSuggestions(keyword) {
     .slice(0, 8);
 
   if (matchedEmployees.length === 0) {
-    suggestBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Khong tim thay nhan vien phu hop.</div>`;
+    suggestBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Không tìm thấy nhân viên phù hợp.</div>`;
     suggestBox.classList.remove("hidden");
     return;
   }
@@ -887,7 +887,7 @@ function updateEditProgressPreview() {
   const endDate = new Date(`${endDateInput.value}T23:59:59`);
 
   if (endDate.getTime() <= startDate.getTime()) {
-    progressPreviewInput.value = "Ngay khong hop le";
+    progressPreviewInput.value = "Ngày không hợp lệ";
     return;
   }
 
@@ -1006,12 +1006,12 @@ function bindCreateTaskModal() {
     const description = String(document.getElementById("taskDescriptionInput")?.value || "").trim();
 
     if (!title || !phaseId) {
-      alert("Vui long nhap ten task va chon giai doan.");
+      alert("Vui lòng nhập tên task và chọn giai đoạn.");
       return;
     }
 
     if (!assigneeCode || !assigneeName) {
-      alert("Vui long chon nguoi phu trach tu danh sach nhan vien cua du an.");
+      alert("Vui lòng chọn người phụ trách từ danh sách nhân viên của dự án.");
       return;
     }
 
@@ -1020,14 +1020,14 @@ function bindCreateTaskModal() {
     );
 
     if (!validAssignee) {
-      alert("Nguoi phu trach khong thuoc du an hien tai.");
+      alert("Người phụ trách không thuộc dự án hiện tại.");
       return;
     }
 
     const selectedPhase = findProjectPhaseById(phaseId);
 
     if (!selectedPhase || selectedPhase.projectId !== currentProjectDetail.id) {
-      alert("Giai doan khong hop le cho du an hien tai.");
+      alert("Giai đoạn không hợp lệ cho dự án hiện tại.");
       return;
     }
 
@@ -1077,7 +1077,7 @@ function showTaskAssigneeSuggestions(projectId, keyword) {
     .slice(0, 8);
 
   if (projectEmployees.length === 0) {
-    suggestBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Khong co nhan vien phu hop trong du an.</div>`;
+    suggestBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Không có nhân viên phù hợp trong dự án.</div>`;
     suggestBox.classList.remove("hidden");
     return;
   }
@@ -1197,12 +1197,12 @@ function bindViewTaskModal() {
     const description = String(document.getElementById("viewTaskDescriptionInput")?.value || "").trim();
 
     if (!taskId || !title || !phaseId) {
-      alert("Vui long nhap ten task va chon giai doan.");
+      alert("Vui lòng nhập tên task và chọn giai đoạn.");
       return;
     }
 
     if (!assigneeCode || !assigneeName) {
-      alert("Vui long chon nguoi phu trach tu danh sach nhan vien cua du an.");
+      alert("Vui lòng chọn người phụ trách từ danh sách nhân viên của dự án.");
       return;
     }
 
@@ -1211,14 +1211,14 @@ function bindViewTaskModal() {
     );
 
     if (!validAssignee) {
-      alert("Nguoi phu trach khong thuoc du an hien tai.");
+      alert("Người phụ trách không thuộc dự án hiện tại.");
       return;
     }
 
     const selectedPhase = findProjectPhaseById(phaseId);
 
     if (!selectedPhase || selectedPhase.projectId !== currentProjectDetail.id) {
-      alert("Giai doan khong hop le cho du an hien tai.");
+      alert("Giai đoạn không hợp lệ cho dự án hiện tại.");
       return;
     }
 
@@ -1233,7 +1233,7 @@ function bindViewTaskModal() {
     });
 
     if (!updatedTask) {
-      alert("Khong cap nhat duoc task.");
+      alert("Không cập nhật được task.");
       return;
     }
 
@@ -1331,7 +1331,7 @@ function fillEditableTaskPhaseOptions(projectId, selectedPhaseId) {
   const phases = findProjectPhasesByProjectId(projectId);
 
   if (phases.length === 0) {
-    phaseSelect.innerHTML = `<option value="">Chua co giai doan</option>`;
+    phaseSelect.innerHTML = `<option value="">Chưa có giai đoạn</option>`;
     return;
   }
 
@@ -1364,7 +1364,7 @@ function showEditableTaskAssigneeSuggestions(projectId, keyword) {
     .slice(0, 8);
 
   if (projectEmployees.length === 0) {
-    suggestBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Khong co nhan vien phu hop trong du an.</div>`;
+    suggestBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Không có nhân viên phù hợp trong dự án.</div>`;
     suggestBox.classList.remove("hidden");
     return;
   }
@@ -1433,7 +1433,7 @@ function fillTaskPhaseOptions(projectId) {
   const phases = findProjectPhasesByProjectId(projectId);
 
   if (phases.length === 0) {
-    phaseSelect.innerHTML = `<option value="">Chua co giai doan</option>`;
+    phaseSelect.innerHTML = `<option value="">Chưa có giai đoạn</option>`;
     return;
   }
 
@@ -1471,7 +1471,7 @@ function renderProjectPhases(projectDetail) {
   if (phases.length === 0) {
     phaseListElement.innerHTML = `
       <div class="rounded-xl border border-dashed border-gray-300 p-6 text-center text-gray-500">
-        Chua co giai doan. Bam "Tao giai doan" de them moi.
+        Chưa có giai đoạn. Bấm "Tạo giai đoạn" để thêm mới.
       </div>
     `;
     return;
@@ -1577,7 +1577,7 @@ function createPhaseCard(phase, tasks, orderNumber, canViewTask) {
       </table>
     `
     : `
-      <div class="px-5 py-6 text-sm text-gray-500">Giai doan nay chua co task.</div>
+      <div class="px-5 py-6 text-sm text-gray-500">Giai đoạn này chưa có task.</div>
     `;
 
   return `
@@ -1633,9 +1633,9 @@ function priorityLabel(priority) {
     case "high":
       return "Cao";
     case "low":
-      return "Thap";
+      return "Thấp";
     default:
-      return "Trung binh";
+      return "Trung bình";
   }
 }
 
