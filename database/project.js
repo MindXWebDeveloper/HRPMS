@@ -12,6 +12,7 @@ const DEFAULT_PROJECTS = [
     projectCode: "PRJ001",
     projectName: "HRPMS",
     leadId: "EMP001",
+    createdByEmployeeCode: "EMP001",
     memberCount: 5,
     status: "Hoàn thành",
     createdAt: "2026-07-10T09:00:00",
@@ -23,6 +24,7 @@ const DEFAULT_PROJECTS = [
     projectCode: "PRJ002",
     projectName: "Mobile App",
     leadId: "EMP002",
+    createdByEmployeeCode: "EMP002",
     memberCount: 5,
     status: "Tạm dừng",
     createdAt: "2026-07-10T09:00:00",
@@ -130,18 +132,22 @@ function getVisibleProjectsForCurrentUser() {
     return projects;
   }
 
-  const role = String(currentUser.role || "").toUpperCase().trim();
+  const role = getCurrentUserRoleLower(currentUser);
+  const currentEmployeeCode = getCurrentUserEmployeeCode(currentUser);
 
-  if (role === "ADMIN") {
+  if (role === "hr_manager") {
     return projects;
   }
 
-  const currentEmployeeCode = String(
-    currentUser.employeeCode || currentUser.MaNhanVien || currentUser.maNhanVien || "",
-  ).trim();
-
   if (!currentEmployeeCode) {
     return [];
+  }
+
+  if (role === "project_manager") {
+    return projects.filter((project) => {
+      const ownerCode = String(project.createdByEmployeeCode || project.leadId || "").trim();
+      return ownerCode === currentEmployeeCode;
+    });
   }
 
   const assignedProjectIds = new Set(
@@ -287,6 +293,7 @@ function createProject(projectJson) {
     projectCode: projectJson.projectCode || nextProjectCode(projects),
     projectName: projectJson.projectName,
     leadId: projectJson.leadId,
+    createdByEmployeeCode: projectJson.createdByEmployeeCode,
     memberCount: projectJson.memberCount,
     status: projectJson.status,
     createdAt: startDate,
@@ -373,11 +380,15 @@ function normalizeProjectRecord(project) {
   const matchedLead = findLeadEmployee(project.leadId, project.leadName);
   const normalizedLeadId = String(matchedLead?.MaNhanVien || project.leadId || "").trim();
   const normalizedLeadName = String(matchedLead?.HoTen || project.leadName || "").trim();
+  const createdByEmployeeCode = String(
+    project.createdByEmployeeCode || normalizedLeadId || "",
+  ).trim();
 
   return {
     ...project,
     leadId: normalizedLeadId,
     leadName: normalizedLeadName,
+    createdByEmployeeCode,
     createdAt,
     endDate,
     progress: calculateProjectProgress(createdAt, endDate),
@@ -392,6 +403,7 @@ function toStoredProjectRecord(project) {
     projectCode: normalized.projectCode,
     projectName: normalized.projectName,
     leadId: normalized.leadId,
+    createdByEmployeeCode: normalized.createdByEmployeeCode,
     memberCount: normalized.memberCount,
     status: normalized.status,
     createdAt: normalized.createdAt,
@@ -430,6 +442,17 @@ function normalizeKeyword(value) {
     .replace(/\p{Diacritic}/gu, "")
     .toLowerCase()
     .trim();
+}
+
+function getCurrentUserRoleLower(currentUser) {
+  const role = String(currentUser?.role || "").trim().toLowerCase();
+  return role === "admin" ? "project_manager" : role;
+}
+
+function getCurrentUserEmployeeCode(currentUser) {
+  return String(
+    currentUser?.employeeCode || currentUser?.MaNhanVien || currentUser?.maNhanVien || "",
+  ).trim();
 }
 
 function calculateProjectProgress(startDateValue, endDateValue, currentDateValue = new Date()) {

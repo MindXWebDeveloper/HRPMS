@@ -16,9 +16,14 @@ function canAccess(allowedRoles = [], authorContext = getAuthorContext()) {
     return true;
   }
 
+  const role = authorContext.role;
+  const adminAliasRoles = ["HR_MANAGER"];
+  const isAdminAliasAllowed = allowedRoles.includes("ADMIN") && adminAliasRoles.includes(role);
+
   return (
     allowedRoles.includes("ALL") ||
-    allowedRoles.includes(authorContext.role)
+    allowedRoles.includes(role) ||
+    isAdminAliasAllowed
   );
 }
 

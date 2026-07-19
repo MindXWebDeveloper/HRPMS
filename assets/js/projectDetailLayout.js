@@ -41,24 +41,28 @@ function initializeProjectDetailPage() {
     return;
   }
 
-  if (!canAccessProjectDetail(projectDetail.id)) {
+  if (!canAccessProjectDetail(projectDetail)) {
     showUnauthorizedProjectAlertAndRedirect();
     return;
   }
 
   currentProjectDetail = projectDetail;
   bindProjectDetail(projectDetail);
-  const canManage = canManageProjectDetail();
+  const canEdit = canEditProjectDetail();
+  const canManageEmployees = canManageProjectEmployees();
 
-  if (canManage) {
+  if (canEdit) {
     bindEditProjectModal();
-    bindAddProjectEmployeeModal();
     bindCreatePhaseModal();
     bindCreateTaskModal();
     bindViewTaskModal();
   }
 
-  bindDeleteEmployeeConfirmModal();
+  if (canManageEmployees) {
+    bindAddProjectEmployeeModal();
+    bindDeleteEmployeeConfirmModal();
+  }
+
   bindEmployeeSearchFilter();
   renderProjectEmployees(projectDetail.id);
   renderProjectPhases(projectDetail);
@@ -475,7 +479,7 @@ function renderProjectEmployees(projectId, keyword = "") {
   }
 
   const allEmployees = getProjectEmployeeDetails(projectId);
-  const canManage = canManageProjectDetail();
+  const canManage = canManageProjectEmployees();
   const query = normalizeKeyword(keyword);
 
   const filteredEmployees = allEmployees.filter((item) => {
@@ -1458,7 +1462,7 @@ function renderProjectPhases(projectDetail) {
   }
 
   const phases = findProjectPhasesByProjectId(projectDetail.id);
-  const canManage = canManageProjectDetail();
+  const canManage = canEditProjectDetail();
 
   if (phases.length === 0) {
     phaseListElement.innerHTML = `
@@ -1640,16 +1644,25 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-function canManageProjectDetail() {
-  return getCurrentUserRoleUpper() === "ADMIN";
+function canEditProjectDetail() {
+  return getCurrentUserRoleLower() === "project_manager";
 }
 
-function canAccessProjectDetail(projectId) {
+function canManageProjectEmployees() {
+  const role = getCurrentUserRoleLower();
+  return role === "hr_manager" || role === "project_manager";
+}
+
+function canAccessProjectDetail(projectDetail) {
+  const projectId = String(projectDetail?.id || "").trim();
+
   if (!projectId) {
     return false;
   }
 
-  if (canManageProjectDetail()) {
+  const role = getCurrentUserRoleLower();
+
+  if (role === "hr_manager") {
     return true;
   }
 
@@ -1657,6 +1670,11 @@ function canAccessProjectDetail(projectId) {
 
   if (!currentEmployeeCode) {
     return false;
+  }
+
+  if (role === "project_manager") {
+    const ownerCode = String(projectDetail?.createdByEmployeeCode || projectDetail?.leadId || "").trim();
+    return ownerCode === currentEmployeeCode;
   }
 
   return findProjectEmployeesByProjectId(projectId).some(
@@ -1682,7 +1700,7 @@ function getCurrentUserEmployeeCode() {
   }
 }
 
-function getCurrentUserRoleUpper() {
+function getCurrentUserRoleLower() {
   try {
     const rawCurrentUser = localStorage.getItem(CURRENT_USER);
 
@@ -1691,21 +1709,34 @@ function getCurrentUserRoleUpper() {
     }
 
     const currentUser = JSON.parse(rawCurrentUser);
-    return String(currentUser?.role || "").toUpperCase().trim();
+    const role = String(currentUser?.role || "").toLowerCase().trim();
+    return role === "admin" ? "project_manager" : role;
   } catch {
     return "";
   }
 }
 
 function applyProjectDetailPermission() {
-  if (canManageProjectDetail()) {
+  if (!canEditProjectDetail()) {
+    hideButtonById("detail-edit-project-btn");
+    hideButtonById("detail-create-phase-btn");
+    hideButtonById("detail-create-task-btn");
+  }
+
+  if (!canManageProjectEmployees()) {
+    hideButtonById("detail-add-employee-btn");
+  }
+}
+
+function hideButtonById(buttonId) {
+  const button = document.getElementById(buttonId);
+
+  if (!button) {
     return;
   }
 
-  document.querySelectorAll("button").forEach((button) => {
-    button.classList.add("hidden");
-    button.setAttribute("aria-hidden", "true");
-  });
+  button.classList.add("hidden");
+  button.setAttribute("aria-hidden", "true");
 }
 
 function showUnauthorizedProjectAlertAndRedirect() {

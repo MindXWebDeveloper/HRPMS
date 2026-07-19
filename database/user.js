@@ -7,7 +7,7 @@ let defaultUsers = [
         account: "adm001",
         email: "thanh.luong@company.com",
         password: "admin1234567",
-        role: "admin",
+        role: "project_manager",
         status: "active",
         MaNhanVien: "EMP001",
         
@@ -19,7 +19,7 @@ let defaultUsers = [
         account: "user002",
         email: "linh.nguyen@company.com",
         password: "user12345671234",
-        role: "employee",
+        role: "hr_manager",
         status: "active",
         MaNhanVien: "EMP002",
         createdAt: "2026-07-10T09:00:00",
@@ -70,8 +70,15 @@ function initUsers() {
     }
 
     const nextUsers = storedUsers.map((user) => {
+        const normalizedRole = String(user?.role || "").toLowerCase() === "admin"
+            ? "project_manager"
+            : user?.role;
+
         if (user?.email) {
-            return user;
+            return {
+                ...user,
+                role: normalizedRole
+            };
         }
 
         const matchedDefault = defaultUsers.find((item) =>
@@ -82,6 +89,7 @@ function initUsers() {
 
         return {
             ...user,
+            role: normalizedRole,
             email: matchedDefault?.email || ""
         };
     });

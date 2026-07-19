@@ -109,9 +109,17 @@ function handleCreateProject(event) {
     return;
   }
 
+  const currentEmployeeCode = getCurrentUserEmployeeCode();
+
+  if (!currentEmployeeCode) {
+    alert("Không xác định được mã nhân viên hiện tại.");
+    return;
+  }
+
   const createdProject = createNewProject({
     projectName,
     leadId: leadCode,
+    createdByEmployeeCode: currentEmployeeCode,
     memberCount,
     status: projectStatus,
   });
@@ -153,11 +161,10 @@ function applyCreateProjectPermission() {
 }
 
 function canCreateProject() {
-  const role = getCurrentUserRoleUpper();
-  return role === "ADMIN";
+  return getCurrentUserRoleLower() === "project_manager";
 }
 
-function getCurrentUserRoleUpper() {
+function getCurrentUserRoleLower() {
   try {
     const rawCurrentUser = localStorage.getItem(CURRENT_USER);
 
@@ -166,7 +173,26 @@ function getCurrentUserRoleUpper() {
     }
 
     const currentUser = JSON.parse(rawCurrentUser);
-    return String(currentUser?.role || "").toUpperCase().trim();
+    const role = String(currentUser?.role || "").toLowerCase().trim();
+    return role === "admin" ? "project_manager" : role;
+  } catch {
+    return "";
+  }
+}
+
+function getCurrentUserEmployeeCode() {
+  try {
+    const rawCurrentUser = localStorage.getItem(CURRENT_USER);
+
+    if (!rawCurrentUser) {
+      return "";
+    }
+
+    const currentUser = JSON.parse(rawCurrentUser);
+
+    return String(
+      currentUser?.employeeCode || currentUser?.MaNhanVien || currentUser?.maNhanVien || "",
+    ).trim();
   } catch {
     return "";
   }

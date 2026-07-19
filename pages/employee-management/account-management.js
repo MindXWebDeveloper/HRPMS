@@ -1,4 +1,5 @@
 import { initUsers, getAll } from "../../database/user.js";
+import { findEmployeeByMaNV } from "../../database/employeedata.js";
 
 const tbody = document.getElementById("accountTableBody");
 
@@ -9,6 +10,8 @@ function renderAccounts() {
     tbody.innerHTML = "";
 
   users.forEach(user => {
+      const employee = findEmployeeByMaNV(user.MaNhanVien);
+      const fullName = employee?.HoTen || user.MaNhanVien || "-";
 
         const tr = document.createElement("tr");
         tr.className = "bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium";
@@ -17,7 +20,7 @@ function renderAccounts() {
             <td scope="row"
           class="px-6 py-4 font-medium text-heading whitespace-nowrap">${String(user.account || "-").toUpperCase()}</td>
 
-      <td class="px-6 py-4">${user.MaNhanVien || "-"}</td>
+      <td class="px-6 py-4">${fullName}</td>
 
       <td class="px-6 py-4">${user.email || "-"}</td>
 

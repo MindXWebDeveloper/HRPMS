@@ -3,12 +3,17 @@ import { getAuthorContext, applyRoleGuards } from "./common/author.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const basePath = document.body.dataset.basePath || "";
+  const currentUser = getCurrentUser();
 
-  if (!ensureAuthenticated(basePath)) {
+  if (!ensureAuthenticated(basePath, currentUser)) {
     return;
   }
 
-  const authorContext = getAuthorContext();
+  if (!ensureMenuAuthorization(basePath, currentUser)) {
+    return;
+  }
+
+  const authorContext = getAuthorContext(currentUser);
   const sidebarHost = document.querySelector("[data-layout='sidebar']");
   applyRoleGuards(document, authorContext);
 
@@ -68,26 +73,58 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.addEventListener("click", () => {});
 
-function ensureAuthenticated(basePath) {
-  const currentUser = getCurrentUser();
-
+function ensureAuthenticated(basePath, currentUser) {
   if (currentUser) {
     return true;
   }
 
-  renderBlankPage();
-
   const signinPath = `${basePath}pages/signin.html`;
+  showAlertOnBlankPageThenRedirect("Vui lòng đăng nhập.", signinPath);
+
+  return false;
+}
+
+function ensureMenuAuthorization(basePath, currentUser) {
+  const role = String(currentUser?.role || "").trim().toLowerCase();
+
+  if (role !== "project_manager") {
+    return true;
+  }
+
+  const currentPath = normalizePath(window.location.pathname);
+  const restrictedPrefixes = [
+    "pages/employee-management/",
+    "pages/accountregister/",
+    "pages/education-management/",
+    "pages/training-management/",
+  ];
+  const restrictedExactPaths = [
+    "pages/accountedit/AccountEdit.html",
+  ];
+
+  const blockedByPrefix = restrictedPrefixes.some((prefix) => currentPath.startsWith(prefix));
+  const blockedByExactPath = restrictedExactPaths.some((path) => currentPath.endsWith(path));
+
+  if (!blockedByPrefix && !blockedByExactPath) {
+    return true;
+  }
+
+  const dashboardPath = `${basePath}pages/accountdashboard/accountdashboard.html`;
+  showAlertOnBlankPageThenRedirect("Bạn không có quyền vào menu này.", dashboardPath);
+
+  return false;
+}
+
+function showAlertOnBlankPageThenRedirect(message, redirectPath) {
+  renderBlankPage();
 
   // Wait for paint so the native alert appears over a blank page.
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(() => {
-      alert("Vui lòng đăng nhập.");
-      window.location.replace(signinPath);
+      alert(message);
+      window.location.replace(redirectPath);
     });
   });
-
-  return false;
 }
 
 function renderBlankPage() {
