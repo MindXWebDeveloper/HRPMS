@@ -1,16 +1,18 @@
-import { findEmployeeByMaNV, updateEmployee } from "../../database/employeedata.js";
-
+const EMPLOYEES_KEY = "EMPLOYEES";
+const CURRENT_USER_KEY = "CURRENT_USER";
 const params = new URLSearchParams(window.location.search);
 const maNV = params.get("maNV");
 
-let employee;
 
-if (maNV) {employee = findEmployeeByMaNV(maNV)}
-else {
-const currentUser = JSON.parse(localStorage.getItem("CURRENT_USER"));
-employee = findEmployeeByMaNV(currentUser.MaNhanVien);
+if (!maNV) {
+    const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+
+    if (currentUser) {
+        maNV = currentUser.MaNhanVien;
+    }
 }
-console.log(employee);
+const employees = JSON.parse(localStorage.getItem(EMPLOYEES_KEY)) || [];
+const employee = employees.find(emp => emp.MaNhanVien === maNV);
 
 document.getElementById('MaNhanVien').value = employee.MaNhanVien || "Chưa có thông tin nhân viên";        
 document.getElementById('HoTen').value = employee.HoTen || "Chưa có thông tin nhân viên";
