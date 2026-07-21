@@ -1,9 +1,22 @@
-import { employees } from "../../database/employeeData.js";
-
+import { employees as defaultEmployees} from "../../database/employeeData.js";
+const EMPLOYEES_KEY ="EMPLOYEES";
 const tbody = document.getElementById("employeeTableBody");
 
+function initEmployeeData() {
+    if (!localStorage.getItem(EMPLOYEES_KEY)) {
+        localStorage.setItem(
+            EMPLOYEES_KEY,
+            JSON.stringify(defaultEmployees)
+        );
+    }
+}
+function getEmployees() {
+    return JSON.parse(localStorage.getItem(EMPLOYEES_KEY)) || [];
+}
+
+
 function renderEmployee() {
-   
+   const employees = getEmployees();
     tbody.innerHTML = "";
 
     employees.forEach(employee => {
@@ -102,4 +115,7 @@ function renderEmployee() {
 
 }
 
-renderEmployee();
+document.addEventListener("DOMContentLoaded", () => {
+    initEmployeeData();
+    renderEmployee();
+    });
