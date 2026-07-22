@@ -119,7 +119,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
     if(foundUser) {
         saveCurrentUser(foundUser);
         // Chuyển hướng đến trang chính hoặc trang dashboard
-        window.location.href = "../pages/accountdashboard/accountdashboard.html";
+        window.location.href = "./pages/accountdashboard/accountdashboard.html";
          btn.disabled = true; // Tắt submit sau khi xử lý xong
     }else{
         showError("account", "Tài khoản hoặc mật khẩu không chính xác");
