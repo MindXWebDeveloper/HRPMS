@@ -4,7 +4,7 @@ import { getAuthorContext, applyRoleGuards } from "./common/author.js";
 document.addEventListener("DOMContentLoaded", async () => {
   const isGitHubPages = location.hostname.endsWith("github.io");
   console.log("isGitHubPages:", isGitHubPages, "hostname:", location.hostname, "pathname:", location.pathname);
-  const basePath = isGitHubPages ? document.body.dataset.basePath +"HRPMS/" : document.body.dataset.basePath;
+  const basePath = isGitHubPages ? location.hostname +"/HRPMS/" : document.body.dataset.basePath;
   console.log("basePath:", basePath);
   //const basePath = document.body.dataset.basePath || "";
   const currentUser = getCurrentUser();
