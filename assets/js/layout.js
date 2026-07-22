@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const isGitHubPages = location.hostname.endsWith("github.io");
   console.log("isGitHubPages:", isGitHubPages, "hostname:", location.hostname, "pathname:", location.pathname);
   const basePath = isGitHubPages ? location.hostname +"/HRPMS/" : document.body.dataset.basePath;
+  const basePath1 = document.body.dataset.basePath;
   console.log("basePath:", basePath);
   //const basePath = document.body.dataset.basePath || "";
   const currentUser = getCurrentUser();
@@ -26,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const response = await fetch(`${basePath}pages/components/sidebar.html`, {
+    const response = await fetch(`${basePath1}pages/components/sidebar.html`, {
       cache: "no-store",
     });
 
