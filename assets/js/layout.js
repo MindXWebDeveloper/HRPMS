@@ -2,7 +2,9 @@
 import { getAuthorContext, applyRoleGuards } from "./common/author.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const basePath = document.body.dataset.basePath || "";
+  const isGitHubPages = location.hostname.endsWith("github.io");
+  const basePath = isGitHubPages ? document.body.dataset.basePath +"/HRPMS" : document.body.dataset.basePath;
+  //const basePath = document.body.dataset.basePath || "";
   const currentUser = getCurrentUser();
 
   if (!ensureAuthenticated(basePath, currentUser)) {
