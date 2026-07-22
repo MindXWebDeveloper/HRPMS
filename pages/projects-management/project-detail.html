@@ -1,0 +1,841 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết dự án</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body data-base-path="../../">
+    <div data-layout="sidebar"></div>
+    <div class="p-4 sm:ml-64 min-h-full">
+      <!-- HEADER -->
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-4">
+          <!-- Back icon -->
+          <button>
+            <svg
+              class="w-6 h-6 text-gray-800"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M5 12h14M5 12l4-4m-4 4 4 4"
+              />
+            </svg>
+          </button>
+
+          <h1 class="text-2xl font-bold">Danh sách dự án</h1>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            id="detail-edit-project-btn"
+            class="flex items-center gap-2 px-5 py-2 border rounded-lg bg-white"
+          >
+            <!-- edit icon -->
+            <svg
+              class="w-5 h-5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m14.304 4.844 
+                2.852 2.852M7 7H4
+                a1 1 0 0 0-1 1v10
+                a1 1 0 0 0 1 1h11
+                a1 1 0 0 0 1-1v-4.5
+                m2.409-9.91a2.017 
+                2.017 0 0 1 0 2.853
+                l-6.844 6.844L8 14
+                l.713-3.565
+                6.844-6.844a2.015 
+                2.015 0 0 1 2.852 0Z"
+              />
+            </svg>
+
+            Chỉnh sửa
+          </button>
+        </div>
+      </div>
+
+      <!-- PROJECT HEADER CARD -->
+
+      <div class="bg-white rounded-xl border shadow-sm p-8 mb-6">
+        <div class="flex gap-8">
+          <!-- folder icon -->
+          <div
+            class="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center"
+          >
+            <svg
+              class="w-12 h-12 text-blue-600"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+                d="M3 7h5l2 3h11v9
+            a2 2 0 0 1-2 2H5
+            a2 2 0 0 1-2-2V7Z"
+              />
+            </svg>
+          </div>
+
+          <div>
+            <div class="flex gap-4 items-center">
+              <h2 id="detail-project-name" class="text-2xl font-bold">
+                HRPMS - Hệ thống quản lý nhân sự
+              </h2>
+
+              <span
+                id="detail-project-status-pill"
+                class="bg-green-100 text-green-600 px-4 py-1 rounded-full text-sm"
+              >
+                Đang thực hiện
+              </span>
+            </div>
+
+            <p id="detail-project-description" class="mt-4 text-gray-500">
+              Xây dựng hệ thống quản lý nhân sự và dự án cho doanh nghiệp.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-6 gap-8 mt-10">
+          <div>
+            <p class="text-gray-400">Mã dự án</p>
+
+            <b id="detail-project-code">PJ001</b>
+          </div>
+
+          <div>
+            <p class="text-gray-400">Quản lý dự án</p>
+
+            <div class="flex items-center gap-2">
+              <img
+                class="w-8 h-8 rounded-full"
+                src="../../assets/images/account-icon.png"
+              />
+
+              <span id="detail-project-manager">Thanh</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-gray-400">Ngày bắt đầu</p>
+
+            <div class="flex gap-2">
+              <!-- calendar -->
+              <svg
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  d="M4 10h16M7 4v3m10-3v3M5 7h14v13H5z"
+                />
+              </svg>
+
+              <span id="detail-project-start-date">01/07/2026</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-gray-400">Ngày kết thúc</p>
+
+            <div class="flex gap-2">
+              <svg
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  d="M4 10h16M7 4v3m10-3v3M5 7h14v13H5z"
+                />
+              </svg>
+
+              <span id="detail-project-end-date">10/08/2026</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-gray-400">Tiến độ</p>
+
+            <div class="flex items-center gap-2">
+              <div class="w-32 bg-gray-200 rounded">
+                <div id="detail-project-progress-bar" class="h-2 rounded bg-blue-600 w-[75%]"></div>
+              </div>
+
+              <span id="detail-project-progress-value">75%</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-gray-400">Trạng thái</p>
+
+            <span id="detail-project-status-inline" class="text-green-600"> ● Đang thực hiện </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+
+      <div class="grid grid-cols-5 gap-6">
+        <!-- MEMBER LIST -->
+
+        <div class="col-span-2 bg-white rounded-xl border shadow-sm">
+          <div class="flex justify-between items-center p-5 border-b">
+            <h2 id="detail-project-member-count" class="font-bold text-xl">Danh sách nhân viên (8)</h2>
+
+            <button
+              id="detail-add-employee-btn"
+              class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M12 5v14M5 12h14"
+                />
+              </svg>
+
+              Thêm nhân viên
+            </button>
+          </div>
+
+          <div class="p-5">
+            <input
+              id="detail-employee-search-input"
+              class="w-full border rounded-lg px-4 py-3 mb-4"
+              placeholder="Tìm kiếm nhân viên..."
+            />
+
+            <table class="w-full">
+              <tr class="border-b text-gray-500">
+                <th class="py-3 text-left">Nhân viên</th>
+
+                <th>Vai trò</th>
+
+                <th>Hành động</th>
+              </tr>
+              <tbody id="detail-project-employee-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <!-- ================= TASK LIST ================= -->
+
+        <div class="col-span-3 bg-white rounded-xl border shadow-sm">
+          <!-- TASK HEADER -->
+
+          <div class="flex items-center justify-between p-5 border-b">
+            <h2 class="text-xl font-bold">Công việc của dự án</h2>
+
+            <div class="flex gap-3">
+              <!-- CREATE PHASE -->
+
+              <button
+                id="detail-create-phase-btn"
+                class="flex items-center gap-2 border px-4 py-2 rounded-lg hover:bg-gray-50"
+              >
+                <!-- plus icon -->
+
+                <svg
+                  class="w-5 h-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    d="M12 5v14M5 12h14"
+                  />
+                </svg>
+
+                Tạo giai đoạn
+              </button>
+
+              <!-- CREATE TASK -->
+
+              <button
+                id="detail-create-task-btn"
+                class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    d="M12 5v14M5 12h14"
+                  />
+                </svg>
+
+                Tạo task
+              </button>
+            </div>
+          </div>
+
+          <!-- PHASE CONTAINER -->
+
+          <div id="detail-phase-list" class="p-5 space-y-5"></div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="add-employee-modal"
+        class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4"
+      >
+        <div class="w-full max-w-lg rounded-xl bg-white shadow-xl">
+          <div class="flex items-center justify-between border-b px-5 py-4">
+            <h3 class="text-lg font-semibold">Thêm nhân viên vào dự án</h3>
+            <button
+              id="add-employee-close-btn"
+              class="rounded-md p-1 text-gray-500 hover:bg-gray-100"
+              type="button"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form id="add-employee-form" class="space-y-4 px-5 py-5">
+            <div class="relative">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="projectEmployeeNameInput">Tên nhân viên</label>
+              <input
+                id="projectEmployeeNameInput"
+                type="text"
+                autocomplete="off"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+                placeholder="Gõ tên nhân viên"
+              />
+              <input id="projectEmployeeCodeInput" type="hidden" />
+              <div
+                id="project-employee-suggest-list"
+                class="absolute z-10 mt-1 hidden max-h-56 w-full overflow-auto rounded-lg border bg-white shadow"
+              ></div>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="projectEmployeeRoleInput">Vai trò</label>
+              <input
+                id="projectEmployeeRoleInput"
+                type="text"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+                placeholder="Ví dụ: Developer"
+              />
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+              <button
+                id="add-employee-cancel-btn"
+                type="button"
+                class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Hủy
+              </button>
+              <button
+                type="submit"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+              >
+                Thêm nhân viên
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div
+        id="delete-employee-confirm-modal"
+        class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4"
+      >
+        <div class="w-full max-w-md rounded-xl bg-white shadow-xl">
+          <div class="border-b px-5 py-4">
+            <h3 class="text-lg font-semibold">Xác nhận</h3>
+          </div>
+          <div class="px-5 py-5">
+            <p class="text-sm text-gray-700">Bạn muốn xóa nhân viên này khỏi dự án.</p>
+          </div>
+          <div class="flex items-center justify-end gap-3 border-t px-5 py-4">
+            <button
+              id="delete-employee-cancel-btn"
+              type="button"
+              class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+            >
+              Hủy
+            </button>
+            <button
+              id="delete-employee-ok-btn"
+              type="button"
+              class="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="create-phase-modal"
+        class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4"
+      >
+        <div class="w-full max-w-lg rounded-xl bg-white shadow-xl">
+          <div class="flex items-center justify-between border-b px-5 py-4">
+            <h3 class="text-lg font-semibold">Tạo giai đoạn</h3>
+            <button
+              id="create-phase-close-btn"
+              class="rounded-md p-1 text-gray-500 hover:bg-gray-100"
+              type="button"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form id="create-phase-form" class="space-y-4 px-5 py-5">
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="phaseNameInput"
+                >Tên giai đoạn</label
+              >
+              <input
+                id="phaseNameInput"
+                name="phaseName"
+                type="text"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+                placeholder="Nhập tên giai đoạn"
+              />
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="phaseColorInput"
+                >Màu hiển thị</label
+              >
+              <select
+                id="phaseColorInput"
+                name="phaseColor"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="purple">Tím</option>
+                <option value="blue" selected>Xanh dương</option>
+                <option value="green">Xanh lá</option>
+                <option value="orange">Cam</option>
+                <option value="red">Đỏ</option>
+              </select>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+              <button
+                id="create-phase-cancel-btn"
+                type="button"
+                class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Hủy
+              </button>
+              <button
+                type="submit"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+              >
+                Lưu giai đoạn
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div
+        id="edit-project-modal"
+        class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4"
+      >
+        <div class="w-full max-w-xl rounded-xl bg-white shadow-xl">
+          <div class="flex items-center justify-between border-b px-5 py-4">
+            <h3 class="text-lg font-semibold">Chỉnh sửa dự án</h3>
+            <button
+              id="edit-project-close-btn"
+              class="rounded-md p-1 text-gray-500 hover:bg-gray-100"
+              type="button"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form id="edit-project-form" class="grid grid-cols-1 gap-4 px-5 py-5 md:grid-cols-2">
+            <div class="md:col-span-2">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="editProjectNameInput">Tên dự án</label>
+              <input
+                id="editProjectNameInput"
+                name="projectName"
+                type="text"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div class="relative">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="editLeadNameInput">Quản lý dự án</label>
+              <input
+                id="editLeadNameInput"
+                name="leadName"
+                type="text"
+                autocomplete="off"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              />
+              <input id="editLeadCodeInput" type="hidden" />
+              <div
+                id="edit-lead-suggest-list"
+                class="absolute z-10 mt-1 hidden max-h-56 w-full overflow-auto rounded-lg border bg-white shadow"
+              ></div>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="editCreatedAtInput">Ngày bắt đầu</label>
+              <input
+                id="editCreatedAtInput"
+                name="createdAt"
+                type="date"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="editEndDateInput">Ngày kết thúc</label>
+              <input
+                id="editEndDateInput"
+                name="endDate"
+                type="date"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="editStatusInput">Trạng thái</label>
+              <select
+                id="editStatusInput"
+                name="status"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="Đang tiến hành">Đang tiến hành</option>
+                <option value="Tạm dừng">Tạm dừng</option>
+                <option value="Hoàn thành">Hoàn thành</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="editProgressPreviewInput">Tiến độ tự tính (%)</label>
+              <input
+                id="editProgressPreviewInput"
+                type="text"
+                readonly
+                class="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-gray-600 focus:outline-none"
+              />
+            </div>
+
+            <div class="md:col-span-2 flex items-center justify-end gap-3 pt-2">
+              <button
+                id="edit-project-cancel-btn"
+                type="button"
+                class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Hủy
+              </button>
+              <button
+                type="submit"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+              >
+                Lưu thay đổi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div
+        id="create-task-modal"
+        class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4"
+      >
+        <div class="w-full max-w-xl rounded-xl bg-white shadow-xl">
+          <div class="flex items-center justify-between border-b px-5 py-4">
+            <h3 class="text-lg font-semibold">Tạo task</h3>
+            <button
+              id="create-task-close-btn"
+              class="rounded-md p-1 text-gray-500 hover:bg-gray-100"
+              type="button"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form id="create-task-form" class="grid grid-cols-1 gap-4 px-5 py-5 md:grid-cols-2">
+            <div class="md:col-span-2">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="taskTitleInput">Tên task</label>
+              <input
+                id="taskTitleInput"
+                name="taskTitle"
+                type="text"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+                placeholder="Nhập tên task"
+              />
+            </div>
+
+            <div class="relative">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="taskAssigneeInput">Người phụ trách</label>
+              <input
+                id="taskAssigneeInput"
+                name="taskAssignee"
+                type="text"
+                autocomplete="off"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+                placeholder="Tên người phụ trách"
+              />
+              <input id="taskAssigneeCodeInput" type="hidden" />
+              <div
+                id="task-assignee-suggest-list"
+                class="absolute z-10 mt-1 hidden max-h-56 w-full overflow-auto rounded-lg border bg-white shadow"
+              ></div>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="taskPhaseInput">Giai đoạn</label>
+              <select
+                id="taskPhaseInput"
+                name="taskPhase"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              ></select>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="taskPriorityInput">Ưu tiên</label>
+              <select
+                id="taskPriorityInput"
+                name="taskPriority"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="high">Cao</option>
+                <option value="medium" selected>Trung bình</option>
+                <option value="low">Thấp</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="taskStatusInput">Trạng thái</label>
+              <select
+                id="taskStatusInput"
+                name="taskStatus"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="todo" selected>Chưa làm</option>
+                <option value="in_progress">Đang làm</option>
+                <option value="done">Hoàn thành</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="taskDescriptionInput">Mô tả</label>
+              <textarea
+                id="taskDescriptionInput"
+                name="taskDescription"
+                rows="3"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+                placeholder="Mô tả task"
+              ></textarea>
+            </div>
+
+            <div class="md:col-span-2 flex items-center justify-end gap-3 pt-2">
+              <button
+                id="create-task-cancel-btn"
+                type="button"
+                class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Hủy
+              </button>
+              <button
+                type="submit"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+              >
+                Lưu task
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div
+        id="view-task-modal"
+        class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4"
+      >
+        <div class="w-full max-w-xl rounded-xl bg-white shadow-xl">
+          <div class="flex items-center justify-between border-b px-5 py-4">
+            <h3 class="text-lg font-semibold">View task</h3>
+            <button
+              id="view-task-close-btn"
+              class="rounded-md p-1 text-gray-500 hover:bg-gray-100"
+              type="button"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                <path
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form id="view-task-form" class="grid grid-cols-1 gap-4 px-5 py-5 md:grid-cols-2">
+            <div class="md:col-span-2">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskTitleInput">Tên task</label>
+              <input
+                id="viewTaskTitleInput"
+                type="text"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+
+            <div class="relative">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskAssigneeInput">Người phụ trách</label>
+              <input
+                id="viewTaskAssigneeInput"
+                type="text"
+                autocomplete="off"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+              />
+              <input id="viewTaskAssigneeCodeInput" type="hidden" />
+              <div
+                id="view-task-assignee-suggest-list"
+                class="absolute z-10 mt-1 hidden max-h-56 w-full overflow-auto rounded-lg border bg-white shadow"
+              ></div>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskPhaseInput">Giai đoạn</label>
+              <select
+                id="viewTaskPhaseInput"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+              ></select>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskPriorityInput">Ưu tiên</label>
+              <select
+                id="viewTaskPriorityInput"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="high">Cao</option>
+                <option value="medium">Trung bình</option>
+                <option value="low">Thấp</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskStatusInput">Trạng thái</label>
+              <select
+                id="viewTaskStatusInput"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="todo">Chưa làm</option>
+                <option value="in_progress">Đang làm</option>
+                <option value="done">Hoàn thành</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskDescriptionInput">Mô tả</label>
+              <textarea
+                id="viewTaskDescriptionInput"
+                rows="3"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
+              ></textarea>
+            </div>
+
+            <div class="md:col-span-2 flex items-center justify-end gap-3 pt-2">
+              <button
+                id="view-task-cancel-btn"
+                type="button"
+                class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+              >
+                Hủy
+              </button>
+              <button
+                type="submit"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+              >
+                Lưu
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../../assets/js/layout.js"></script>
+    <script type="module" src="../../assets/js/projectDetailLayout.js"></script>
+  </body>
+</html>

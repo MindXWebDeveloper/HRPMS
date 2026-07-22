@@ -1,0 +1,248 @@
+﻿<!doctype html>
+<html lang="en">
+  <>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý tài khoản</title>
+    <link rel="icon" type="image/png" href="../../assets/images/logo.png" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body data-base-path="../../">
+    <div data-layout="sidebar"></div>
+
+    <div class="p-4 sm:ml-64 min-h-full">
+      <div
+        class="relative min-h-full overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default grid-rows-9 gap-4"
+      >
+        <div class="mx-8 my-2 font-bold text-xl row-span-2">Danh sách tài khoản</div>
+
+        <div class="p-4 flex items-center justify-between space-x-4 row-span-2">
+          <label for="account-search-input" class="sr-only">Search</label>
+          <div class="flex items-center gap-2">
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-body"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="account-search-input"
+                class="block w-full max-w-96 ps-9 pe-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                placeholder="Tìm theo họ và tên"
+              />
+            </div>
+
+            <button
+              id="account-search-btn"
+              type="button"
+              class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Tìm Kiếm
+            </button>
+          </div>
+
+          <!-- Thêm tài khoản -->
+          <button
+            id="open-add-account-modal-btn"
+            class="flex items-center text-white bg-blue-500 rounded-md text-[14px] sm:text-sm text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            type="button"
+          >
+            <svg
+              class="w-4 h-4 me-1.5 -ms-0.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 12h14m-7 7V5"
+              />
+            </svg>
+            Thêm tài khoản
+          </button>
+         
+        </div>
+        <div
+          class="relative min-h-[70vh] overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
+        >
+          <table class="w-full text-sm text-left rtl:text-right text-body">
+            <thead
+              class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-3">Tên tài khoản</th>
+                <th scope="col" class="px-6 py-3">Họ và tên</th>
+                <th scope="col" class="px-6 py-3">Email</th>
+                <th scope="col" class="px-6 py-3">Vai trò</th>
+                <th scope="col" class="px-6 py-3">Trạng thái</th>
+                <th scope="col" class="px-6 py-3">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="accountTableBody"></tbody>
+          </table>
+
+        </div>
+
+        <div id="add-account-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+          <div class="w-full max-w-lg rounded-xl bg-white shadow-xl">
+            <div class="flex items-center justify-between border-b px-5 py-4">
+              <h3 class="text-lg font-semibold">Thêm tài khoản</h3>
+              <button id="close-add-account-modal-btn" type="button" class="rounded-md p-1 text-gray-500 hover:bg-gray-100">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                  <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <form id="add-account-form" class="space-y-4 px-5 py-4">
+              <div>
+                <label for="new-account-full-name" class="mb-1 block text-sm font-medium text-gray-700">Họ và tên</label>
+                <input id="new-account-full-name" type="text" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập họ và tên" required />
+              </div>
+
+              <div>
+                <label for="new-account-email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                <input id="new-account-email" type="email" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập email" required />
+              </div>
+
+              <div>
+                <label for="new-account-role" class="mb-1 block text-sm font-medium text-gray-700">Vai trò</label>
+                <select id="new-account-role" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" required>
+                  <option value="employee">Nhân viên</option>
+                  <option value="hr_manager">Quản lý nhân sự</option>
+                  <option value="project_manager">Quản lý dự án</option>
+                </select>
+              </div>
+
+              <p class="text-xs text-gray-500">Tên tài khoản và mã nhân viên sẽ được tự động sinh khi bấm Lưu.</p>
+
+              <div class="flex justify-end gap-3 border-t pt-4">
+                <button id="cancel-add-account-btn" type="button" class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Hủy</button>
+                <button type="submit" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Lưu</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="edit-account-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+          <div class="w-full max-w-lg rounded-xl bg-white shadow-xl">
+            <div class="flex items-center justify-between border-b px-5 py-4">
+              <h3 class="text-lg font-semibold">Chỉnh sửa tài khoản</h3>
+              <button id="close-edit-account-modal-btn" type="button" class="rounded-md p-1 text-gray-500 hover:bg-gray-100">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                  <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <form id="edit-account-form" class="space-y-4 px-5 py-4">
+              <input id="edit-account-id" type="hidden" />
+
+              <div>
+                <label for="edit-account-name" class="mb-1 block text-sm font-medium text-gray-700">Tên tài khoản</label>
+                <input id="edit-account-name" type="text" class="w-full rounded-lg border border-gray-300 px-3 py-2 bg-gray-100 text-gray-700" readonly />
+              </div>
+
+              <div>
+                <label for="edit-account-full-name" class="mb-1 block text-sm font-medium text-gray-700">Họ và tên</label>
+                <input id="edit-account-full-name" type="text" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập họ và tên" required />
+                <p id="edit-account-full-name-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-email" class="mb-1 block text-sm font-medium text-gray-700">Email</label>
+                <input id="edit-account-email" type="email" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập email" required />
+                <p id="edit-account-email-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-role" class="mb-1 block text-sm font-medium text-gray-700">Vai trò</label>
+                <select id="edit-account-role" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" required>
+                  <option value="employee">Nhân viên</option>
+                  <option value="hr_manager">Quản lý nhân sự</option>
+                  <option value="project_manager">Quản lý dự án</option>
+                </select>
+                <p id="edit-account-role-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-status" class="mb-1 block text-sm font-medium text-gray-700">Trạng thái tài khoản</label>
+                <select id="edit-account-status" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" required>
+                  <option value="active">Hoạt động</option>
+                  <option value="inactive">Ngưng hoạt động</option>
+                </select>
+                <p id="edit-account-status-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-password" class="mb-1 block text-sm font-medium text-gray-700">Mật khẩu</label>
+                <input id="edit-account-password" type="password" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập mật khẩu mới" required />
+                <p id="edit-account-password-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-confirm-password" class="mb-1 block text-sm font-medium text-gray-700">Xác nhận mật khẩu</label>
+                <input id="edit-account-confirm-password" type="password" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập lại mật khẩu" required />
+                <p id="edit-account-confirm-password-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <p class="text-xs text-gray-500">Mật khẩu tối thiểu 12 ký tự, có ít nhất 1 chữ in hoa, 1 số, 1 ký tự đặc biệt và không chứa khoảng trắng.</p>
+
+              <div class="flex justify-end gap-3 border-t pt-4">
+                <button id="cancel-edit-account-btn" type="button" class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Hủy</button>
+                <button type="submit" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Lưu</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+                  <nav
+            class="flex items-center flex-column flex-wrap md:flex-row justify-between p-4"
+            aria-label="Table navigation"
+          >
+            <span
+              id="account-pagination-summary"
+              class="text-sm font-normal text-body mb-4 md:mb-0 block w-full md:inline md:w-auto"
+              >Hiển thị 0-0 of 0</span
+            >
+            <ul id="account-pagination-controls" class="flex -space-x-px text-sm"></ul>
+          </nav>
+      </div>
+    </div>
+       <script type="module" src="../../assets/js/layout.js"></script>
+       <script type="module" src="account-management.js"></script>
+  </body>
+</html>
