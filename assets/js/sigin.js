@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const currentUser = getCurrentUser();
 
     if (currentUser) {
-        window.location.replace("./accountdashboard/accountdashboard.html");
+        window.location.replace("./pages/accountdashboard/accountdashboard.html");
         return;
     }
 

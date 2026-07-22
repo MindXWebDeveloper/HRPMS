@@ -371,6 +371,7 @@ function bindEditAccountModal() {
   const fullNameInput = document.getElementById("edit-account-full-name");
   const emailInput = document.getElementById("edit-account-email");
   const roleInput = document.getElementById("edit-account-role");
+  const statusInput = document.getElementById("edit-account-status");
   const passwordInput = document.getElementById("edit-account-password");
   const confirmPasswordInput = document.getElementById("edit-account-confirm-password");
   const fullNameError = document.getElementById("edit-account-full-name-error");
@@ -431,8 +432,9 @@ function bindEditAccountModal() {
     if (fullNameInput) fullNameInput.value = employee?.HoTen || user.MaNhanVien || "";
     if (emailInput) emailInput.value = user.email || "";
     if (roleInput) roleInput.value = user.role || "employee";
-    if (passwordInput) passwordInput.value = "";
-    if (confirmPasswordInput) confirmPasswordInput.value = "";
+    if (passwordInput) passwordInput.value = user.password|| "";
+    if (confirmPasswordInput) confirmPasswordInput.value = user.password|| "";
+    if (statusInput) statusInput.value = user.status|| "active";
     clearFormErrors(fieldValidationMap);
 
     openModal();
@@ -457,6 +459,7 @@ function bindEditAccountModal() {
     const role = String(roleInput?.value || "employee").trim().toLowerCase();
     const password = String(passwordInput?.value || "");
     const confirmPassword = String(confirmPasswordInput?.value || "");
+    const status = String(statusInput?.value || "active");
 
     clearFormErrors(fieldValidationMap);
 
@@ -521,6 +524,7 @@ function bindEditAccountModal() {
       email,
       role,
       password,
+      status,
       updatedAt: now,
     };
 

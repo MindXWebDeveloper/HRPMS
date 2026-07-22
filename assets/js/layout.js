@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (btnLogout) {
     btnLogout.addEventListener("click", function () {
       clearCurrentUser();
-      window.location.href = `${basePath}pages/signin.html`;
+      window.location.href = `${basePath}index.html`;
     });
   }
 
@@ -78,7 +78,7 @@ function ensureAuthenticated(basePath, currentUser) {
     return true;
   }
 
-  const signinPath = `${basePath}pages/signin.html`;
+  const signinPath = `${basePath}index.html`;
   showAlertOnBlankPageThenRedirect("Vui lòng đăng nhập.", signinPath);
 
   return false;

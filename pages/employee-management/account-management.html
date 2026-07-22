@@ -64,7 +64,7 @@
               type="button"
               class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
-              Search
+              Tìm Kiếm
             </button>
           </div>
 
@@ -196,6 +196,15 @@
                   <option value="project_manager">Quản lý dự án</option>
                 </select>
                 <p id="edit-account-role-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
+                <label for="edit-account-status" class="mb-1 block text-sm font-medium text-gray-700">Trạng thái tài khoản</label>
+                <select id="edit-account-status" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" required>
+                  <option value="active">Hoạt động</option>
+                  <option value="inactive">Ngưng hoạt động</option>
+                </select>
+                <p id="edit-account-status-error" class="mt-1 hidden text-xs text-red-600"></p>
               </div>
 
               <div>
