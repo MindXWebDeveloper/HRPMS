@@ -171,8 +171,8 @@ function getAllEmployees() {
     return JSON.parse(localStorage.getItem(EMPLOYEES)) || [];
 }
 
-function findEmployeeByMaNV(maNhanVien) { 
-    const employeeCode = String(maNhanVien || "").trim();
+function findEmployeeByMaNV(MaNhanVien) { 
+    const employeeCode = String(MaNhanVien || "").trim();
 
     if (!employeeCode) {
         return null;

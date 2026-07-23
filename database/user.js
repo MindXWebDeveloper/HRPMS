@@ -9,7 +9,7 @@ let defaultUsers = [
         password: "admin1234567",
         role: "project_manager",
         status: "active",
-        MaNhanVien: "EMP001",
+        MaNhanVien: "thanhlv",
         
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
@@ -21,7 +21,7 @@ let defaultUsers = [
         password: "user12345671234",
         role: "hr_manager",
         status: "active",
-        MaNhanVien: "EMP002",
+        MaNhanVien: "linhnh",
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     },
@@ -32,7 +32,7 @@ let defaultUsers = [
         password: "user1234567",
         role: "employee",
         status: "active",
-        MaNhanVien: "EMP003",
+        MaNhanVien: "cuonglm",
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     },
@@ -43,7 +43,7 @@ let defaultUsers = [
         password: "user1234567",
         role: "employee",
         status: "active",
-        MaNhanVien: "EMP004",
+        MaNhanVien: "hapt",
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     },
@@ -54,7 +54,7 @@ let defaultUsers = [
         password: "user1234567",
         role: "employee",
         status: "inactive",
-        MaNhanVien: "EMP005",
+        MaNhanVien: "viethq",
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     }
