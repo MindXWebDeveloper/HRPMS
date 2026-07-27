@@ -1,11 +1,12 @@
-import { PROJECTS, PROJECT_TASKS } from "../../assets/js/common/storageKeys.js";
+import { PROJECTS, PROJECT_TASKS, EMPLOYEES, TASKS } from "../../assets/js/common/storageKeys.js";
 import { getAll, initProjects } from "../../database/project.js";
 import { getAllTasks, initTasks } from "../../database/task.js";
 import { initProjectTasks, getAllProjectTasks, getProjectByTaskId } from "../../database/projet_task.js";
+import { initEmployees } from "../../database/employeedata.js";
 const tbody = document.getElementById("ProjectTableBody");
 const tbodytask = document.getElementById("TaskTableBody");
 const PROJECTS_KEY = "PROJECTS";
-const TASKS = "TASKS";
+const TASKS_KEY = "TASKS";
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initTasks();
     renderTask();
     initProjectTasks();
+    initEmployees();
+    renderTopEmployees();
+    renderEmployeeWorkload();
 });
 function getStatusClass(status) {
     switch (status) {
@@ -145,8 +149,129 @@ function renderTask() {
 }
 
 
+function renderTopEmployees() {
+    const container = document.getElementById("TopEmp");
+
+    const employees = JSON.parse(localStorage.getItem(EMPLOYEES)) || [];
+
+    const topEmployees = [...employees]
+        .sort((a, b) => (b.Points || 0) - (a.Points || 0))
+        .slice(0, 5);
 
 
+    const maxPoint = topEmployees.length ? topEmployees[0].Points : 1;
 
+    container.innerHTML = topEmployees.map((emp, index) => {
+        const percent = Math.max((emp.Points / maxPoint) * 100, 5);
+
+        return `
+            <div class="flex items-center gap-4 py-3">
+                
+                <div class="w-5 font-bold text-slate-800">
+                    ${index + 1}
+                </div>
+
+                <img
+                    src="${emp.Avatar}"
+                    class="w-10 h-10 rounded-full object-cover"
+                >
+
+                <div class="w-40">
+                    <p class="font-semibold text-sm text-slate-900">
+                        ${emp.HoTen}
+                    </p>
+                    <p class="text-xs text-slate-500">
+                        ${emp.ChucVu || ""}
+                    </p>
+                </div>
+
+                <div class="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                        class="h-full bg-blue-600 rounded-full transition-all duration-500"
+                        style="width:${percent}%"
+                    ></div>
+                </div>
+
+                <div class="w-24 text-right text-sm font-medium text-slate-700">
+                    ${(emp.Points || 0).toLocaleString()} điểm
+                </div>
+
+            </div>
+        `;
+    }).join("");
+}
+
+function renderEmployeeWorkload() {
+
+    const employees = JSON.parse(localStorage.getItem(EMPLOYEES));
+    const tasks = JSON.parse(localStorage.getItem(TASKS_KEY));
+
+    const workloadMap = {};
+
+    tasks.forEach(task => {
+        if (!task.assigneeCode) return;
+
+        workloadMap[task.assigneeCode] =
+            (workloadMap[task.assigneeCode] || 0) + 1;
+    });
+
+    const workloadList = employees.map(emp => ({
+        ...emp,
+        workload: workloadMap[emp.MaNhanVien] 
+    }));
+
+    workloadList.sort((a, b) => b.workload - a.workload);
+
+    const top5 = workloadList.slice(0, 5);
+
+    const maxWorkload = Math.max(...top5.map(e => e.workload), 1);
+
+    document.getElementById("employeeWorkloadList").innerHTML =
+        top5.map((emp, index) => {
+
+            const percent = (emp.workload / maxWorkload) * 100;
+
+            return `
+            <div class="flex items-center gap-4">
+
+                <div class="w-5 text-center font-bold text-slate-800">
+                    ${index + 1}
+                </div>
+
+                <img
+                    src="${emp.Avatar}"
+                    class="w-11 h-11 rounded-full object-cover"
+                >
+
+                <div class="w-44">
+                    <p class="font-semibold text-sm text-slate-800">
+                        ${emp.HoTen}
+                    </p>
+
+                    <p class="text-xs text-slate-500">
+                        ${emp.ChucVu}
+                    </p>
+                </div>
+
+                <div class="flex-1">
+                    <div class="w-full h-2 bg-slate-200 rounded-full">
+
+                        <div
+                            class="h-2 rounded-full bg-blue-600 transition-all duration-500"
+                            style="width:${percent}%"
+                        ></div>
+
+                    </div>
+                </div>
+
+                <div class="w-20 text-right font-semibold text-slate-700">
+                    ${emp.workload} task
+                </div>
+
+            </div>
+            `;
+
+        }).join("");
+}
 
 

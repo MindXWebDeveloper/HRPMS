@@ -151,78 +151,13 @@
     
     <div class="BottomTable grid grid-cols-3 gap-[10px] mx-[10px] my-[20px]">
       <div class="TopEmployee bg-white rounded-xl p-6 border border-blue-500">
-        <div class="flex items-center gap-2 text-blue-700 text-lg font-bold mb-6">
-          <span></span>
+        <div class="flex items-center gap-2 text-blue-700 text-xl font-bold mb-6">
+          <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-star-icon lucide-user-star"><path d="M16.051 12.616a1 1 0 0 1 1.909.024l.737 1.452a1 1 0 0 0 .737.535l1.634.256a1 1 0 0 1 .588 1.806l-1.172 1.168a1 1 0 0 0-.282.866l.259 1.613a1 1 0 0 1-1.541 1.134l-1.465-.75a1 1 0 0 0-.912 0l-1.465.75a1 1 0 0 1-1.539-1.133l.258-1.613a1 1 0 0 0-.282-.866l-1.156-1.153a1 1 0 0 1 .572-1.822l1.633-.256a1 1 0 0 0 .737-.535z"/><path d="M8 15H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/></svg></span>
           <p>Top nhân viên xuất sắc</p>
         </div>
 
-        <div class="space-y-4">
+        <div id = "TopEmp" class="space-y-4">
         
-          <div class="flex items-center gap-4">
-            <span class="w-4 text-center font-bold text-slate-800 text-sm">1</span>
-            <img class="w-9 h-9 rounded-full object-cover bg-slate-100" src="" alt="Avatar">
-            <div class="w-32">
-                <div class="text-xs font-bold text-slate-800 leading-tight">Nguyễn Văn A</div>
-                <div class="text-[11px] text-slate-400 font-medium">Senior Developer</div>
-            </div>
-            <div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[80%]"></div>
-            </div>
-            <span class="w-20 text-right text-xs font-semibold text-slate-700">1,280 điểm</span>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <span class="w-4 text-center font-bold text-slate-800 text-sm">2</span>
-            <img class="w-9 h-9 rounded-full object-cover bg-slate-100" src="" alt="Avatar">
-            <div class="w-32">
-                <div class="text-xs font-bold text-slate-800 leading-tight">Trần Thị B</div>
-                <div class="text-[11px] text-slate-400 font-medium">Project Leader</div>
-            </div>
-            <div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[70%]"></div>
-            </div>
-            <span class="w-20 text-right text-xs font-semibold text-slate-700">1,150 điểm</span>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <span class="w-4 text-center font-bold text-slate-800 text-sm">3</span>
-            <img class="w-9 h-9 rounded-full object-cover bg-slate-100" src="" alt="Avatar">
-            <div class="w-32">
-                <div class="text-xs font-bold text-slate-800 leading-tight">Lê Văn C</div>
-                <div class="text-[11px] text-slate-400 font-medium">UI/UX Designer</div>
-            </div>
-            <div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[63%]"></div>
-            </div>
-            <span class="w-20 text-right text-xs font-semibold text-slate-700">1,050 điểm</span>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <span class="w-4 text-center font-bold text-slate-800 text-sm">4</span>
-            <img class="w-9 h-9 rounded-full object-cover bg-slate-100" src="" alt="Avatar">
-            <div class="w-32">
-                <div class="text-xs font-bold text-slate-800 leading-tight">Phạm Thị D</div>
-                <div class="text-[11px] text-slate-400 font-medium">Tester</div>
-            </div>
-            <div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[58%]"></div>
-            </div>
-            <span class="w-20 text-right text-xs font-semibold text-slate-700">980 điểm</span>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <span class="w-4 text-center font-bold text-slate-800 text-sm">5</span>
-            <img class="w-9 h-9 rounded-full object-cover bg-slate-100" src="" alt="Avatar">
-            <div class="w-32">
-                <div class="text-xs font-bold text-slate-800 leading-tight">Hoàng Văn E</div>
-                <div class="text-[11px] text-slate-400 font-medium">DevOps Engineer</div>
-            </div>
-            <div class="flex-1 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[52%]"></div>
-            </div>
-            <span class="w-20 text-right text-xs font-semibold text-slate-700">900 điểm</span>
-          </div>
-
         </div>
 
         <div class="mt-6 pt-2">
@@ -231,12 +166,17 @@
 
       </div>
       
-      <div class="ProductivityChart bg-white rounded-xl p-6 border border-blue-500">
+      <div class="ProductivityTable bg-white rounded-xl p-6 border border-blue-500">
         <div class="flex items-center gap-2 text-blue-700 text-lg font-bold mb-6">
           <span></span>
           <p>Hiệu suất làm việc </p>
         </div>
-        <img src="../../assets/images/accountdashboard/mockup-bieu-do.jpg"/>
+        <div id = "employeeWorkloadList" class="space-y-10">
+
+        </div>
+         <div class="mt-6 pt-2">
+        <a href="#" class="text-blue-600 hover:underline text-sm font-semibold">Xem tất cả nhân viên </a>
+        </div>
 
       </div>
 
@@ -246,7 +186,7 @@
         
         <div class="flex items-start gap-3">
             <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mt-0.5">
-                <span> icon </span>
+                <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-clock-icon lucide-folder-clock"><path d="M16 14v2.2l1.6 1"/><path d="M7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2"/><circle cx="16" cy="16" r="6"/></svg> </span>
             </div>
             <div>
                 <p class="text-xs font-medium text-slate-700 leading-tight">
@@ -258,11 +198,11 @@
 
         <div class="flex items-start gap-3">
             <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mt-0.5">
-                <span>icon</span>
+                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-check-icon lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m9 15 2 2 4-4"/></svg></span>
             </div>
             <div>
                 <p class="text-xs font-medium text-slate-700 leading-tight">
-                    Nhân viên <span class="font-bold">Nguyễn Văn A</span> hoàn thành 3 task
+                    Nhân viên <span class="font-bold">Lương Văn Thanh </span> hoàn thành 3 task
                 </p>
                 <span class="text-[11px] text-slate-400 font-medium block mt-1">4 giờ trước</span>
             </div>
@@ -270,7 +210,7 @@
 
         <div class="flex items-start gap-3">
             <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mt-0.5">
-                <span>icon</span>
+                <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-clock-icon lucide-folder-clock"><path d="M16 14v2.2l1.6 1"/><path d="M7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2"/><circle cx="16" cy="16" r="6"/></svg> </span>
             </div>
             <div>
                 <p class="text-xs font-medium text-slate-700 leading-tight">
@@ -282,7 +222,7 @@
 
         <div class="flex items-start gap-3">
             <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mt-0.5">
-                <span>icon</span>
+                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></span>
             </div>
             <div>
                 <p class="text-xs font-medium text-slate-700 leading-tight">
@@ -294,7 +234,7 @@
         
          <div class="flex items-start gap-3">
             <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mt-0.5">
-                <span>icon</span>
+                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-check-icon lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m9 15 2 2 4-4"/></svg></span>
             </div>
             <div>
                 <p class="text-xs font-medium text-slate-700 leading-tight">
@@ -303,7 +243,66 @@
                 <span class="text-[11px] text-slate-400 font-medium block mt-1">5 giờ trước</span>
             </div>
         </div>
-        
+        <div class="flex items-start gap-3">
+    <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mt-0.5">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+                <rect x="9" y="3" width="6" height="4" rx="1"/>
+                <path d="M9 12h6"/>
+                <path d="M9 16h4"/>
+            </svg>
+        </span>
+    </div>
+    <div>
+        <p class="text-xs font-medium text-slate-700 leading-tight">
+            Dự án <span class="font-bold">"Software"</span> đã tạo thêm <span class="font-bold">12 task</span> mới
+        </p>
+        <span class="text-[11px] text-slate-400 font-medium block mt-1">8 giờ trước</span>
+    </div>
+</div>
+
+<div class="flex items-start gap-3">
+    <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mt-0.5">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="m16 11 2 2 4-4"/>
+            </svg>
+        </span>
+    </div>
+    <div>
+        <p class="text-xs font-medium text-slate-700 leading-tight">
+            Nhân viên <span class="font-bold">Phạm Thu Hà</span> được phân công vào dự án <span class="font-bold">Mobile Banking</span>
+        </p>
+        <span class="text-[11px] text-slate-400 font-medium block mt-1">12 giờ trước</span>
+    </div>
+</div>
+
+<div class="flex items-start gap-3">
+    <div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 mt-0.5">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1815c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check-2">
+                <path d="M8 2v4"/>
+                <path d="M16 2v4"/>
+                <rect width="18" height="18" x="3" y="4" rx="2"/>
+                <path d="M3 10h18"/>
+                <path d="m9 16 2 2 4-4"/>
+            </svg>
+        </span>
+    </div>
+    <div>
+        <p class="text-xs font-medium text-slate-700 leading-tight">
+            Cuộc họp <span class="font-bold">Sprint Review</span> đã được lên lịch cho toàn bộ nhóm phát triển
+        </p>
+        <span class="text-[11px] text-slate-400 font-medium block mt-1">2 ngày trước</span>
+    </div>
+</div>
+
+        </div>
+        <div class="mt-6 pt-2">
+        <a href="#" class="text-blue-600 hover:underline text-sm font-semibold">Xem tất cả hoạt động gần đây </a>
         </div>
       </div>
 

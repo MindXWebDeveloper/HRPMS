@@ -30,7 +30,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP001.jpg",
     Vaitro: "admin",
     ChucVu: "Developer",
-    TrangThai:"Hoạt động"
+    TrangThai:"Hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1TmkF8xaojUTHJ3C9iFDUTZRr_vr1MKwE",
+    Points: 1350
 },
 
 {
@@ -61,7 +63,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP002.jpg",
     Vaitro: "user",
     ChucVu: "IT Support",
-    TrangThai:"Hoạt động"
+    TrangThai:"Hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1maiLrZMV4YPFNiuav9Z0q7mnvKvnmPp8",
+    Points: 1280,
 
 },
 
@@ -93,7 +97,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP003.jpg",
     ChucVu: "Frontend Dev",
     Vaitro: "user",
-    TrangThai:"Hoạt động"
+    TrangThai:"Hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1Dv3q-53YJXCHTB1pUZcCyRLxuPguphvK",
+    Points: 980
 },
 
 {
@@ -124,7 +130,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP004.jpg",
     Vaitro: "user",
     ChucVu: "Developer",
-    TrangThai:"Hoạt động"
+    TrangThai:"Hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1cG1wRkGMbpb06Rrn8EOAWp_M5XQkyNgA",
+    Points: 1050
 },
 
 {
@@ -155,7 +163,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP005.jpg",
     Vaitro: "user",
     ChucVu: "Project Manager",
-    TrangThai:" Ngưng hoạt động"
+    TrangThai:" Ngưng hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1hgM0h71O-16rlsMRmWMchDmWR116g1Gm",
+    Points: 900
 }
 
 ];
