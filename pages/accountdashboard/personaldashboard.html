@@ -80,15 +80,15 @@
     </div>
 
 
-    <div class="ListProjectTask grid grid-cols-2 gap-[10px] mx-[10px] my-[20px]">
+<div class="ListProjectTask grid grid-cols-2 gap-[10px] mx-[10px] my-[20px]">
         <div class="ListProject border border-2 border-blue-500 rounded-xl">
-            <div>
-                <span></span>
-                <p> Danh sách dự án </p>
+            <div class="flex gap-2 ml-3 mt-2">
+                <div><svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" viewBox="0 0 24 24" fill="none" stroke="#416c95" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-icon lucide-folder"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></div>  
+                <p class="text-blue-600 text-xl font-bold"> Danh sách dự án </p>
             </div>
-            <table>       
+            <table class="w-[95%] m-auto my-4">       
            <thead>
-                <tr class="text-blue-500 font-bold border-b border-blue-500">
+                <tr class="text-blue-800 font-bold border-b border-blue-500">
                     <th class="pb-3 pl-4">Dự án</th>
                     <th class="pb-3">Khách hàng</th>
                     <th class="pb-3">Trưởng dự án</th>
@@ -99,191 +99,32 @@
                 </tr>
             </thead>
 
-            <tbody class="text-gray-700 text-sm divide-y divide-gray-50">
-            <tr class="hover:bg-gray-50/50 transition-colors">
-                <td class="py-4 pl-4 font-medium flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span>
-            Website E-commerce
-                </td>
-                <td class="py-4 text-gray-500">Công ty ABC</td>
-                <td class="py-4">Nguyễn Văn A</td>
-                <td class="py-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-24 bg-gray-100 h-2 rounded-full overflow-hidden">
-                    <div class="bg-blue-600 h-full rounded-full w-[75%]"></div>
-                    </div>
-                    <span class="text-xs text-gray-500">75%</span>
-                </div>
-                </td>
-                <td class="py-4">
-                  <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-blue-50 text-blue-600 border border-blue-100">
-                  Đang thực hiện
-                  </span>
-                </td>
-                <td class="py-4 text-gray-500 text-center">25/06/2024</td>
-                <td class="py-4 pr-4 text-right">
-                <button class="material-symbols-outlined text-gray-400 hover:text-gray-600 align-middle">more_vert</button>
-                </td>
-            </tr>
-
-            <tr class="hover:bg-gray-50/50 transition-colors">
-            <td class="py-4 pl-4 font-medium flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span>
-            ERP System
-            </td>
-            <td class="py-4 text-gray-500">Công ty DEF</td>
-            <td class="py-4">Lê Văn C</td>
-            <td class="py-4">
-            <div class="flex items-center gap-2">
-              <div class="w-24 bg-gray-100 h-2 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[90%]"></div>
-              </div>
-              <span class="text-xs text-gray-500">90%</span>
-            </div>
-            </td>
-            <td class="py-4">
-            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100">
-              Sắp hoàn thành
-            </span>
-            </td>
-            <td class="py-4 text-gray-500 text-center">05/06/2024</td>
-            <td class="py-4 pr-4 text-right">
-            <button class="material-symbols-outlined text-gray-400 hover:text-gray-600 align-middle">more_vert</button>
-            </td>
-            </tr>
-
-            <tr class="hover:bg-gray-50/50 transition-colors">
-            <td class="py-4 pl-4 font-medium flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-            CRM Platform
-            </td>
-            <td class="py-4 text-gray-500">Công ty GHI</td>
-            <td class="py-4">Phạm Thị D</td>
-            <td class="py-4">
-            <div class="flex items-center gap-2">
-              <div class="w-24 bg-gray-100 h-2 rounded-full overflow-hidden">
-              <div class="bg-blue-600 h-full rounded-full w-[100%]"></div>
-              </div>
-              <span class="text-xs text-gray-500">100%</span>
-            </div>
-            </td>
-            <td class="py-4">
-            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-green-50 text-green-600 border border-green-100">
-              Hoàn thành
-            </span>
-            </td>
-            <td class="py-4 text-gray-500 text-center">20/05/2024</td>
-            <td class="py-4 pr-4 text-right">
-            <button class="material-symbols-outlined text-gray-400 hover:text-gray-600 align-middle">more_vert</button>
-            </td>
-            </tr>
+            <tbody id="ProjectTableBody" class="text-gray-700 text-sm divide-y divide-gray-50">
 
             </tbody>
             </table>
         </div>
 
         <div class="ListTask border border-2 border-blue-500 rounded-xl">
-        <div>
-                <span></span>
-                <p> Danh sách task </p>
+        <div class="flex gap-2 ml-3 mt-2">
+                <div><svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" viewBox="0 0 24 24" fill="none" stroke="#982ac0" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list-icon lucide-clipboard-list"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></div>
+                <p class="text-blue-600 text-xl font-bold"> Danh sách task </p>
         </div>
-        <table>
+        <table class="w-[95%] m-auto my-4">
         <thead>
-          <tr class="text-blue-500 font-bold text-sm border-b border-b-blue-500">
+          <tr class="text-blue-600 font-bold text-sm border-b border-b-blue-500">
           <th class="pb-3 pl-4">Task</th>
           <th class="pb-3">Dự án</th>
           <th class="pb-3">Người thực hiện</th>
-          <th class="pb-3">Tiến độ</th>
-          <th class="pb-3">Hạn hoàn thành</th>
+          <th class="pb-3">Priority</th>
           <th class="pb-3">Trạng thái</th>
+          <th class="pb-3">Cập nhật cuối</th>
           <th class="pb-3 pr-4 text-right"></th>
         </tr>
         </thead>
 
-        <tbody class="text-gray-700 text-sm divide-y divide-gray-50">
+        <tbody id="TaskTableBody" class="text-gray-700 text-sm divide-y divide-gray-50">
         
-        <tr class="hover:bg-gray-50/50 transition-colors">
-          <td class="py-4 pl-4 font-medium">Thiết kế UI/UX</td>
-          <td class="py-4 text-gray-500">Website E-commerce</td>
-          <td class="py-4">
-            <div class="flex -space-x-2 overflow-hidden">
-              <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white object-cover" src="" alt="Avatar 1">
-              <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white object-cover" src="" alt="Avatar 2">
-            </div>
-          </td>
-          <td class="py-4">
-            <div class="flex items-center gap-2">
-              <div class="w-24 bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[100%]"></div>
-              </div>
-              <span class="text-xs text-gray-500">100%</span>
-            </div>
-          </td>
-          <td class="py-4 text-gray-500 text-center">28/05/2024</td>
-          <td class="py-4">
-            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-green-50 text-green-600 border border-green-100">
-              Hoàn thành
-            </span>
-          </td>
-          <td class="py-4 pr-4 text-right">
-            <button class="material-symbols-outlined text-gray-400 hover:text-gray-600 align-middle">more_vert</button>
-          </td>
-        </tr>
-
-        <tr class="hover:bg-gray-50/50 transition-colors">
-          <td class="py-4 pl-4 font-medium">Xây dựng API</td>
-          <td class="py-4 text-gray-500">Mobile App Banking</td>
-          <td class="py-4">
-            <div class="flex -space-x-2 overflow-hidden">
-              <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white object-cover" src="" alt="Avatar 1">
-              <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white object-cover" src="" alt="Avatar 2">
-            </div>
-          </td>
-          <td class="py-4">
-            <div class="flex items-center gap-2">
-              <div class="w-24 bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[60%]"></div>
-              </div>
-              <span class="text-xs text-gray-500">60%</span>
-            </div>
-          </td>
-          <td class="py-4 text-gray-500 text-center">30/05/2024</td>
-          <td class="py-4">
-            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-blue-50 text-blue-600 border border-blue-100">
-              Đang thực hiện
-            </span>
-          </td>
-          <td class="py-4 pr-4 text-right">
-            <button class="material-symbols-outlined text-gray-400 hover:text-gray-600 align-middle">more_vert</button>
-          </td>
-        </tr>
-
-        <tr class="hover:bg-gray-50/50 transition-colors">
-          <td class="py-4 pl-4 font-medium">Tích hợp thanh toán</td>
-          <td class="py-4 text-gray-500">Mobile App Banking</td>
-          <td class="py-4">
-            <div class="flex overflow-hidden">
-              <img class="inline-block h-7 w-7 rounded-full ring-2 ring-white object-cover" src="" alt="Avatar 1">
-            </div>
-          </td>
-          <td class="py-4">
-            <div class="flex items-center gap-2">
-              <div class="w-24 bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full w-[20%]"></div>
-              </div>
-              <span class="text-xs text-gray-500">20%</span>
-            </div>
-          </td>
-          <td class="py-4 text-gray-500 text-center">02/06/2024</td>
-          <td class="py-4">
-            <span class="px-2.5 py-1 text-xs font-medium rounded-full bg-blue-50 text-blue-600 border border-blue-100">
-              Đang thực hiện
-            </span>
-          </td>
-          <td class="py-4 pr-4 text-right">
-            <button class="material-symbols-outlined text-gray-400 hover:text-gray-600 align-middle">more_vert</button>
-          </td>
-        </tr>
       </tbody>
     </table>
         </div>
@@ -340,10 +181,137 @@
     <div class="ProductivityChart bg-white rounded-xl p-6 border border-blue-500">
         <div class="flex items-center gap-2 text-blue-700 text-lg font-bold mb-6">
           <span></span>
-          <p>Hiệu suất làm việc </p>
+          <p>Tiến độ hoàn thành KPI cá nhân </p>
         </div>
-        <img src="../../assets/images/accountdashboard/mockup-bieu-do.jpg"/>
+        <div id="personal-kpi" class="space-y-6">
 
+        <div class="flex items-center gap-4">
+
+            <div
+                class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b11cb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-check-icon lucide-folder-check"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="m9 13 2 2 4-4"/></svg>
+            </div>
+
+            <div class="w-52">
+                <p class="font-semibold text-gray-800">
+                    Project hoàn thành
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Hoàn thành trong năm
+                </p>
+            </div>
+
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                    class="h-full bg-blue-600 rounded-full"
+                    style="width:70%">
+                </div>
+            </div>
+
+            <div class="w-16 text-right font-semibold text-lg">
+                8
+            </div>
+
+        </div>
+
+
+
+        <div class="flex items-center gap-4">
+
+            <div
+                class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0ecb0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-checks-icon lucide-list-checks"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></svg>
+            </div>
+
+            <div class="w-52">
+                <p class="font-semibold text-gray-800">
+                    Task hoàn thành
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Tổng số task
+                </p>
+            </div>
+
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                    class="h-full bg-green-500 rounded-full"
+                    style="width:82%">
+                </div>
+            </div>
+
+            <div class="w-16 text-right font-semibold text-lg">
+                42
+            </div>
+
+        </div>
+
+      
+
+        <div class="flex items-center gap-4">
+
+            <div
+                class="w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#cb7b0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-check-icon lucide-clock-check"><path d="M12 6v6l4 2"/><path d="M22 12a10 10 0 1 0-11 9.95"/><path d="m22 16-5.5 5.5L14 19"/></svg>
+            </div>
+
+            <div class="w-52">
+                <p class="font-semibold text-gray-800">
+                    Hoàn thành đúng hạn
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Task / Project
+                </p>
+            </div>
+
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                    class="h-full bg-yellow-500 rounded-full"
+                    style="width:87%">
+                </div>
+            </div>
+
+            <div class="w-16 text-right font-semibold text-lg">
+                87%
+            </div>
+
+        </div>
+
+        <!-- Customer -->
+
+        <div class="flex items-center gap-4">
+
+            <div
+                class="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center text-pink-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#cb0bc5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-percent-icon lucide-badge-percent"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m15 9-6 6"/><path d="M9 9h.01"/><path d="M15 15h.01"/></svg>
+            </div>
+
+            <div class="w-52">
+                <p class="font-semibold text-gray-800">
+                    Hài lòng khách hàng
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Customer Rating
+                </p>
+            </div>
+
+            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                    class="h-full bg-pink-500 rounded-full"
+                    style="width:96%">
+                </div>
+            </div>
+
+            <div class="w-16 text-right font-semibold text-lg">
+                4.8
+            </div>
+
+        </div>
+
+    </div>
     </div>
 
 
@@ -407,7 +375,7 @@
 
 </div>
 
-<script src="accountdashboard.js"></script>
-<script type="module" src="../../assets/js/layout.js?v=2"></script>   
+<script type = module src="personaldashboard.js"></script>
+<script type="module" src="../../assets/js/layout.js"></script>   
 </body>
 </html>
