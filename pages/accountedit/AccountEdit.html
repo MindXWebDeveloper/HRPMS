@@ -7,6 +7,7 @@
     <link href="style.css" rel="stylesheet"> 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel ="stylesheet" href="../../assets/css/dashboard.css"
 </head>
 <body data-base-path="../../">
 <div data-layout="sidebar" class="fixed w-64 h-screen"></div>
@@ -24,10 +25,10 @@
     <div class="text-bold text-blue-600 px-[20px] border-2 border-b-4 border-b-blue-900 content-center text-center">
     <p> Thông tin cá nhân </p>
     </div>
-    <div class="text-bold text-slate-600 px-[20px] h-[40px] border-2 content-center text-center">
+    <div class="text-bold text-slate-600 px-[20px] border-2 content-center text-center">
     <p> Tài liệu đính kèm </p>
     </div>
-    <div class="text-bold text-slate-600 px-[20px] h-[40px] border-2 content-center text-center">
+    <div class="text-bold text-slate-600 px-[20px] border-2 content-center text-center">
     <p> Tổng hợp</p>
     </div>
 
@@ -44,15 +45,15 @@
                 <div class="Infocol1">
                 <div>
                  <p class="font-bold text-blue-900"> Họ và tên </p>
-                 <input id="HoTen" type="text" placeholder="   Nhập họ và tên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                 <input id="HoTen" type="text" placeholder="   Nhập họ và tên" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
                 <div>
                  <p class="font-bold text-blue-900"> Số điện thoại </p>
-                 <input id="SoDienThoai" type="text" placeholder="   Nhập số điện thoại" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                 <input id="SoDienThoai" type="text" placeholder="   Nhập số điện thoại" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Ngày cấp </p>
-                <input id="NgayCap" type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                <input id="NgayCap" type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
              
                 </div>
@@ -60,15 +61,15 @@
                 <div class="Infocol2"> 
                 <div>
                 <p class="font-bold text-blue-900"> Ngày sinh </p>
-                <input id="NgaySinh" type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                <input id="NgaySinh" type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Email  </p>
-                <input id="DcEmail" type="text" placeholder="   Nhập email" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                <input id="DcEmail" type="text" placeholder="   Nhập email" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Nơi cấp</p>
-                <input id="NoiCap" type="text" placeholder="   Nhập nơi cấp" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                <input id="NoiCap" type="text" placeholder="   Nhập nơi cấp" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
                 
                 </div>
@@ -76,7 +77,7 @@
                 <div class="Infocol3 items-end">
                 <div>
                     <p class="font-bold text-blue-900"> Giới tính </p>
-                    <select id="GioiTinh" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                    <select id="GioiTinh" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                         <option>Chọn giới tính </option>
                         <option>Nam</option>
                         <option> Nữ</option>
@@ -84,11 +85,11 @@
                 </div>
                 <div>
                     <p class="font-bold text-blue-900"> Số CCCD  </p>
-                    <input id="SoCccd" type="text" placeholder="   Nhập số CCCD" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                    <input id="SoCccd" type="text" placeholder="   Nhập số CCCD" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
                     <div>
                     <p class="font-bold text-blue-900"> Quốc tịch</p>
-                    <input id="QuocTich" type="text" placeholder="   Nhập Quốc tịch" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                    <input id="QuocTich" type="text" placeholder="   Nhập Quốc tịch" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                     </div>
                
                 </div>
@@ -124,26 +125,26 @@
 
 </div>
 
-<div class="flex justify-center px-[20px]">
-    <div class="BottomInfo w-[100%] grid grid-cols-3 gap-[20px]"> 
+<div class="flex justify-center px-[20px] w-[100%]">
+    <div class="BottomInfo grid grid-cols-3 gap-[20px]"> 
     <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
     <div class="flex mb-[5px] gap-[5px]">
         <img src="../../assets/images/accountregister/contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin liên hệ khẩn cấp </p>
     </div>
-    <div class="flex gap-[10px]">
+    <div class="flex flex-col-2 items-center gap-[10px] w-[100%]">
         <div>
-            <p class="font-bold text-blue-900"> Họ tên người liên hệ </p>
-            <input id="NgLienHe" type="text" placeholder="   Nhập họ tên" class="mb-[10px] border rounded-full border-slate-400">
+            <p class="font-bold text-blue-900"> Họ tên  </p>
+            <input id="NgLienHe" type="text" placeholder="   Nhập họ tên" class="mb-[10px] border rounded-full border-slate-400 w-[90%]">
         </div>
         <div>
             <p class="font-bold text-blue-900"> Số điện thoại </p>
-            <input id="SDTNgLienHe" type="text" placeholder="   Số điện thoại" class="mb-[10px] border rounded-full border-slate-400">
+            <input id="SDTNgLienHe" type="text" placeholder="   Số điện thoại" class="mb-[10px] border rounded-full border-slate-400 w-[90%]">
         </div>
     </div>
     <div>
         <p class="font-bold text-blue-900"> Mối quan hệ </p>
-        <select id="QuanHe" class="mb-[10px] px-[5px] border rounded-full border-slate-400">
+        <select id="QuanHe" class="mb-[10px] px-[5px] border rounded-full border-slate-400 w-[50%]">
             <option> Chọn mối quan hệ </option>
             <option> Vợ/chồng </option>
             <option> Bố/mẹ đẻ </option>
@@ -154,7 +155,7 @@
     </div>
     <div>
         <p class="font-bold text-blue-900"> Địa chỉ </p>
-        <input id="DCNgLienHe" type="text" placeholder="   Nhập địa chỉ" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+        <input id="DCNgLienHe" type="text" placeholder="   Nhập địa chỉ" class="mb-[10px] border rounded-full border-slate-400 w-[95%]">
     </div>
     </div>
       
@@ -166,19 +167,19 @@
         <div class="grid grid-cols-2 grid-rows-2 my-[5px]">
             <div>
                 <p class="font-bold text-blue-900"> Mã Nhân viên </p>
-                <input id="MaNhanVien" type="text" placeholder="   Nhập mã nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                <input id="MaNhanVien" type="text" placeholder="   Nhập mã nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Cấp bậc </p>
-                <input id="Level" type="text" placeholder="   Nhập cấp bậc nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                <input id="Level" type="text" placeholder="   Nhập cấp bậc nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
             <div>
                 <p class="font-bold text-blue-900"> Phòng ban </p>
-                <input id="PhongBan" type="text" placeholder="   Nhập phòng ban" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                <input id="PhongBan" type="text" placeholder="   Nhập phòng ban" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
                 </div>
             <div>
         <p class="font-bold text-blue-900"> Trạng thái </p>
-        <select id="TrangThai" class="mb-[10px] px-[5px] border rounded-full border-slate-400">
+        <select id="TrangThai" class="mb-[10px] px-[5px] border rounded-full border-slate-400 w-[85%]">
             <option> Chọn trạng thái </option>
             <option> Hoạt động </option>
             <option> Ngừng hoạt động </option>
@@ -195,7 +196,7 @@
         <div class="grid grid-cols-2">
             <div>
                 <p class="font-bold text-blue-900"> Trình độ học vấn </p>
-                <select id="HocVan" class="mb-[10px] px-[5px] border rounded-full border-slate-400">
+                <select id="HocVan" class="mb-[10px] px-[5px] border rounded-full border-slate-400 w-[85%]">
                     <option> Chọn trình độ </option>
                     <option> THPT </option>
                     <option> Cao đẳng/Đại học </option>
@@ -204,7 +205,7 @@
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Ngoại ngữ </p>
-                <input id="NgoaiNgu" type="text" placeholder="   Nhập ngoại ngữ" class="mb-[10px] border rounded-full border-slate-400">
+                <input id="NgoaiNgu" type="text" placeholder="   Nhập ngoại ngữ" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
             </div>
         </div>
         <div>

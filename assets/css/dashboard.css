@@ -1,0 +1,64 @@
+@media (max-width: 1024px) {
+    .InfoCards {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+    .ListProjectTask {
+        display: flex !important;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .BottomTable {
+        display: flex !important;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .TopInfo {
+        display: flex;
+        flex-direction: column-reverse
+      
+    }
+    .AvatarBox, .InfoBox {
+        width: 95%
+    }
+
+    .BottomInfo {
+        display: flex !important;
+        flex-direction: column;
+        width: 95%
+    }
+}
+
+@media (max-width: 768px) {
+    .InfoCards {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .ListProjectTask {
+        display: flex !important;
+        flex-direction: column;
+        gap: 20px
+    }
+    .BottomTable {
+        display: flex !important;
+        flex-direction: column;
+        gap: 20px
+    }
+    .mana1, .mana2 {
+        display: none
+    }
+    .TopInfo {
+        display: flex;
+        flex-direction: column-reverse
+      
+    }
+    .AvatarBox, .InfoBox {
+        width: 95%
+    }
+
+    .BottomInfo {
+        display: flex !important;
+        flex-direction: column;
+        width: 95%
+    }
+}
+}
