@@ -9,8 +9,8 @@ let defaultUsers = [
         password: "admin1234567",
         role: "project_manager",
         status: "active",
-        MaNhanVien: "EMP001",
-        
+        MaNhanVien: "thanhlv",
+        resetPass: false,
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     },
@@ -18,10 +18,11 @@ let defaultUsers = [
         id: "us002",
         account: "user002",
         email: "linh.nguyen@company.com",
-        password: "user12345671234",
+        password: "V@nth@nh10041999",
         role: "hr_manager",
         status: "active",
-        MaNhanVien: "EMP002",
+        MaNhanVien: "linhnh",
+        resetPass: false,
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     },
@@ -32,7 +33,8 @@ let defaultUsers = [
         password: "user1234567",
         role: "employee",
         status: "active",
-        MaNhanVien: "EMP003",
+        MaNhanVien: "cuonglm",
+        resetPass: false,
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     },
@@ -43,7 +45,8 @@ let defaultUsers = [
         password: "user1234567",
         role: "employee",
         status: "active",
-        MaNhanVien: "EMP004",
+        MaNhanVien: "hapt",
+        resetPass: false,
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     },
@@ -54,7 +57,8 @@ let defaultUsers = [
         password: "user1234567",
         role: "employee",
         status: "inactive",
-        MaNhanVien: "EMP005",
+        MaNhanVien: "viethq",
+        resetPass: false,       
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     }

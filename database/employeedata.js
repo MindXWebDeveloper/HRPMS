@@ -12,7 +12,7 @@ export const employees = [
     GioiTinh: "Nam",
     SoCccd: "001095123456",
     QuocTich: "Việt Nam",
-    MaNhanVien: "EMP001",
+    MaNhanVien: "thanhlv",
     Level: "Junior Developer",
     PhongBan: "Phát triển phần mềm",
     DCTtru: "Ba Đình, Hà Nội",
@@ -30,7 +30,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP001.jpg",
     Vaitro: "admin",
     ChucVu: "Developer",
-    TrangThai:"Hoạt động"
+    TrangThai:"Hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1TmkF8xaojUTHJ3C9iFDUTZRr_vr1MKwE",
+    Points: 1350
 },
 
 {
@@ -43,7 +45,7 @@ export const employees = [
     GioiTinh: "Nữ",
     SoCccd: "001097654321",
     QuocTich: "Việt Nam",
-    MaNhanVien: "EMP002",
+    MaNhanVien: "linhnh",
     Level: "Tester",
     PhongBan: "QA/QC",
     DCTtru: "Hải Châu, Đà Nẵng",
@@ -61,7 +63,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP002.jpg",
     Vaitro: "user",
     ChucVu: "IT Support",
-    TrangThai:"Hoạt động"
+    TrangThai:"Hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1maiLrZMV4YPFNiuav9Z0q7mnvKvnmPp8",
+    Points: 1280,
 
 },
 
@@ -75,7 +79,7 @@ export const employees = [
     GioiTinh: "Nam",
     SoCccd: "001093987654",
     QuocTich: "Việt Nam",
-    MaNhanVien: "EMP003",
+    MaNhanVien: "cuonglm",
     Level: "Senior Developer",
     PhongBan: "Phát triển phần mềm",
     DCTtru: "Quận 1, TP Hồ Chí Minh",
@@ -93,7 +97,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP003.jpg",
     ChucVu: "Frontend Dev",
     Vaitro: "user",
-    TrangThai:"Hoạt động"
+    TrangThai:"Hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1Dv3q-53YJXCHTB1pUZcCyRLxuPguphvK",
+    Points: 980
 },
 
 {
@@ -106,7 +112,7 @@ export const employees = [
     GioiTinh: "Nữ",
     SoCccd: "001098112233",
     QuocTich: "Việt Nam",
-    MaNhanVien: "EMP004",
+    MaNhanVien: "hapt",
     Level: "Business Analyst",
     PhongBan: "Phân tích nghiệp vụ",
     DCTtru: "Lê Chân, Hải Phòng",
@@ -124,7 +130,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP004.jpg",
     Vaitro: "user",
     ChucVu: "Developer",
-    TrangThai:"Hoạt động"
+    TrangThai:"Hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1cG1wRkGMbpb06Rrn8EOAWp_M5XQkyNgA",
+    Points: 1050
 },
 
 {
@@ -137,7 +145,7 @@ export const employees = [
     GioiTinh: "Nam",
     SoCccd: "001091223344",
     QuocTich: "Việt Nam",
-    MaNhanVien: "EMP005",
+    MaNhanVien: "viethq",
     Level: "Project Manager",
     PhongBan: "Quản lý dự án",
     DCTtru: "Ninh Kiều, Cần Thơ",
@@ -155,7 +163,9 @@ export const employees = [
     Avatar: "assets/avatar/EMP005.jpg",
     Vaitro: "user",
     ChucVu: "Project Manager",
-    TrangThai:" Ngưng hoạt động"
+    TrangThai:" Ngưng hoạt động",
+    Avatar: "https://lh3.googleusercontent.com/d/1hgM0h71O-16rlsMRmWMchDmWR116g1Gm",
+    Points: 900
 }
 
 ];
@@ -171,8 +181,8 @@ function getAllEmployees() {
     return JSON.parse(localStorage.getItem(EMPLOYEES)) || [];
 }
 
-function findEmployeeByMaNV(maNhanVien) { 
-    const employeeCode = String(maNhanVien || "").trim();
+function findEmployeeByMaNV(MaNhanVien) { 
+    const employeeCode = String(MaNhanVien || "").trim();
 
     if (!employeeCode) {
         return null;

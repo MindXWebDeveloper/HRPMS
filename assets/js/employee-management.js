@@ -1,7 +1,10 @@
-import { employees as defaultEmployees} from "../../database/employeeData.js";
+import { employees as defaultEmployees} from "../../database/employeedata.js";
 const EMPLOYEES_KEY ="EMPLOYEES";
 const tbody = document.getElementById("employeeTableBody");
-
+const searchInput = document.getElementById("employee-search-input");
+const searchButton = document.getElementById("employee-search-btn");
+let currentSearchKeyword = "";
+let currentPage = 1;
 function initEmployeeData() {
     if (!localStorage.getItem(EMPLOYEES_KEY)) {
         localStorage.setItem(
@@ -14,9 +17,36 @@ function getEmployees() {
     return JSON.parse(localStorage.getItem(EMPLOYEES_KEY)) || [];
 }
 
+function bindSearchEmployeeByName() {
+  if (!searchInput || !searchButton) {
+    return;
+  }
+
+  const triggerSearch = () => {
+    currentSearchKeyword = String(searchInput.value || "").trim().toLowerCase();
+    currentPage = 1;
+    renderEmployee();
+  };
+
+  searchButton.addEventListener("click", triggerSearch);
+
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      triggerSearch();
+    }
+  });
+}
 
 function renderEmployee() {
-   const employees = getEmployees();
+   let employees = getEmployees();
+   if (currentSearchKeyword) {
+    employees = employees.filter(employee =>
+        employee.HoTen
+            .toLowerCase()
+            .includes(currentSearchKeyword)``
+    );
+}
     tbody.innerHTML = "";
 
     employees.forEach(employee => {
@@ -118,4 +148,5 @@ function renderEmployee() {
 document.addEventListener("DOMContentLoaded", () => {
     initEmployeeData();
     renderEmployee();
+    bindSearchEmployeeByName();
     });

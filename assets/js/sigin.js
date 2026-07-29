@@ -6,6 +6,7 @@ import {
    saveCurrentUser,
    signinUser
 } from "./services/authService.js";
+import { INFO_TEMP } from "./common/storageKeys.js";
 
 document.addEventListener("DOMContentLoaded", function() {
     const currentUser = getCurrentUser();
@@ -84,7 +85,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
     event.preventDefault(); // không tải lại trang khi submit form
 
     let account = document.getElementById("account").value.trim().toLowerCase();
-    let inputPassword = document.getElementById("password").value.trim().toLowerCase();
+    let inputPassword = document.getElementById("password").value.trim();
     let btn = event.currentTarget.querySelector("button[type='submit']");
     let hasError = false;
     
@@ -117,10 +118,21 @@ document.getElementById("login-form").addEventListener("submit", async function(
     let foundUser =  await signinUser(account, inputPassword);
 
     if(foundUser) {
-        saveCurrentUser(foundUser);
-        // Chuyển hướng đến trang chính hoặc trang dashboard
-        window.location.href = "../pages/accountdashboard/accountdashboard.html";
-         btn.disabled = true; // Tắt submit sau khi xử lý xong
+        if(!foundUser.resetPass) {
+            saveCurrentUser(foundUser);
+            // Chuyển hướng đến trang chính hoặc trang dashboard
+            window.location.href = "./pages/accountdashboard/accountdashboard.html";
+            btn.disabled = true; // Tắt submit sau khi xử lý xong
+        }else{
+            const data = {
+                account: account,
+                password: inputPassword,
+                resetPass: true
+            };
+            localStorage.setItem(INFO_TEMP, JSON.stringify(data));
+            window.location.href = "./pages/employee-management/reset-password.html";
+        }
+        
     }else{
         showError("account", "Tài khoản hoặc mật khẩu không chính xác");
          btn.disabled = false; // Kích hoạt lại nút submit sau khi xử lý xong
