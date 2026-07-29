@@ -432,8 +432,8 @@ function bindEditAccountModal() {
     if (fullNameInput) fullNameInput.value = employee?.HoTen || user.MaNhanVien || "";
     if (emailInput) emailInput.value = user.email || "";
     if (roleInput) roleInput.value = user.role || "employee";
-    if (passwordInput) passwordInput.value = user.password|| "";
-    if (confirmPasswordInput) confirmPasswordInput.value = user.password|| "";
+    //if (passwordInput) passwordInput.value = user.password|| "";
+    //if (confirmPasswordInput) confirmPasswordInput.value = user.password|| "";
     if (statusInput) statusInput.value = user.status|| "active";
     clearFormErrors(fieldValidationMap);
 

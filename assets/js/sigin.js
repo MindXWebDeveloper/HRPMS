@@ -84,7 +84,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
     event.preventDefault(); // không tải lại trang khi submit form
 
     let account = document.getElementById("account").value.trim().toLowerCase();
-    let inputPassword = document.getElementById("password").value.trim().toLowerCase();
+    let inputPassword = document.getElementById("password").value.trim();
     let btn = event.currentTarget.querySelector("button[type='submit']");
     let hasError = false;
     
