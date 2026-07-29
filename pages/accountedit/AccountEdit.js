@@ -1,7 +1,7 @@
 const EMPLOYEES_KEY = "EMPLOYEES";
 const CURRENT_USER_KEY = "CURRENT_USER";
 const params = new URLSearchParams(window.location.search);
-const maNV = params.get("maNV");
+let maNV = params.get("maNV");
 
 
 if (!maNV) {
@@ -14,31 +14,30 @@ if (!maNV) {
 const employees = JSON.parse(localStorage.getItem(EMPLOYEES_KEY)) || [];
 const employee = employees.find(emp => emp.MaNhanVien === maNV);
 
-document.getElementById('MaNhanVien').value = employee.MaNhanVien || "Chưa có thông tin nhân viên";        
-document.getElementById('HoTen').value = employee.HoTen || "Chưa có thông tin nhân viên";
-document.getElementById('NgaySinh').value = employee.NgaySinh || "Chưa có thông tin nhân viên";
-document.getElementById('SoDienThoai').value = employee.SoDienThoai || "Chưa có thông tin nhân viên";
-document.getElementById('NgayCap').value = employee.NgayCap || "Chưa có thông tin nhân viên";
-document.getElementById('DcEmail').value = employee.DcEmail || "Chưa có thông tin nhân viên";
-document.getElementById('NoiCap').value = employee.NoiCap || "Chưa có thông tin nhân viên";
-document.getElementById('GioiTinh').value = employee.GioiTinh || "Chưa có thông tin nhân viên";
-document.getElementById('SoCccd').value = employee.SoCccd || "Chưa có thông tin nhân viên";
-document.getElementById('QuocTich').value = employee.QuocTich || "Chưa có thông tin nhân viên";
-document.getElementById('Level').value = employee.Level || "Chưa có thông tin nhân viên";
-document.getElementById('PhongBan').value = employee.PhongBan || "Chưa có thông tin nhân viên";
-document.getElementById('DCTtru').value = employee.DCTtru || "Chưa có thông tin nhân viên";
-document.getElementById('DCHtai').value = employee.DCHtai || "Chưa có thông tin nhân viên";
-document.getElementById('NgLienHe').value = employee.NgLienHe || "Chưa có thông tin nhân viên";
-document.getElementById('SDTNgLienHe').value = employee.SDTNgLienHe || "Chưa có thông tin nhân viên";
-document.getElementById('QuanHe').value = employee.QuanHe || "Chưa có thông tin nhân viên";
-document.getElementById('DCNgLienHe').value = employee.DCNgLienHe || "Chưa có thông tin nhân viên";
-document.getElementById('TenDangNhap').value = employee.TenDangNhap || "Chưa có thông tin nhân viên";
-document.getElementById('EmailDangNhap').value = employee.EmailDangNhap || "Chưa có thông tin nhân viên";
-document.getElementById('HocVan').value = employee.HocVan || "Chưa có thông tin nhân viên";
-document.getElementById('NgoaiNgu').value = employee.NgoaiNgu || "Chưa có thông tin nhân viên";
-document.getElementById('KyNang').value = employee.KyNang || "Chưa có thông tin nhân viên";
-document.getElementById('GhiChu').value = employee.GhiChu || "Chưa có thông tin nhân viên";
-document.getElementById('Avatar').src = employee.Avatar || "Chưa có thông tin nhân viên";
+document.getElementById('MaNhanVien').value = employee.MaNhanVien;        
+document.getElementById('HoTen').value = employee.HoTen;
+document.getElementById('NgaySinh').value = employee.NgaySinh;
+document.getElementById('SoDienThoai').value = employee.SoDienThoai;
+document.getElementById('NgayCap').value = employee.NgayCap;
+document.getElementById('DcEmail').value = employee.DcEmail;
+document.getElementById('NoiCap').value = employee.NoiCap;
+document.getElementById('GioiTinh').value = employee.GioiTinh;
+document.getElementById('SoCccd').value = employee.SoCccd;
+document.getElementById('QuocTich').value = employee.QuocTich;
+document.getElementById('Level').value = employee.Level;
+document.getElementById('PhongBan').value = employee.PhongBan;
+document.getElementById('TrangThai').value = employee.TrangThai;
+document.getElementById('DCTtru').value = employee.DCTtru;
+document.getElementById('DCHtai').value = employee.DCHtai;
+document.getElementById('NgLienHe').value = employee.NgLienHe;
+document.getElementById('SDTNgLienHe').value = employee.SDTNgLienHe;
+document.getElementById('QuanHe').value = employee.QuanHe;
+document.getElementById('DCNgLienHe').value = employee.DCNgLienHe;
+document.getElementById('HocVan').value = employee.HocVan;
+document.getElementById('NgoaiNgu').value = employee.NgoaiNgu;
+document.getElementById('KyNang').value = employee.KyNang;
+document.getElementById('GhiChu').value = employee.GhiChu;
+document.getElementById('Avatar').src = employee.Avatar;
 
 const btnTiepTuc = document.getElementById('btnTiepTuc');
 const btnHuy = document.getElementById('btnHuy');
@@ -60,16 +59,13 @@ const fieldIds = [
     "MaNhanVien",
     "Level",
     "PhongBan",
+    "TrangThai",
     "DCTtru",
     "DCHtai",
     "NgLienHe",
     "SDTNgLienHe",
     "QuanHe",
     "DCNgLienHe",
-    "TenDangNhap",
-    "EmailDangNhap",
-    "MatKhauTam",
-    "NhapLaiMK",
     "HocVan",
     "NgoaiNgu",
     "KyNang",
@@ -216,16 +212,13 @@ const QuocTich1 = document.getElementById('QuocTich').value;
 const MaNhanVien1 = document.getElementById('MaNhanVien').value;
 const Level1 = document.getElementById('Level').value;
 const PhongBan1 = document.getElementById('PhongBan').value;
+const TrangThai1 = document.getElementById('TrangThai').value;
 const DCTtru1 = document.getElementById('DCTtru').value;
 const DCHtai1 = document.getElementById('DCHtai').value;
 const NgLienHe1 = document.getElementById('NgLienHe').value;
 const SDTNgLienHe1 = document.getElementById('SDTNgLienHe').value;
 const QuanHe1 = document.getElementById('QuanHe').value;
 const DCNgLienHe1 = document.getElementById('DCNgLienHe').value;
-const TenDangNhap1 = document.getElementById('TenDangNhap').value;
-const EmailDangNhap1 = document.getElementById('EmailDangNhap').value;
-const MatKhauTam1 = document.getElementById('MatKhauTam').value;
-const NhapLaiMK1 = document.getElementById('NhapLaiMK').value;
 const HocVan1 = document.getElementById('HocVan').value;
 const NgoaiNgu1 = document.getElementById('NgoaiNgu').value;
 const KyNang1 = document.getElementById('KyNang').value;
@@ -243,16 +236,13 @@ document.getElementById('Re_QuocTich').textContent = QuocTich1 || "Chưa nhập"
 document.getElementById('Re_MaNhanVien').textContent = MaNhanVien1 || "Chưa nhập";
 document.getElementById('Re_Level').textContent = Level1 || "Chưa nhập";
 document.getElementById('Re_PhongBan').textContent = PhongBan1 || "Chưa nhập";
+document.getElementById('Re_TrangThai').textContent = TrangThai1 || "Chưa nhập";
 document.getElementById('Re_DCTtru').textContent = DCTtru1 || "Chưa nhập";
 document.getElementById('Re_DCHtai').textContent = DCHtai1 || "Chưa nhập";
 document.getElementById('Re_NgLienHe').textContent = NgLienHe1 || "Chưa nhập";
 document.getElementById('Re_SDTNgLienHe').textContent = SDTNgLienHe1 || "Chưa nhập";
 document.getElementById('Re_QuanHe').textContent = QuanHe1 || "Chưa nhập";
 document.getElementById('Re_DCNgLienHe').textContent = DCNgLienHe1 || "Chưa nhập";
-document.getElementById('Re_TenDangNhap').textContent = TenDangNhap1 || "Chưa nhập";
-document.getElementById('Re_EmailDangNhap').textContent = EmailDangNhap1 || "Chưa nhập";
-document.getElementById('Re_MatKhauTam').textContent = MatKhauTam1 || "Chưa nhập";
-document.getElementById('Re_NhapLaiMK').textContent = NhapLaiMK1 || "Chưa nhập";
 document.getElementById('Re_HocVan').textContent = HocVan1 || "Chưa nhập";
 document.getElementById('Re_NgoaiNgu').textContent = NgoaiNgu1 || "Chưa nhập";
 document.getElementById('Re_KyNang').textContent = KyNang1 || "Chưa nhập";
@@ -269,35 +259,40 @@ btnBack.addEventListener('click',()=>{
 btnConfirm.addEventListener('click',() =>{
     const updatedEmployee ={
         ...employee,
-        HoTen: document.getElementById("HoTen").value,
-        NgaySinh: document.getElementById("NgaySinh").value,
-        SoDienThoai: document.getElementById("SoDienThoai").value,
-        NgayCap: document.getElementById("NgayCap").value,
-        DcEmail: document.getElementById("DcEmail").value,
-        NoiCap: document.getElementById("NoiCap").value,
-        GioiTinh: document.getElementById("GioiTinh").value,
-        SoCccd: document.getElementById("SoCccd").value,
-        QuocTich: document.getElementById("QuocTich").value,
-        Level: document.getElementById("Level").value,
-        PhongBan: document.getElementById("PhongBan").value,
-        DCTtru: document.getElementById("DCTtru").value,
-        DCHtai: document.getElementById("DCHtai").value,
-        NgLienHe: document.getElementById("NgLienHe").value,
-        SDTNgLienHe: document.getElementById("SDTNgLienHe").value,
-        QuanHe: document.getElementById("QuanHe").value,
-        DCNgLienHe: document.getElementById("DCNgLienHe").value,
-        TenDangNhap: document.getElementById("TenDangNhap").value,
-        EmailDangNhap: document.getElementById("EmailDangNhap").value,
-        HocVan: document.getElementById("HocVan").value,
-        NgoaiNgu: document.getElementById("NgoaiNgu").value,
-        KyNang: document.getElementById("KyNang").value,
-        GhiChu: document.getElementById("GhiChu").value,
+        HoTen: document.getElementById("Re_HoTen").textContent,
+        NgaySinh: document.getElementById("Re_NgaySinh").textContent,
+        SoDienThoai: document.getElementById("Re_SoDienThoai").textContent,
+        NgayCap: document.getElementById("Re_NgayCap").textContent,
+        DcEmail: document.getElementById("Re_DcEmail").textContent,
+        NoiCap: document.getElementById("Re_NoiCap").textContent,
+        GioiTinh: document.getElementById("Re_GioiTinh").textContent,
+        SoCccd: document.getElementById("Re_SoCccd").textContent,
+        QuocTich: document.getElementById("Re_QuocTich").textContent,
+        Level: document.getElementById("Re_Level").textContent,
+        PhongBan: document.getElementById("Re_PhongBan").textContent,
+        TrangThai: document.getElementById("Re_TrangThai").textContent,
+        DCTtru: document.getElementById("Re_DCTtru").textContent,
+        DCHtai: document.getElementById("Re_DCHtai").textContent,
+        NgLienHe: document.getElementById("Re_NgLienHe").textContent,
+        SDTNgLienHe: document.getElementById("Re_SDTNgLienHe").textContent,
+        QuanHe: document.getElementById("Re_QuanHe").textContent,
+        DCNgLienHe: document.getElementById("Re_DCNgLienHe").textContent,
+        HocVan: document.getElementById("Re_HocVan").textContent,
+        NgoaiNgu: document.getElementById("Re_NgoaiNgu").textContent,
+        KyNang: document.getElementById("Re_KyNang").textContent,
+        GhiChu: document.getElementById("Re_GhiChu").textContent,
 
         Avatar: avatarUrl || employee.Avatar
     };
-    updateEmployee(updatedEmployee);
+let employees = JSON.parse(localStorage.getItem(EMPLOYEES_KEY)) || [];
+const index = employees.findIndex(
+        emp => emp.MaNhanVien === updatedEmployee.MaNhanVien
+);
+employees[index] = updatedEmployee;
+localStorage.setItem(EMPLOYEES_KEY,JSON.stringify(employees)
+        );
     alert("Cập nhật thành công!");    
     modal.style.display="none";
+    window.location.reload();
 })
 
-console.log(employee);

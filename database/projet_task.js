@@ -32,6 +32,36 @@ const DEFAULT_PROJECT_TASKS = [
     createdAt: "2026-07-03T08:00:00",
     updatedAt: "2026-07-03T08:00:00",
   },
+  {
+    id: "pt-004",
+    projectId: "prj-004",
+    taskId: "task-004",
+    phaseId: "phase-001",
+    phaseName: "Thiet ke he thong",
+    sortOrder: 1,
+    createdAt: "2026-07-03T08:00:00",
+    updatedAt: "2026-07-03T08:00:00",
+  },
+  {
+    id: "pt-005",
+    projectId: "prj-005",
+    taskId: "task-005",
+    phaseId: "phase-001",
+    phaseName: "Thiet ke he thong",
+    sortOrder: 1,
+    createdAt: "2026-07-03T08:00:00",
+    updatedAt: "2026-07-03T08:00:00",
+  },
+  {
+    id: "pt-006",
+    projectId: "prj-004",
+    taskId: "task-006",
+    phaseId: "phase-001",
+    phaseName: "Thiet ke he thong",
+    sortOrder: 1,
+    createdAt: "2026-07-03T08:00:00",
+    updatedAt: "2026-07-03T08:00:00",
+  },
 ];
 
 function initProjectTasks() {
@@ -164,6 +194,14 @@ function updateProjectTaskByTaskId(taskId, updatedData) {
   return updatedMapping;
 }
 
+function getProjectByTaskId(taskId) {
+  const projectTask = getAllProjectTasks().find(
+    (item) => item.taskId === taskId
+  );
+
+  return projectTask ? projectTask.projectId : null;
+}
+
 export {
   DEFAULT_PROJECT_TASKS,
   initProjectTasks,
@@ -176,4 +214,5 @@ export {
   removeProjectTask,
   removeProjectTaskByTaskId,
   updateProjectTaskByTaskId,
+  getProjectByTaskId,
 };
