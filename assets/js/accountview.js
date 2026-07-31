@@ -1,4 +1,4 @@
-import { initEmployees, getAllEmployees } from "../../database/employeeData.js";
+import { initEmployees, getAllEmployees } from "../../database/employeedata.js";
 const EMPLOYEES_KEY ="EMPLOYEES";
 const CURRENT_USER_KEY = "CURRENT_USER";
 const params = new URLSearchParams(window.location.search);

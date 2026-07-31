@@ -1687,7 +1687,7 @@ function canEditProjectDetail() {
 
 function canViewProjectTask() {
   const role = getCurrentUserRoleLower();
-  return role === "employee" || role === "project_manager" || role === "hr_manager";
+  return role === "employee" || role === "project_manager";
 }
 
 function canManageProjectEmployees() {

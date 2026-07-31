@@ -2,7 +2,12 @@
 import { getAuthorContext, applyRoleGuards } from "./common/author.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const basePath = document.body.dataset.basePath || "";
+  const isGitHubPages = location.hostname.endsWith("github.io");
+  console.log("isGitHubPages:", isGitHubPages, "hostname:", location.hostname, "pathname:", location.pathname);
+  const basePath = isGitHubPages ? location.hostname +"/HRPMS/" : document.body.dataset.basePath;
+  const basePath1 = document.body.dataset.basePath;
+  console.log("basePath:", basePath);
+  //const basePath = document.body.dataset.basePath || "";
   const currentUser = getCurrentUser();
 
   if (!ensureAuthenticated(basePath, currentUser)) {
@@ -22,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const response = await fetch(`${basePath}pages/components/sidebar.html`, {
+    const response = await fetch(`${basePath1}pages/components/sidebar.html`, {
       cache: "no-store",
     });
 
@@ -61,7 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (btnLogout) {
     btnLogout.addEventListener("click", function () {
       clearCurrentUser();
-      window.location.href = `${basePath}pages/signin.html`;
+      window.location.href = `${basePath}index.html`;
     });
   }
 
@@ -78,7 +83,7 @@ function ensureAuthenticated(basePath, currentUser) {
     return true;
   }
 
-  const signinPath = `${basePath}pages/signin.html`;
+  const signinPath = `${basePath}index.html`;
   showAlertOnBlankPageThenRedirect("Vui lòng đăng nhập.", signinPath);
 
   return false;

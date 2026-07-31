@@ -1,4 +1,4 @@
-import { employees as defaultEmployees} from "../../database/employeeData.js";
+import { employees as defaultEmployees} from "../../database/employeedata.js";
 const EMPLOYEES_KEY ="EMPLOYEES";
 const tbody = document.getElementById("employeeTableBody");
 const searchInput = document.getElementById("employee-search-input");

@@ -1,6 +1,7 @@
 import { initUsers, getAll } from "../../database/user.js";
 import { findEmployeeByMaNV, initEmployees, getAllEmployees } from "../../database/employeedata.js";
 import { USERS, EMPLOYEES } from "../../assets/js/common/storageKeys.js";
+import { sendPasswordUpdateMail } from "./services/sendMail.js";
 
 const tbody = document.getElementById("accountTableBody");
 const searchInput = document.getElementById("account-search-input");
@@ -336,10 +337,11 @@ function bindAddAccountModal() {
       id: `us-${Date.now()}`,
       account,
       email,
-      password: "user12345671234",
+      password: "User123456712389!",
       role,
       status: "active",
       MaNhanVien: account,
+      resetPass: true,
       createdAt: now,
       updatedAt: now,
     };
@@ -371,6 +373,7 @@ function bindEditAccountModal() {
   const fullNameInput = document.getElementById("edit-account-full-name");
   const emailInput = document.getElementById("edit-account-email");
   const roleInput = document.getElementById("edit-account-role");
+  const statusInput = document.getElementById("edit-account-status");
   const passwordInput = document.getElementById("edit-account-password");
   const confirmPasswordInput = document.getElementById("edit-account-confirm-password");
   const fullNameError = document.getElementById("edit-account-full-name-error");
@@ -426,13 +429,14 @@ function bindEditAccountModal() {
 
     const employee = findEmployeeByMaNV(user.MaNhanVien);
 
-    if (accountIdInput) accountIdInput.value = user.id || "";
+    if (accountIdInput) accountIdInput.value = user.account || "";
     if (accountNameInput) accountNameInput.value = String(user.account || "").toUpperCase();
     if (fullNameInput) fullNameInput.value = employee?.HoTen || user.MaNhanVien || "";
     if (emailInput) emailInput.value = user.email || "";
     if (roleInput) roleInput.value = user.role || "employee";
-    if (passwordInput) passwordInput.value = "";
-    if (confirmPasswordInput) confirmPasswordInput.value = "";
+    //if (passwordInput) passwordInput.value = user.password|| "";
+    //if (confirmPasswordInput) confirmPasswordInput.value = user.password|| "";
+    if (statusInput) statusInput.value = user.status|| "active";
     clearFormErrors(fieldValidationMap);
 
     openModal();
@@ -457,6 +461,7 @@ function bindEditAccountModal() {
     const role = String(roleInput?.value || "employee").trim().toLowerCase();
     const password = String(passwordInput?.value || "");
     const confirmPassword = String(confirmPasswordInput?.value || "");
+    const status = String(statusInput?.value || "active");
 
     clearFormErrors(fieldValidationMap);
 
@@ -480,21 +485,18 @@ function bindEditAccountModal() {
       hasValidationError = true;
     }
 
-    if (!password) {
-      setFieldError(passwordInput, passwordError, "Vui lòng nhập mật khẩu.");
-      hasValidationError = true;
-    } else if (!isValidPassword(password)) {
+    if(password.trim() !== "" && password.trim() !== "") {
+      if (!isValidPassword(password)) {
       setFieldError(passwordInput, passwordError, "Mật khẩu tối thiểu 12 ký tự, có chữ in hoa, số, ký tự đặc biệt và không chứa khoảng trắng.");
       hasValidationError = true;
-    }
+      }
 
-    if (!confirmPassword) {
-      setFieldError(confirmPasswordInput, confirmPasswordError, "Vui lòng nhập xác nhận mật khẩu.");
-      hasValidationError = true;
-    } else if (password !== confirmPassword) {
-      setFieldError(confirmPasswordInput, confirmPasswordError, "Xác nhận mật khẩu không khớp.");
-      hasValidationError = true;
+      if (password !== confirmPassword) {
+        setFieldError(confirmPasswordInput, confirmPasswordError, "Xác nhận mật khẩu không khớp.");
+        hasValidationError = true;
+      }
     }
+    
 
     if (hasValidationError) {
       return;
@@ -506,7 +508,7 @@ function bindEditAccountModal() {
     }
 
     const users = getAll() || [];
-    const userIndex = users.findIndex((item) => String(item.id || "").trim() === accountId);
+    const userIndex = users.findIndex((item) => String(item.account || "").trim() === accountId);
 
     if (userIndex < 0) {
       alert("Không tìm thấy tài khoản để lưu.");
@@ -516,14 +518,43 @@ function bindEditAccountModal() {
     const currentUser = users[userIndex];
     const now = new Date().toISOString();
 
-    users[userIndex] = {
+    if(password.trim() === "" && confirmPassword.trim() === "") {
+       users[userIndex] = {
+      ...currentUser,
+      email,
+      role,
+      status,
+      updatedAt: now,
+    };
+    } else {
+       users[userIndex] = {
       ...currentUser,
       email,
       role,
       password,
-      updatedAt: now,
+      resetPass: true,
+      status,
+      updatedAt: now
     };
 
+      const recipientEmail = email;
+      const recipientFullName = fullName;
+      const recipientPassword = password;
+
+      void sendPasswordUpdateMail({
+        email: recipientEmail,
+        fullName: recipientFullName,
+        password: recipientPassword,
+      })
+        .then(() => {
+          alert("Mail thông báo thay đổi mật khẩu đã được gửi.");
+        })
+        .catch((error) => {
+          console.error("Gửi mail thất bại:", error);
+          alert("Cập nhật mật khẩu thành công nhưng gửi mail thất bại.");
+        });
+    }
+   
     localStorage.setItem(USERS, JSON.stringify(users));
 
     upsertEmployeeData(currentUser.MaNhanVien, fullName, email);

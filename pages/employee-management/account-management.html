@@ -64,7 +64,7 @@
               type="button"
               class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
-              Search
+              Tìm Kiếm
             </button>
           </div>
 
@@ -199,14 +199,23 @@
               </div>
 
               <div>
+                <label for="edit-account-status" class="mb-1 block text-sm font-medium text-gray-700">Trạng thái tài khoản</label>
+                <select id="edit-account-status" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" required>
+                  <option value="active">Hoạt động</option>
+                  <option value="inactive">Ngưng hoạt động</option>
+                </select>
+                <p id="edit-account-status-error" class="mt-1 hidden text-xs text-red-600"></p>
+              </div>
+
+              <div>
                 <label for="edit-account-password" class="mb-1 block text-sm font-medium text-gray-700">Mật khẩu</label>
-                <input id="edit-account-password" type="password" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập mật khẩu mới" required />
+                <input id="edit-account-password" type="password" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập mật khẩu mới" />
                 <p id="edit-account-password-error" class="mt-1 hidden text-xs text-red-600"></p>
               </div>
 
               <div>
                 <label for="edit-account-confirm-password" class="mb-1 block text-sm font-medium text-gray-700">Xác nhận mật khẩu</label>
-                <input id="edit-account-confirm-password" type="password" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập lại mật khẩu" required />
+                <input id="edit-account-confirm-password" type="password" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none" placeholder="Nhập lại mật khẩu" />
                 <p id="edit-account-confirm-password-error" class="mt-1 hidden text-xs text-red-600"></p>
               </div>
 
@@ -233,7 +242,8 @@
           </nav>
       </div>
     </div>
+       <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
        <script type="module" src="../../assets/js/layout.js"></script>
-       <script type="module" src="account-management.js"></script>
+       <script type="module" src="../../assets/js/account-management.js"></script>
   </body>
 </html>
