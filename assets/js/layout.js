@@ -132,7 +132,15 @@ function showAlertOnBlankPageThenRedirect(message, redirectPath) {
   // Wait for paint so the native alert appears over a blank page.
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(() => {
-      alert(message);
+      Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "info",
+                title: message,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
       window.location.replace(redirectPath);
     });
   });

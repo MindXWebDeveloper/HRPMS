@@ -261,7 +261,15 @@ function bindCreatePhaseModal() {
     const phaseColor = String(phaseColorInput?.value || "blue").trim();
 
     if (!phaseName) {
-      alert("Vui lòng nhập tên giai đoạn.");
+      Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Vui lòng nhập tên giai đoạn.",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
       return;
     }
 
@@ -1233,7 +1241,15 @@ function bindViewTaskModal() {
     });
 
     if (!updatedTask) {
-      alert("Không cập nhật được task.");
+      Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Không cập nhật được task.",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
       return;
     }
 
@@ -1798,11 +1814,23 @@ function showUnauthorizedProjectAlertAndRedirect() {
   }
 
   const showAlertThenRedirect = () => {
-    alert("Bạn không phải là nhân viên thuộc dự án này.");
-    window.location.replace(redirectPath);
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "error",
+      title: "Bạn không phải là nhân viên thuộc dự án này.",
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+    }).then(() => {
+      window.location.replace(redirectPath);
+    });
   };
 
-  // Let the browser paint the blank body before showing native alert.
+  // Let the browser paint the blank body before showing the toast.
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(showAlertThenRedirect);
   });

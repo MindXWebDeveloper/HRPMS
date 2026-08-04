@@ -291,7 +291,15 @@ const index = employees.findIndex(
 employees[index] = updatedEmployee;
 localStorage.setItem(EMPLOYEES_KEY,JSON.stringify(employees)
         );
-    alert("Cập nhật thành công!");    
+    Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Cập nhật thành công!",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });   
     modal.style.display="none";
     window.location.reload();
 })

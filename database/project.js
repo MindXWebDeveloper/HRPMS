@@ -372,7 +372,7 @@ function createProject(projectJson) {
     createdByEmployeeCode: projectJson.createdByEmployeeCode,
     memberCount: projectJson.memberCount,
     status: projectJson.status,
-    createdAt: stgitartDate,
+    createdAt: startDate,
     endDate,
     updatedAt: projectJson.updatedAt || now,
   });

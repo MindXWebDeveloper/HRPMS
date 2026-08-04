@@ -176,7 +176,9 @@ function initEmployees() {
 
     if (!Array.isArray(data) || data.length === 0) {
         localStorage.setItem(EMPLOYEES, JSON.stringify(employees));
-    }}
+    }
+}
+
 function getAllEmployees() {
     return JSON.parse(localStorage.getItem(EMPLOYEES)) || [];
 }

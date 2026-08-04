@@ -324,7 +324,15 @@ function bindAddAccountModal() {
     const role = String(roleInput?.value || "employee").trim().toLowerCase();
 
     if (!fullName || !email || !role) {
-      alert("Vui lòng nhập đầy đủ họ tên, email và vai trò.");
+      Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Vui lòng nhập đầy đủ họ tên, email và vai trò.",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
       return;
     }
 
@@ -423,7 +431,15 @@ function bindEditAccountModal() {
     const user = users.find((item) => String(item.id || "").trim() === accountId);
 
     if (!user) {
-      alert("Không tìm thấy tài khoản để chỉnh sửa.");
+      Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Không tìm thấy tài khoản để chỉnh sửa.",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
       return;
     }
 
@@ -503,7 +519,15 @@ function bindEditAccountModal() {
     }
 
     if (!accountId) {
-      alert("Không tìm thấy tài khoản để lưu.");
+      Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Không tìm thấy tài khoản để lưu.",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
       return;
     }
 
@@ -511,7 +535,15 @@ function bindEditAccountModal() {
     const userIndex = users.findIndex((item) => String(item.account || "").trim() === accountId);
 
     if (userIndex < 0) {
-      alert("Không tìm thấy tài khoản để lưu.");
+      Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Không tìm thấy tài khoản để lưu.",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
       return;
     }
 
@@ -547,11 +579,27 @@ function bindEditAccountModal() {
         password: recipientPassword,
       })
         .then(() => {
-          alert("Mail thông báo thay đổi mật khẩu đã được gửi.");
+          Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Mail thông báo thay đổi mật khẩu đã được gửi.",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
         })
         .catch((error) => {
           console.error("Gửi mail thất bại:", error);
-          alert("Cập nhật mật khẩu thành công nhưng gửi mail thất bại.");
+          Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Cập nhật mật khẩu thành công nhưng gửi mail thất bại.",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
         });
     }
    

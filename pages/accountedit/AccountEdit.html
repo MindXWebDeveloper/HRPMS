@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body data-base-path="../../">
 <div data-layout="sidebar" class="fixed w-64 h-screen"></div>
@@ -37,7 +38,7 @@
 <div class="TopInfo w-ml-64 px-[20px] flex gap-[10px] my-[25px] justify-between">
     <div class="InfoBox my-[5px] w-[70%]">
         <div class="flex gap-[2px]">
-        <img src="../../assets/images/accountregister/iconPI.png" class="text-blue-900 object-contain">
+        <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin cá nhân </p>
         </div>
         <div class="flex">
@@ -110,12 +111,12 @@
 
     <div class="AvatarBox w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
         <div class="flex gap-[2px]">
-        <img src="../../assets/images/accountregister/iconPI.png" class="text-blue-900 object-contain">
+        <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Ảnh đại diện </p>
         </div>
         <div class="w-[90%] h-[90%] border-2 rounded-xl border-slate-300 m-[15px] flex flex-col justify-center text-center items-center gap-[8px]">
             <img id="AvatarPreview" class="h-[50%] w-[50%] border rounded-full object-cover" hidden>
-            <img src="../../assets/images/accountregister/uploadicon.png" class="w-[40px] h-[40px]"/>
+            <img src="../../assets/images/uploadicon.png" class="w-[40px] h-[40px]"/>
             <p class="text-slate-500 font-bold"> Kéo thả ảnh vào đây hoặc </p>
             <input type="file" id="Avatar" accept="image/*"hidden>
             <button type="button" id="AvatarUploadBtn" class="border-2 rounded-xl border-blue-800 text-blue-800 w-[100px] h-[50px]"> Chọn ảnh </button>      
@@ -129,7 +130,7 @@
     <div class="BottomInfo w-[100%] grid grid-cols-3 gap-[20px]"> 
     <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
     <div class="flex mb-[5px] gap-[5px]">
-        <img src="../../assets/images/accountregister/contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
+        <img src="../../assets/images/contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin liên hệ khẩn cấp </p>
     </div>
     <div class="flex gap-[10px]">
@@ -161,7 +162,7 @@
       
     <div class="border border-2 rounded-xl border-slate-300 px-[20px]">
         <div class="flex mb-[5px] gap-[5px] my-[10px]">
-            <img src="../../assets/images/accountregister/account-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
+            <img src="../../assets/images/account-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
             <p class="text-lg font-bold text-blue-900"> Thông tin công việc </p>
         </div>
         <div class="grid grid-cols-2 grid-rows-2 my-[5px]">
@@ -190,7 +191,7 @@
 
     <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
         <div class="flex mb-[5px] gap-[5px] my-[10px]">
-            <img src="../../assets/images/accountregister/information-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
+            <img src="../../assets/images/information-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
             <p class="text-lg font-bold text-blue-900"> Thông tin bổ sung </p>
         </div>
         <div class="grid grid-cols-2">
@@ -239,7 +240,7 @@
       <div class="TopInfo w-ml-64 px-[20px] flex gap-[10px] my-[25px] justify-between">
     <div class="InfoBox my-[5px] w-[70%]">
         <div class="flex gap-[2px]">
-        <img src="../../assets/images/accountregister/iconPI.png" class="text-blue-900 object-contain">
+        <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin cá nhân </p>
         </div>
         <div class="flex">
@@ -308,7 +309,7 @@
 
     <div class="AvatarBox w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
         <div class="flex gap-[2px]">
-        <img src="../../assets/images/accountregister/iconPI.png" class="text-blue-900 object-contain">
+        <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Ảnh đại diện </p>
         </div>
         <div class="my-[15px] h-[60%] w-[80%] mx-auto">
@@ -322,7 +323,7 @@
     <div class="BottomInfo w-[100%] grid grid-cols-3 gap-[20px]"> 
     <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
     <div class="flex mb-[5px] gap-[5px]">
-        <img src="../../assets/images/accountregister/contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
+        <img src="../../assets/images/contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin liên hệ khẩn cấp </p>
     </div>
     <div class="flex gap-[10px]">
@@ -347,7 +348,7 @@
       
     <div class="border border-2 rounded-xl border-slate-300 px-[20px]">
         <div class="flex mb-[5px] gap-[5px] my-[10px]">
-            <img src="../../assets/images/accountregister/account-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
+            <img src="../../assets/images/account-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
             <p class="text-lg font-bold text-blue-900"> Thông tin công việc </p>
         </div>
         <div class="grid grid-cols-2 grid-rows-2 my-[5px]">
@@ -371,7 +372,7 @@
     </div>
     <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
         <div class="flex mb-[5px] gap-[5px] my-[10px]">
-            <img src="../../assets/images/accountregister/information-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
+            <img src="../../assets/images/information-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
             <p class="text-lg font-bold text-blue-900"> Thông tin bổ sung </p>
         </div>
         <div class="grid grid-cols-2">
