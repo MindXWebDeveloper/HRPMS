@@ -1,6 +1,6 @@
 import { PROJECT_EMPLOYEES } from "../assets/js/common/storageKeys.js";
-import { employees, getAllEmployees } from "./employeedata.js";
-
+import { getAllEmployees } from "./employeedata.js";
+let employees = getAllEmployees();
 const DEFAULT_PROJECT_EMPLOYEES = [
   {
     id: "pem-001",

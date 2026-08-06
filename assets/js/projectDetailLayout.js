@@ -1957,7 +1957,7 @@ function escapeHtml(value) {
 }
 
 function canEditProjectDetail() {
-  return getCurrentUserRoleLower() === "project_manager";
+  return getCurrentUserRoleLower() === "hr_manager";
 }
 
 function canViewProjectTask() {

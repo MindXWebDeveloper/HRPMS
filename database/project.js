@@ -3,9 +3,10 @@ import { initTasks } from "./task.js";
 import { initProjectTasks, getTasksByProjectId } from "./projet_task.js";
 import { initProjectPhases } from "./project_phase.js";
 import { initProjectEmployees, getAllProjectEmployees } from "./project-employees.js";
-import { employees } from "./employeedata.js";
+import { getAllEmployees } from "./employeedata.js";
 import { CURRENT_USER } from "../assets/js/common/storageKeys.js";
 
+let employees = getAllEmployees();
 const DEFAULT_PROJECTS = [
   {
     id: "prj-001",
