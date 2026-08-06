@@ -88,8 +88,8 @@ function renderProjects() {
             <td class="py-4 text-center">${project.leadId}</td>
             <td class="py-4">
                 <div class="flex justify-center gap-2">
-                    <div class="w-24 bg-gray-100 h-2 rounded-full overflow-hidden">
-                        <div class="bg-blue-600 h-full rounded-full" style="width:${pace}%"></div>
+                    <div class="mana1 w-24 bg-gray-100 h-2 rounded-full overflow-hidden">
+                        <div class="mana2 bg-blue-600 h-full rounded-full" style="width:${pace}%"></div>
                     </div>
                     <span class="text-xs text-gray-500">${pace}%</span>
                 </div>

@@ -3,11 +3,13 @@ import { getAuthorContext, applyRoleGuards } from "./common/author.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const isGitHubPages = location.hostname.endsWith("github.io");
+  const relativeBasePath = document.body.dataset.basePath || "";
+  const basePath = isGitHubPages
+    ? getGitHubPagesBasePath()
+    : ensureTrailingSlash(relativeBasePath);
+  const basePath1 = ensureTrailingSlash(relativeBasePath);
   console.log("isGitHubPages:", isGitHubPages, "hostname:", location.hostname, "pathname:", location.pathname);
-  const basePath = isGitHubPages ? location.hostname +"/HRPMS/" : document.body.dataset.basePath;
-  const basePath1 = document.body.dataset.basePath;
-  console.log("basePath:", basePath);
-  //const basePath = document.body.dataset.basePath || "";
+  console.log("basePath:", basePath, "basePath1:", basePath1);
   const currentUser = getCurrentUser();
 
   if (!ensureAuthenticated(basePath, currentUser)) {
@@ -27,7 +29,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const response = await fetch(`${basePath1}pages/components/sidebar.html`, {
+    const sidebarUrl = isGitHubPages
+      ? `${basePath}pages/components/sidebar.html`
+      : `${basePath1}pages/components/sidebar.html`;
+
+    const response = await fetch(sidebarUrl, {
       cache: "no-store",
     });
 
@@ -107,7 +113,7 @@ function ensureMenuAuthorization(basePath, currentUser) {
     "pages/accountedit/AccountEdit.html",
   ];
 
-  const blockedByPrefix = restrictedPrefixes.some((prefix) => currentPath.startsWith(prefix));
+  const blockedByPrefix = restrictedPrefixes.some((prefix) => currentPath.includes(prefix));
   const blockedByExactPath = restrictedExactPaths.some((path) => currentPath.endsWith(path));
 
   if (!blockedByPrefix && !blockedByExactPath) {
@@ -126,7 +132,15 @@ function showAlertOnBlankPageThenRedirect(message, redirectPath) {
   // Wait for paint so the native alert appears over a blank page.
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(() => {
-      alert(message);
+      Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "info",
+                title: message,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
       window.location.replace(redirectPath);
     });
   });
@@ -156,6 +170,15 @@ function resolveSidebarPaths(root, basePath) {
   root.querySelectorAll("[data-src]").forEach((image) => {
     image.src = `${basePath}${image.dataset.src}`;
   });
+}
+
+function getGitHubPagesBasePath() {
+  const repoName = location.pathname.split("/")[1] || "";
+  return repoName ? `/${repoName}/` : "/";
+}
+
+function ensureTrailingSlash(path) {
+  return path.endsWith("/") ? path : `${path}/`;
 }
 
 function setActiveSidebarItem(root) {

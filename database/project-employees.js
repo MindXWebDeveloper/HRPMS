@@ -1,6 +1,6 @@
 import { PROJECT_EMPLOYEES } from "../assets/js/common/storageKeys.js";
-import { employees } from "./employeedata.js";
-
+import { getAllEmployees } from "./employeedata.js";
+let employees = getAllEmployees();
 const DEFAULT_PROJECT_EMPLOYEES = [
   {
     id: "pem-001",
@@ -39,6 +39,7 @@ function initProjectEmployees() {
 function getAllProjectEmployees() {
   try {
     const stored = JSON.parse(localStorage.getItem(PROJECT_EMPLOYEES));
+    const allEmployee = getAllEmployees();
     return Array.isArray(stored) ? stored : [];
   } catch {
     return [];

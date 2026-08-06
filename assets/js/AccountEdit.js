@@ -37,8 +37,7 @@ document.getElementById('HocVan').value = employee.HocVan;
 document.getElementById('NgoaiNgu').value = employee.NgoaiNgu;
 document.getElementById('KyNang').value = employee.KyNang;
 document.getElementById('GhiChu').value = employee.GhiChu;
-document.getElementById('Avatar').src = employee.Avatar;
-
+document.getElementById('AvatarPreview').src = employee.Avatar;
 const btnTiepTuc = document.getElementById('btnTiepTuc');
 const btnHuy = document.getElementById('btnHuy');
 const modal = document.getElementById('confirmationModal');
@@ -155,6 +154,40 @@ function showError(id,message) {
         errorSpan.innerText = message; 
     }
 
+function validateForm() {
+    let isValid = true;
+    document.querySelectorAll(".error-msg").forEach(el => el.remove());
+
+    document.querySelectorAll("input").forEach(input => {
+        input.classList.remove("border-red-500", "focus:border-red-500");
+        input.classList.add("border-slate-400");
+    });
+
+    const phone = document.getElementById("SoDienThoai").value.trim();
+    if (!/^\d{10}$/.test(phone)) {
+        showError("SoDienThoai", "Số điện thoại phải gồm đúng 10 chữ số.");
+        isValid = false;
+    }
+
+    const cccd = document.getElementById("SoCccd").value.trim();
+    if (!/^\d{12}$/.test(cccd)) {
+        showError("SoCccd", "CCCD phải gồm đúng 12 chữ số.");
+        isValid = false;
+    }
+
+    const email = document.getElementById("DcEmail").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError("DcEmail", "Email không đúng định dạng.");
+        isValid = false;
+    }
+    const phoneNLH = document.getElementById("SDTNgLienHe").value.trim();
+    if (!/^\d{10}$/.test(phoneNLH)) {
+        showError("SDTNgLienHe", "Số điện thoại phải gồm đúng 10 chữ số.");
+        isValid = false;
+    }
+
+    return isValid;
+}
 
 function clearError(id) {
         const input = document.getElementById(id);
@@ -170,7 +203,7 @@ function clearError(id) {
 
 
 btnTiepTuc.addEventListener ('click',()=>
-{
+{   
     isValid = true;
     for (const id of fieldIds){ 
     const element = document.getElementById(id);
@@ -196,7 +229,7 @@ btnTiepTuc.addEventListener ('click',()=>
     if (!isValid) {
         return;
     }
-
+    if (!validateForm()) return;
     
 
     {modal.style.display = "flex";
@@ -291,7 +324,15 @@ const index = employees.findIndex(
 employees[index] = updatedEmployee;
 localStorage.setItem(EMPLOYEES_KEY,JSON.stringify(employees)
         );
-    alert("Cập nhật thành công!");    
+    Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Cập nhật thành công!",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });   
     modal.style.display="none";
     window.location.reload();
 })

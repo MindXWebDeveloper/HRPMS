@@ -115,7 +115,7 @@ function saveUsers(users) {
 async function findUserSignin(account, password){
     const users = getAll() || [];
 
-    return users.find(user => user.account === account && user.password === password);
+    return users.find(user => user.account === account && user.password === password && user.status === "active") || null;
 }
 
 export {

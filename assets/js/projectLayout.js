@@ -3,14 +3,14 @@
   renderProjects,
   createNewProject,
 } from "./services/projectService.js";
-import { employees } from "../../database/employeedata.js";
+import { getAllEmployees } from "../../database/employeedata.js";
 import { upsertProjectEmployee } from "../../database/project-employees.js";
 import { CURRENT_USER } from "./common/storageKeys.js";
 
 const PAGE_SIZE = 10;
 let currentSearchKeyword = "";
 let currentPage = 1;
-
+let employees = getAllEmployees();
 const paginationSummary = document.getElementById("project-pagination-summary");
 const paginationControls = document.getElementById("project-pagination-controls");
 

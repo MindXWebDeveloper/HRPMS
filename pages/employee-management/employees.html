@@ -12,6 +12,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
       * {
         box-sizing: border-box;
@@ -64,36 +65,10 @@
               type="button"
               class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
-              Search
+              Tìm kiếm
             </button>
           </div>
 
-          <!-- Thêm tài khoản -->
-          <button
-            id="open-add-account-modal-btn"
-            class="flex items-center text-white bg-blue-500 rounded-md text-[14px] sm:text-sm text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
-            type="button"
-          >
-            <svg
-              class="w-4 h-4 me-1.5 -ms-0.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 12h14m-7 7V5"
-              />
-            </svg>
-            Thêm tài khoản
-          </button>
-         
         </div>
         <div
           class="relative min-h-[70vh] overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
@@ -274,68 +249,17 @@
           </table>
 
         </div>
-                  <nav
-            class="flex items-center flex-column flex-wrap md:flex-row justify-between p-4"
-            aria-label="Table navigation"
+        <nav
+          class="flex items-center flex-column flex-wrap md:flex-row justify-between p-4"
+          aria-label="Table navigation"
+        >
+          <span
+            id="employee-pagination-summary"
+            class="text-sm font-normal text-body mb-4 md:mb-0 block w-full md:inline md:w-auto"
+            >Hiển thị 0-0 of 0</span
           >
-            <span
-              class="text-sm font-normal text-body mb-4 md:mb-0 block w-full md:inline md:w-auto"
-              >Showing <span class="font-semibold text-heading">1-10</span> of
-              <span class="font-semibold text-heading">1000</span></span
-            >
-            <ul class="flex -space-x-px text-sm">
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading font-medium rounded-s-base text-sm px-3 h-9 focus:outline-none"
-                  >Previous</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading font-medium text-sm w-9 h-9 focus:outline-none"
-                  >1</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading font-medium text-sm w-9 h-9 focus:outline-none"
-                  >2</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  aria-current="page"
-                  class="flex items-center justify-center text-fg-brand bg-brand-softer box-border border border-default-medium hover:bg-brand-soft hover:text-fg-brand font-medium text-sm w-9 h-9 focus:outline-none"
-                  >3</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading font-medium text-sm w-9 h-9 focus:outline-none"
-                  >...</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading font-medium text-sm w-9 h-9 focus:outline-none"
-                  >5</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading font-medium rounded-e-base text-sm px-3 h-9 focus:outline-none"
-                  >Next</a
-                >
-              </li>
-            </ul>
-          </nav>
+          <ul id="employee-pagination-controls" class="flex -space-x-px text-sm"></ul>
+        </nav>
       </div>
     </div>
       <script type="module" src="../../assets/js/layout.js"></script>

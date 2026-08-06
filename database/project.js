@@ -3,9 +3,10 @@ import { initTasks } from "./task.js";
 import { initProjectTasks, getTasksByProjectId } from "./projet_task.js";
 import { initProjectPhases } from "./project_phase.js";
 import { initProjectEmployees, getAllProjectEmployees } from "./project-employees.js";
-import { employees } from "./employeedata.js";
+import { getAllEmployees } from "./employeedata.js";
 import { CURRENT_USER } from "../assets/js/common/storageKeys.js";
 
+let employees = getAllEmployees();
 const DEFAULT_PROJECTS = [
   {
     id: "prj-001",
@@ -365,14 +366,14 @@ function createProject(projectJson) {
   const endDate = projectJson.endDate || addDays(startDate, 30);
 
   const newProject = normalizeProjectRecord({
-    id: projectJson.id || `prj-${Date.now()}`,
+    id: projectJson.id || nextProjectCode(projects),
     projectCode: projectJson.projectCode || nextProjectCode(projects),
     projectName: projectJson.projectName,
     leadId: projectJson.leadId,
     createdByEmployeeCode: projectJson.createdByEmployeeCode,
     memberCount: projectJson.memberCount,
     status: projectJson.status,
-    createdAt: stgitartDate,
+    createdAt: startDate,
     endDate,
     updatedAt: projectJson.updatedAt || now,
   });

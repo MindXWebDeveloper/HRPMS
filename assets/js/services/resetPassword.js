@@ -113,5 +113,5 @@ document.getElementById("reset-password").addEventListener("submit", async funct
     let foundUser =  await signinUser(currentUser.account, newPassword);
     saveCurrentUser(foundUser);
     localStorage.removeItem(INFO_TEMP);
-    window.location.href = "/pages/accountdashboard/accountdashboard.html";
+    window.location.href = new URL("../accountdashboard/accountdashboard.html", window.location.href).href;
 });
