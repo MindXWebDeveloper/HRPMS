@@ -16,7 +16,7 @@ import {
   removeProjectTaskByTaskId,
   updateProjectTaskByTaskId,
 } from "../../database/projet_task.js";
-import { employees } from "../../database/employeedata.js";
+import { getAllEmployees } from "../../database/employeedata.js";
 import {
   addProjectEmployee,
   getProjectEmployeeDetails,
@@ -28,6 +28,7 @@ import { CURRENT_USER } from "./common/storageKeys.js";
 
 let currentProjectDetail = null;
 let pendingDeleteEmployeeCode = "";
+let employees = getAllEmployees();
 
 document.addEventListener("DOMContentLoaded", initializeProjectDetailPage);
 
@@ -83,8 +84,14 @@ function bindProjectDetail(project) {
   setTextById("detail-project-manager", project.leadName || "N/A");
   setTextById("detail-project-start-date", formatDate(project.createdAt));
   setTextById("detail-project-end-date", formatDate(project.endDate));
-  setTextById("detail-project-progress-value", `${normalizeProgress(project.progress)}%`);
-  setTextById("detail-project-status-inline", `● ${project.status || "Đang tiến hành"}`);
+  setTextById(
+    "detail-project-progress-value",
+    `${normalizeProgress(project.progress)}%`,
+  );
+  setTextById(
+    "detail-project-status-inline",
+    `● ${project.status || "Đang tiến hành"}`,
+  );
 
   updateStatusPill(project.status);
   updateProgressBar(project.progress);
@@ -137,7 +144,9 @@ function updateMemberCount(memberCount) {
 
 function updateStatusPill(status) {
   const pillElement = document.getElementById("detail-project-status-pill");
-  const inlineStatusElement = document.getElementById("detail-project-status-inline");
+  const inlineStatusElement = document.getElementById(
+    "detail-project-status-inline",
+  );
 
   if (!pillElement || !inlineStatusElement) {
     return;
@@ -205,7 +214,8 @@ function renderProjectNotFound() {
 
   if (pillElement) {
     pillElement.textContent = "N/A";
-    pillElement.className = "bg-gray-100 text-gray-600 px-4 py-1 rounded-full text-sm";
+    pillElement.className =
+      "bg-gray-100 text-gray-600 px-4 py-1 rounded-full text-sm";
   }
 
   const phaseListElement = document.getElementById("detail-phase-list");
@@ -262,14 +272,14 @@ function bindCreatePhaseModal() {
 
     if (!phaseName) {
       Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "error",
-                title: "Vui lòng nhập tên giai đoạn.",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            });
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Vui lòng nhập tên giai đoạn.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
@@ -289,6 +299,15 @@ function bindCreatePhaseModal() {
 
     currentProjectDetail = refreshedProject;
     renderProjectPhases(refreshedProject);
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: "Đã tạo thành công 1 giai đoạn",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
   });
 }
 
@@ -365,7 +384,9 @@ function bindAddProjectEmployeeModal() {
   });
 
   document.addEventListener("click", (event) => {
-    const suggestionBox = document.getElementById("project-employee-suggest-list");
+    const suggestionBox = document.getElementById(
+      "project-employee-suggest-list",
+    );
 
     if (!suggestionBox) {
       return;
@@ -389,34 +410,83 @@ function bindAddProjectEmployeeModal() {
     const role = String(roleInput.value || "").trim() || "Member";
 
     if (!employeeCode) {
-      alert("Vui lòng chọn nhân viên từ danh sách gợi ý.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Vui lòng chọn nhân viên từ danh sách gợi ý.",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+      });
       return;
     }
 
-    const createdLink = addProjectEmployee(currentProjectDetail.id, employeeCode, role);
+    const createdLink = addProjectEmployee(
+      currentProjectDetail.id,
+      employeeCode,
+      role,
+    );
 
     if (!createdLink) {
-      alert("Không thể thêm nhân viên. Có thể nhân viên đã tồn tại trong dự án.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title:
+          "Không thể thêm nhân viên. Có thể nhân viên đã tồn tại trong dự án.",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+      });
       return;
     }
 
     closeModal();
     refreshCurrentProjectAndRender();
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: "Thêm nhân viên thành công.",
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+    });
   });
 }
 
 function showEmployeeSuggestions(keyword) {
-  const suggestionBox = document.getElementById("project-employee-suggest-list");
+  const suggestionBox = document.getElementById(
+    "project-employee-suggest-list",
+  );
   const codeInput = document.getElementById("projectEmployeeCodeInput");
   const nameInput = document.getElementById("projectEmployeeNameInput");
   const roleInput = document.getElementById("projectEmployeeRoleInput");
 
-  if (!suggestionBox || !currentProjectDetail || !codeInput || !nameInput || !roleInput) {
+  if (
+    !suggestionBox ||
+    !currentProjectDetail ||
+    !codeInput ||
+    !nameInput ||
+    !roleInput
+  ) {
     return;
   }
 
   const projectEmployees = getProjectEmployeeDetails(currentProjectDetail.id);
-  const currentCodes = new Set(projectEmployees.map((item) => item.employeeCode));
+  const currentCodes = new Set(
+    projectEmployees.map((item) => item.employeeCode),
+  );
 
   const query = normalizeKeyword(keyword);
   const matchedEmployees = employees
@@ -455,26 +525,36 @@ function showEmployeeSuggestions(keyword) {
 
   suggestionBox.classList.remove("hidden");
 
-  suggestionBox.querySelectorAll("button[data-employee-code]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const selectedCode = String(button.getAttribute("data-employee-code") || "");
-      const selectedName = String(button.getAttribute("data-employee-name") || "");
-      const selectedRole = String(button.getAttribute("data-employee-role") || "Member");
+  suggestionBox
+    .querySelectorAll("button[data-employee-code]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedCode = String(
+          button.getAttribute("data-employee-code") || "",
+        );
+        const selectedName = String(
+          button.getAttribute("data-employee-name") || "",
+        );
+        const selectedRole = String(
+          button.getAttribute("data-employee-role") || "Member",
+        );
 
-      codeInput.value = selectedCode;
-      nameInput.value = selectedName;
+        codeInput.value = selectedCode;
+        nameInput.value = selectedName;
 
-      if (!roleInput.value.trim()) {
-        roleInput.value = selectedRole;
-      }
+        if (!roleInput.value.trim()) {
+          roleInput.value = selectedRole;
+        }
 
-      hideEmployeeSuggestions();
+        hideEmployeeSuggestions();
+      });
     });
-  });
 }
 
 function hideEmployeeSuggestions() {
-  const suggestionBox = document.getElementById("project-employee-suggest-list");
+  const suggestionBox = document.getElementById(
+    "project-employee-suggest-list",
+  );
 
   if (!suggestionBox) {
     return;
@@ -553,14 +633,16 @@ function renderProjectEmployees(projectId, keyword = "") {
 function bindProjectEmployeeDeleteButtons() {
   document.querySelectorAll("[data-delete-employee-code]").forEach((button) => {
     button.addEventListener("click", () => {
-      const employeeCode = String(button.getAttribute("data-delete-employee-code") || "").trim();
+      const employeeCode = String(
+        button.getAttribute("data-delete-employee-code") || "",
+      ).trim();
 
       if (!employeeCode || !currentProjectDetail) {
         return;
       }
 
-       pendingDeleteEmployeeCode = employeeCode;
-       openDeleteEmployeeConfirmModal();
+      pendingDeleteEmployeeCode = employeeCode;
+      openDeleteEmployeeConfirmModal();
     });
   });
 }
@@ -596,9 +678,9 @@ function bindDeleteEmployeeConfirmModal() {
 
     const employeeCode = pendingDeleteEmployeeCode;
 
-    const employeeInProject = getProjectEmployeeDetails(currentProjectDetail.id).find(
-      (employee) => employee.employeeCode === employeeCode,
-    );
+    const employeeInProject = getProjectEmployeeDetails(
+      currentProjectDetail.id,
+    ).find((employee) => employee.employeeCode === employeeCode);
 
     if (!employeeInProject) {
       closeModal();
@@ -610,7 +692,10 @@ function bindDeleteEmployeeConfirmModal() {
         return task.assigneeCode === employeeCode;
       }
 
-      return normalizeKeyword(task.assigneeName) === normalizeKeyword(employeeInProject.fullName);
+      return (
+        normalizeKeyword(task.assigneeName) ===
+        normalizeKeyword(employeeInProject.fullName)
+      );
     });
 
     employeeTasks.forEach((task) => {
@@ -726,11 +811,21 @@ function bindEditProjectModal() {
       return;
     }
 
-    const projectName = String(document.getElementById("editProjectNameInput")?.value || "").trim();
-    const leadCode = String(document.getElementById("editLeadCodeInput")?.value || "").trim();
-    const createdAtDate = String(document.getElementById("editCreatedAtInput")?.value || "").trim();
-    const endDateValue = String(document.getElementById("editEndDateInput")?.value || "").trim();
-    const status = String(document.getElementById("editStatusInput")?.value || "Đang tiến hành").trim();
+    const projectName = String(
+      document.getElementById("editProjectNameInput")?.value || "",
+    ).trim();
+    const leadCode = String(
+      document.getElementById("editLeadCodeInput")?.value || "",
+    ).trim();
+    const createdAtDate = String(
+      document.getElementById("editCreatedAtInput")?.value || "",
+    ).trim();
+    const endDateValue = String(
+      document.getElementById("editEndDateInput")?.value || "",
+    ).trim();
+    const status = String(
+      document.getElementById("editStatusInput")?.value || "Đang tiến hành",
+    ).trim();
 
     if (!projectName || !createdAtDate || !endDateValue) {
       alert("Vui lòng nhập đầy đủ thông tin hợp lệ.");
@@ -742,10 +837,14 @@ function bindEditProjectModal() {
       return;
     }
 
-    const leadIsValid = employees.some((employee) => employee.MaNhanVien === leadCode);
+    const leadIsValid = employees.some(
+      (employee) => employee.MaNhanVien === leadCode,
+    );
 
     if (!leadIsValid) {
-      alert("Quản lý dự án không hợp lệ. Vui lòng chọn từ danh sách nhân viên.");
+      alert(
+        "Quản lý dự án không hợp lệ. Vui lòng chọn từ danh sách nhân viên.",
+      );
       return;
     }
 
@@ -783,7 +882,9 @@ function fillEditProjectForm(project) {
   const leadCodeInput = document.getElementById("editLeadCodeInput");
   const createdAtInput = document.getElementById("editCreatedAtInput");
   const endDateInput = document.getElementById("editEndDateInput");
-  const progressPreviewInput = document.getElementById("editProgressPreviewInput");
+  const progressPreviewInput = document.getElementById(
+    "editProgressPreviewInput",
+  );
   const statusInput = document.getElementById("editStatusInput");
 
   if (
@@ -800,7 +901,10 @@ function fillEditProjectForm(project) {
 
   const matchedLead =
     employees.find((employee) => employee.MaNhanVien === project.leadId) ||
-    employees.find((employee) => normalizeKeyword(employee.HoTen) === normalizeKeyword(project.leadName));
+    employees.find(
+      (employee) =>
+        normalizeKeyword(employee.HoTen) === normalizeKeyword(project.leadName),
+    );
 
   nameInput.value = project.projectName || "";
   leadInput.value = matchedLead?.HoTen || project.leadName || "";
@@ -880,7 +984,9 @@ function hideProjectManagerSuggestions() {
 function updateEditProgressPreview() {
   const startDateInput = document.getElementById("editCreatedAtInput");
   const endDateInput = document.getElementById("editEndDateInput");
-  const progressPreviewInput = document.getElementById("editProgressPreviewInput");
+  const progressPreviewInput = document.getElementById(
+    "editProgressPreviewInput",
+  );
 
   if (!startDateInput || !endDateInput || !progressPreviewInput) {
     return;
@@ -1005,37 +1111,83 @@ function bindCreateTaskModal() {
       return;
     }
 
-    const title = String(document.getElementById("taskTitleInput")?.value || "").trim();
-    const assigneeName = String(document.getElementById("taskAssigneeInput")?.value || "").trim();
-    const assigneeCode = String(document.getElementById("taskAssigneeCodeInput")?.value || "").trim();
-    const phaseId = String(document.getElementById("taskPhaseInput")?.value || "").trim();
-    const priority = String(document.getElementById("taskPriorityInput")?.value || "medium").trim();
-    const status = String(document.getElementById("taskStatusInput")?.value || "todo").trim();
-    const description = String(document.getElementById("taskDescriptionInput")?.value || "").trim();
+    const title = String(
+      document.getElementById("taskTitleInput")?.value || "",
+    ).trim();
+    const assigneeName = String(
+      document.getElementById("taskAssigneeInput")?.value || "",
+    ).trim();
+    const assigneeCode = String(
+      document.getElementById("taskAssigneeCodeInput")?.value || "",
+    ).trim();
+    const phaseId = String(
+      document.getElementById("taskPhaseInput")?.value || "",
+    ).trim();
+    const priority = String(
+      document.getElementById("taskPriorityInput")?.value || "medium",
+    ).trim();
+    const status = String(
+      document.getElementById("taskStatusInput")?.value || "todo",
+    ).trim();
+    const description = String(
+      document.getElementById("taskDescriptionInput")?.value || "",
+    ).trim();
 
     if (!title || !phaseId) {
-      alert("Vui lòng nhập tên task và chọn giai đoạn.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Vui lòng nhập tên task và chọn giai đoạn.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
     if (!assigneeCode || !assigneeName) {
-      alert("Vui lòng chọn người phụ trách từ danh sách nhân viên của dự án.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Vui lòng chọn người phụ trách từ danh sách nhân viên của dự án.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
-    const validAssignee = getProjectEmployeeDetails(currentProjectDetail.id).some(
-      (employee) => employee.employeeCode === assigneeCode,
-    );
+    const validAssignee = getProjectEmployeeDetails(
+      currentProjectDetail.id,
+    ).some((employee) => employee.employeeCode === assigneeCode);
 
     if (!validAssignee) {
-      alert("Người phụ trách không thuộc dự án hiện tại.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Người phụ trách không thuộc dự án hiện tại.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
     const selectedPhase = findProjectPhaseById(phaseId);
 
     if (!selectedPhase || selectedPhase.projectId !== currentProjectDetail.id) {
-      alert("Giai đoạn không hợp lệ cho dự án hiện tại.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Giai đoạn không hợp lệ cho dự án hiện tại.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
@@ -1049,7 +1201,9 @@ function bindCreateTaskModal() {
       phaseId,
     });
 
-    const projectTaskCount = findProjectTasksByProjectId(currentProjectDetail.id).length;
+    const projectTaskCount = findProjectTasksByProjectId(
+      currentProjectDetail.id,
+    ).length;
 
     insertProjectTask({
       projectId: currentProjectDetail.id,
@@ -1061,6 +1215,15 @@ function bindCreateTaskModal() {
 
     closeModal();
     refreshCurrentProjectAndRender();
+    Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: "Tạo mới task thành công",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
   });
 }
 
@@ -1108,16 +1271,22 @@ function showTaskAssigneeSuggestions(projectId, keyword) {
 
   suggestBox.classList.remove("hidden");
 
-  suggestBox.querySelectorAll("button[data-employee-code]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const selectedCode = String(button.getAttribute("data-employee-code") || "");
-      const selectedName = String(button.getAttribute("data-employee-name") || "");
+  suggestBox
+    .querySelectorAll("button[data-employee-code]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedCode = String(
+          button.getAttribute("data-employee-code") || "",
+        );
+        const selectedName = String(
+          button.getAttribute("data-employee-name") || "",
+        );
 
-      assigneeCodeInput.value = selectedCode;
-      assigneeInput.value = selectedName;
-      hideTaskAssigneeSuggestions();
+        assigneeCodeInput.value = selectedCode;
+        assigneeInput.value = selectedName;
+        hideTaskAssigneeSuggestions();
+      });
     });
-  });
 }
 
 function hideTaskAssigneeSuggestions() {
@@ -1136,9 +1305,18 @@ function bindViewTaskModal() {
   const cancelButton = document.getElementById("view-task-cancel-btn");
   const form = document.getElementById("view-task-form");
   const assigneeInput = document.getElementById("viewTaskAssigneeInput");
-  const assigneeCodeInput = document.getElementById("viewTaskAssigneeCodeInput");
+  const assigneeCodeInput = document.getElementById(
+    "viewTaskAssigneeCodeInput",
+  );
 
-  if (!modal || !closeButton || !cancelButton || !form || !assigneeInput || !assigneeCodeInput) {
+  if (
+    !modal ||
+    !closeButton ||
+    !cancelButton ||
+    !form ||
+    !assigneeInput ||
+    !assigneeCodeInput
+  ) {
     return;
   }
 
@@ -1162,7 +1340,10 @@ function bindViewTaskModal() {
       return;
     }
 
-    showEditableTaskAssigneeSuggestions(currentProjectDetail.id, assigneeInput.value);
+    showEditableTaskAssigneeSuggestions(
+      currentProjectDetail.id,
+      assigneeInput.value,
+    );
   });
 
   assigneeInput.addEventListener("input", () => {
@@ -1171,11 +1352,16 @@ function bindViewTaskModal() {
     }
 
     assigneeCodeInput.value = "";
-    showEditableTaskAssigneeSuggestions(currentProjectDetail.id, assigneeInput.value);
+    showEditableTaskAssigneeSuggestions(
+      currentProjectDetail.id,
+      assigneeInput.value,
+    );
   });
 
   document.addEventListener("click", (event) => {
-    const suggestBox = document.getElementById("view-task-assignee-suggest-list");
+    const suggestBox = document.getElementById(
+      "view-task-assignee-suggest-list",
+    );
 
     if (!suggestBox) {
       return;
@@ -1196,37 +1382,83 @@ function bindViewTaskModal() {
     }
 
     const taskId = String(form.getAttribute("data-task-id") || "").trim();
-    const title = String(document.getElementById("viewTaskTitleInput")?.value || "").trim();
-    const assigneeName = String(document.getElementById("viewTaskAssigneeInput")?.value || "").trim();
-    const assigneeCode = String(document.getElementById("viewTaskAssigneeCodeInput")?.value || "").trim();
-    const phaseId = String(document.getElementById("viewTaskPhaseInput")?.value || "").trim();
-    const priority = String(document.getElementById("viewTaskPriorityInput")?.value || "medium").trim();
-    const status = String(document.getElementById("viewTaskStatusInput")?.value || "todo").trim();
-    const description = String(document.getElementById("viewTaskDescriptionInput")?.value || "").trim();
+    const title = String(
+      document.getElementById("viewTaskTitleInput")?.value || "",
+    ).trim();
+    const assigneeName = String(
+      document.getElementById("viewTaskAssigneeInput")?.value || "",
+    ).trim();
+    const assigneeCode = String(
+      document.getElementById("viewTaskAssigneeCodeInput")?.value || "",
+    ).trim();
+    const phaseId = String(
+      document.getElementById("viewTaskPhaseInput")?.value || "",
+    ).trim();
+    const priority = String(
+      document.getElementById("viewTaskPriorityInput")?.value || "medium",
+    ).trim();
+    const status = String(
+      document.getElementById("viewTaskStatusInput")?.value || "todo",
+    ).trim();
+    const description = String(
+      document.getElementById("viewTaskDescriptionInput")?.value || "",
+    ).trim();
 
     if (!taskId || !title || !phaseId) {
-      alert("Vui lòng nhập tên task và chọn giai đoạn.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Vui lòng nhập tên task và chọn giai đoạn.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
     if (!assigneeCode || !assigneeName) {
-      alert("Vui lòng chọn người phụ trách từ danh sách nhân viên của dự án.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Vui lòng chọn người phụ trách từ danh sách nhân viên của dự án.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
-    const validAssignee = getProjectEmployeeDetails(currentProjectDetail.id).some(
-      (employee) => employee.employeeCode === assigneeCode,
-    );
+    const validAssignee = getProjectEmployeeDetails(
+      currentProjectDetail.id,
+    ).some((employee) => employee.employeeCode === assigneeCode);
 
     if (!validAssignee) {
-      alert("Người phụ trách không thuộc dự án hiện tại.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Người phụ trách không thuộc dự án hiện tại.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
     const selectedPhase = findProjectPhaseById(phaseId);
 
     if (!selectedPhase || selectedPhase.projectId !== currentProjectDetail.id) {
-      alert("Giai đoạn không hợp lệ cho dự án hiện tại.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Giai đoạn không hợp lệ cho dự án hiện tại.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
@@ -1242,14 +1474,14 @@ function bindViewTaskModal() {
 
     if (!updatedTask) {
       Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "error",
-                title: "Không cập nhật được task.",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            });
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "Không cập nhật được task.",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
       return;
     }
 
@@ -1260,6 +1492,15 @@ function bindViewTaskModal() {
 
     closeModal();
     refreshCurrentProjectAndRender();
+    Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: "Cập nhật task thành công",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
   });
 }
 
@@ -1268,11 +1509,17 @@ function bindTaskViewButtons() {
     button.addEventListener("click", () => {
       const taskId = String(button.getAttribute("data-view-task-id") || "");
 
-      if (!taskId || !currentProjectDetail || !Array.isArray(currentProjectDetail.tasks)) {
+      if (
+        !taskId ||
+        !currentProjectDetail ||
+        !Array.isArray(currentProjectDetail.tasks)
+      ) {
         return;
       }
 
-      const task = currentProjectDetail.tasks.find((item) => item.id === taskId);
+      const task = currentProjectDetail.tasks.find(
+        (item) => item.id === taskId,
+      );
 
       if (!task) {
         return;
@@ -1292,7 +1539,8 @@ function openViewTaskModal(task) {
   }
 
   const phase = findProjectPhaseById(task.phaseId);
-  const assigneeCode = task.assigneeCode || findEmployeeCodeByName(task.assigneeName);
+  const assigneeCode =
+    task.assigneeCode || findEmployeeCodeByName(task.assigneeName);
 
   form.setAttribute("data-task-id", task.id || "");
   setInputValue("viewTaskTitleInput", task.title || "");
@@ -1362,7 +1610,9 @@ function fillEditableTaskPhaseOptions(projectId, selectedPhaseId) {
 function showEditableTaskAssigneeSuggestions(projectId, keyword) {
   const suggestBox = document.getElementById("view-task-assignee-suggest-list");
   const assigneeInput = document.getElementById("viewTaskAssigneeInput");
-  const assigneeCodeInput = document.getElementById("viewTaskAssigneeCodeInput");
+  const assigneeCodeInput = document.getElementById(
+    "viewTaskAssigneeCodeInput",
+  );
 
   if (!suggestBox || !assigneeInput || !assigneeCodeInput) {
     return;
@@ -1403,16 +1653,22 @@ function showEditableTaskAssigneeSuggestions(projectId, keyword) {
 
   suggestBox.classList.remove("hidden");
 
-  suggestBox.querySelectorAll("button[data-employee-code]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const selectedCode = String(button.getAttribute("data-employee-code") || "");
-      const selectedName = String(button.getAttribute("data-employee-name") || "");
+  suggestBox
+    .querySelectorAll("button[data-employee-code]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const selectedCode = String(
+          button.getAttribute("data-employee-code") || "",
+        );
+        const selectedName = String(
+          button.getAttribute("data-employee-name") || "",
+        );
 
-      assigneeCodeInput.value = selectedCode;
-      assigneeInput.value = selectedName;
-      hideEditableTaskAssigneeSuggestions();
+        assigneeCodeInput.value = selectedCode;
+        assigneeInput.value = selectedName;
+        hideEditableTaskAssigneeSuggestions();
+      });
     });
-  });
 }
 
 function hideEditableTaskAssigneeSuggestions() {
@@ -1493,7 +1749,9 @@ function renderProjectPhases(projectDetail) {
     return;
   }
 
-  const allTasks = Array.isArray(projectDetail.tasks) ? projectDetail.tasks : [];
+  const allTasks = Array.isArray(projectDetail.tasks)
+    ? projectDetail.tasks
+    : [];
   const tasks = getVisibleTasksByRole(allTasks);
 
   phaseListElement.innerHTML = phases
@@ -1524,7 +1782,8 @@ function getVisibleTasksByRole(tasks) {
   }
 
   const currentEmployee = employees.find(
-    (employee) => String(employee.MaNhanVien || "").trim() === currentEmployeeCode,
+    (employee) =>
+      String(employee.MaNhanVien || "").trim() === currentEmployeeCode,
   );
   const currentEmployeeName = normalizeKeyword(currentEmployee?.HoTen || "");
 
@@ -1669,11 +1928,11 @@ function priorityBadgeClass(priority) {
 function statusLabel(status) {
   switch (status) {
     case "done":
-      return "Hoan thanh";
+      return "Hoàn thành";
     case "in_progress":
-      return "Dang lam";
+      return "Đang làm";
     default:
-      return "Chua lam";
+      return "Chưa làm";
   }
 }
 
@@ -1731,7 +1990,9 @@ function canAccessProjectDetail(projectDetail) {
   }
 
   if (role === "project_manager") {
-    const ownerCode = String(projectDetail?.createdByEmployeeCode || projectDetail?.leadId || "").trim();
+    const ownerCode = String(
+      projectDetail?.createdByEmployeeCode || projectDetail?.leadId || "",
+    ).trim();
     return ownerCode === currentEmployeeCode;
   }
 
@@ -1751,7 +2012,10 @@ function getCurrentUserEmployeeCode() {
     const currentUser = JSON.parse(rawCurrentUser);
 
     return String(
-      currentUser?.employeeCode || currentUser?.MaNhanVien || currentUser?.maNhanVien || "",
+      currentUser?.employeeCode ||
+        currentUser?.MaNhanVien ||
+        currentUser?.maNhanVien ||
+        "",
     ).trim();
   } catch {
     return "";
@@ -1767,7 +2031,9 @@ function getCurrentUserRoleLower() {
     }
 
     const currentUser = JSON.parse(rawCurrentUser);
-    const role = String(currentUser?.role || "").toLowerCase().trim();
+    const role = String(currentUser?.role || "")
+      .toLowerCase()
+      .trim();
     return role === "admin" ? "project_manager" : role;
   } catch {
     return "";

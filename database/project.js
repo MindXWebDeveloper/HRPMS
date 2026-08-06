@@ -365,7 +365,7 @@ function createProject(projectJson) {
   const endDate = projectJson.endDate || addDays(startDate, 30);
 
   const newProject = normalizeProjectRecord({
-    id: projectJson.id || `prj-${Date.now()}`,
+    id: projectJson.id || nextProjectCode(projects),
     projectCode: projectJson.projectCode || nextProjectCode(projects),
     projectName: projectJson.projectName,
     leadId: projectJson.leadId,
