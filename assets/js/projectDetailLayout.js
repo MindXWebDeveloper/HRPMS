@@ -17,6 +17,7 @@ import {
   updateProjectTaskByTaskId,
 } from "../../database/projet_task.js";
 import { getAllEmployees } from "../../database/employeedata.js";
+import { getAll } from "../../database/user.js";
 import {
   addProjectEmployee,
   getProjectEmployeeDetails,
@@ -29,7 +30,7 @@ import { CURRENT_USER } from "./common/storageKeys.js";
 let currentProjectDetail = null;
 let pendingDeleteEmployeeCode = "";
 let employees = getAllEmployees();
-
+let users     = getAll();
 document.addEventListener("DOMContentLoaded", initializeProjectDetailPage);
 
 function initializeProjectDetailPage() {

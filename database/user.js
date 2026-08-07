@@ -4,7 +4,7 @@ let defaultUsers = [
     {
         id: "ad001",
 
-        account: "adm001",
+        account: "thanhlv",
         email: "thanh.luong@company.com",
         password: "admin1234567",
         role: "project_manager",
@@ -16,7 +16,7 @@ let defaultUsers = [
     },
     {
         id: "us002",
-        account: "user002",
+        account: "linhnh",
         email: "linh.nguyen@company.com",
         password: "V@nth@nh10041999",
         role: "hr_manager",
@@ -28,7 +28,7 @@ let defaultUsers = [
     },
     {
         id: "us003",
-        account: "user003",
+        account: "cuonglm",
         email: "cuong.le@company.com",
         password: "user1234567",
         role: "employee",
@@ -40,7 +40,7 @@ let defaultUsers = [
     },
     {
         id: "us004",
-        account: "user004",
+        account: "hapt",
         email: "ha.pham@company.com",
         password: "user1234567",
         role: "employee",
@@ -52,7 +52,7 @@ let defaultUsers = [
     },
     {
         id: "us005",
-        account: "user005",
+        account: "viethq",
         email: "viet.hoang@company.com",
         password: "user1234567",
         role: "employee",
