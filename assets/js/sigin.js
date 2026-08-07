@@ -121,8 +121,18 @@ document.getElementById("login-form").addEventListener("submit", async function(
         if(!foundUser.resetPass) {
             saveCurrentUser(foundUser);
             // Chuyển hướng đến trang chính hoặc trang dashboard
-            window.location.href = "./pages/accountdashboard/accountdashboard.html";
-            btn.disabled = true; // Tắt submit sau khi xử lý xong
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Đăng nhập thành công",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            }).then(() => {
+                window.location.href = "./pages/accountdashboard/accountdashboard.html";
+                btn.disabled = true; // Tắt submit sau khi xử lý xong
+            });
         }else{
             const data = {
                 account: account,
@@ -130,11 +140,21 @@ document.getElementById("login-form").addEventListener("submit", async function(
                 resetPass: true
             };
             localStorage.setItem(INFO_TEMP, JSON.stringify(data));
+            
             window.location.href = "./pages/employee-management/reset-password.html";
         }
         
     }else{
-        showError("account", "Tài khoản hoặc mật khẩu không chính xác");
+        Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Đăng nhập không thành công",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            });
+         showError("account", "Tài khoản hoặc mật khẩu không chính xác");
          btn.disabled = false; // Kích hoạt lại nút submit sau khi xử lý xong
     }
    
