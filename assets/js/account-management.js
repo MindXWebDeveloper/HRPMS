@@ -358,7 +358,7 @@ function bindAddAccountModal() {
     localStorage.setItem(USERS, JSON.stringify(users));
 
     const employeeData = getAllEmployees() || [];
-    employeeData.push(createEmployeeSkeleton(fullName, email, account));
+    employeeData.push(createEmployeeSkeleton(fullName, email, account, newUser.status));
     localStorage.setItem(EMPLOYEES, JSON.stringify(employeeData));
 
     closeModal();
@@ -605,7 +605,7 @@ function bindEditAccountModal() {
    
     localStorage.setItem(USERS, JSON.stringify(users));
 
-    upsertEmployeeData(currentUser.MaNhanVien, fullName, email);
+    upsertEmployeeData(currentUser.MaNhanVien, fullName, email, status);
 
     closeModal();
     renderAccounts();
@@ -646,27 +646,29 @@ function isValidPassword(password) {
   return /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=\S+$).{12,}$/.test(String(password || ""));
 }
 
-function upsertEmployeeData(maNhanVien, fullName, email) {
+function upsertEmployeeData(maNhanVien, fullName, email, userStatus) {
   const employeeCode = String(maNhanVien || "").trim();
   const employees = getAllEmployees() || [];
   const employeeIndex = employees.findIndex(
     (item) => String(item?.MaNhanVien || "").trim() === employeeCode,
   );
+  const mappedStatus = mapUserStatusToEmployeeStatus(userStatus);
 
   if (employeeIndex >= 0) {
     employees[employeeIndex] = {
       ...employees[employeeIndex],
       HoTen: fullName,
       DcEmail: email,
+      TrangThai: mappedStatus,
     };
   } else {
-    employees.push(createEmployeeSkeleton(fullName, email, employeeCode));
+    employees.push(createEmployeeSkeleton(fullName, email, employeeCode, userStatus));
   }
 
   localStorage.setItem(EMPLOYEES, JSON.stringify(employees));
 }
 
-function createEmployeeSkeleton(fullName, email, maNhanVien) {
+function createEmployeeSkeleton(fullName, email, maNhanVien, userStatus = "active") {
   return {
     HoTen: fullName,
     NgaySinh: "",
@@ -695,8 +697,14 @@ function createEmployeeSkeleton(fullName, email, maNhanVien) {
     Avatar: "",
     Vaitro: "",
     ChucVu: "",
-    TrangThai: "",
+    TrangThai: mapUserStatusToEmployeeStatus(userStatus),
   };
+}
+
+function mapUserStatusToEmployeeStatus(userStatus) {
+  return String(userStatus || "").trim().toLowerCase() === "active"
+    ? "Hoạt động"
+    : "Ngưng hoạt động";
 }
 
 function generateAccountBase(fullName) {
