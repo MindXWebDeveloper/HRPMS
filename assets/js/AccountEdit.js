@@ -26,6 +26,7 @@ document.getElementById('SoCccd').value = employee.SoCccd;
 document.getElementById('QuocTich').value = employee.QuocTich;
 document.getElementById('Level').value = employee.Level;
 document.getElementById('PhongBan').value = employee.PhongBan;
+document.getElementById('ChucVu').value = employee.ChucVu || "";
 document.getElementById('TrangThai').value = employee.TrangThai;
 document.getElementById('DCTtru').value = employee.DCTtru;
 document.getElementById('DCHtai').value = employee.DCHtai;
@@ -58,6 +59,7 @@ const fieldIds = [
     "MaNhanVien",
     "Level",
     "PhongBan",
+    "ChucVu",
     "TrangThai",
     "DCTtru",
     "DCHtai",
@@ -245,6 +247,7 @@ const QuocTich1 = document.getElementById('QuocTich').value;
 const MaNhanVien1 = document.getElementById('MaNhanVien').value;
 const Level1 = document.getElementById('Level').value;
 const PhongBan1 = document.getElementById('PhongBan').value;
+const ChucVu1 = document.getElementById('ChucVu').value;
 const TrangThai1 = document.getElementById('TrangThai').value;
 const DCTtru1 = document.getElementById('DCTtru').value;
 const DCHtai1 = document.getElementById('DCHtai').value;
@@ -303,6 +306,7 @@ btnConfirm.addEventListener('click',() =>{
         QuocTich: document.getElementById("Re_QuocTich").textContent,
         Level: document.getElementById("Re_Level").textContent,
         PhongBan: document.getElementById("Re_PhongBan").textContent,
+        ChucVu: document.getElementById("ChucVu").value,
         TrangThai: document.getElementById("Re_TrangThai").textContent,
         DCTtru: document.getElementById("Re_DCTtru").textContent,
         DCHtai: document.getElementById("Re_DCHtai").textContent,
