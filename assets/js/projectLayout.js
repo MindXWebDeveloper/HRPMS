@@ -268,6 +268,7 @@ function handleCreateProject(event) {
     addProjectModal.classList.add("hidden");
     addProjectModal.setAttribute("aria-hidden", "true");
   }
+  window.location.reload();
 }
 
 function applyCreateProjectPermission() {

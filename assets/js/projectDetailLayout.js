@@ -51,11 +51,15 @@ function initializeProjectDetailPage() {
   currentProjectDetail = projectDetail;
   bindProjectDetail(projectDetail);
   const canEdit = canEditProjectDetail();
+  const canCreateWork = canCreateProjectWork();
   const canManageEmployees = canManageProjectEmployees();
   const canViewTask = canViewProjectTask();
 
   if (canEdit) {
     bindEditProjectModal();
+  }
+
+  if (canCreateWork) {
     bindCreatePhaseModal();
     bindCreateTaskModal();
   }
@@ -1961,6 +1965,10 @@ function canEditProjectDetail() {
   return getCurrentUserRoleLower() === "hr_manager";
 }
 
+function canCreateProjectWork() {
+  return getCurrentUserRoleLower() === "project_manager";
+}
+
 function canViewProjectTask() {
   const role = getCurrentUserRoleLower();
   return role === "employee" || role === "project_manager";
@@ -2044,6 +2052,9 @@ function getCurrentUserRoleLower() {
 function applyProjectDetailPermission() {
   if (!canEditProjectDetail()) {
     hideButtonById("detail-edit-project-btn");
+  }
+
+  if (!canCreateProjectWork()) {
     hideButtonById("detail-create-phase-btn");
     hideButtonById("detail-create-task-btn");
   }
