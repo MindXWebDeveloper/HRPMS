@@ -204,6 +204,12 @@ function fillEditForm(task) {
       "task-plan-requester-input",
       String(task.requesterName || task.requestorName || ""),
     );
+    setInputValue("task-plan-start-date-input", formatDateForInput(task.startDate));
+    setInputValue("task-plan-due-date-input", formatDateForInput(task.dueDate));
+    setInputValue(
+      "task-plan-requester-input",
+      String(task.requesterName || task.requestorName || ""),
+    );
     setSelectValue(
       "task-plan-point-select",
       task.storyPoints || task.point ? String(task.storyPoints || task.point) : "",
@@ -327,6 +333,7 @@ function bindTaskDraftAutoSave() {
     "task-edit-priority-select",
     "task-edit-status-select",
     "task-edit-description-input",
+    "task-plan-start-date-input",
     "task-plan-due-date-input",
     "task-plan-requester-input",
     "task-plan-point-select",
@@ -383,8 +390,8 @@ function persistTaskSnapshot(options = {}) {
   if (
     strict &&
     formData.dueDate &&
-    currentTask.startDate &&
-    formData.dueDate < currentTask.startDate.slice(0, 10)
+    formData.startDate &&
+    formData.dueDate < formData.startDate
   ) {
     if (!silent) {
       Swal.fire({
@@ -439,6 +446,7 @@ function persistTaskSnapshot(options = {}) {
     assigneeCode: formData.assigneeValue.code,
     assigneeName: formData.assigneeValue.name,
     priority: formData.priority,
+    startDate: formData.startDate || null,
     dueDate: formData.dueDate || null,
     description: formData.description,
     status: formData.status,
@@ -495,6 +503,11 @@ function collectTaskFormData() {
       currentTask?.requestorName ||
       "",
   ).trim();
+  const startDate = String(
+    document.getElementById("task-plan-start-date-input")?.value ||
+      formatDateForInput(currentTask?.startDate) ||
+      "",
+  ).trim();
   const storyPointsInput = String(
     document.getElementById("task-plan-point-select")?.value ||
       (currentTask?.storyPoints ? String(currentTask.storyPoints) : "") ||
@@ -530,6 +543,7 @@ function collectTaskFormData() {
   return {
     title,
     description,
+    startDate,
     dueDate,
     requesterName,
     storyPointsInput,
