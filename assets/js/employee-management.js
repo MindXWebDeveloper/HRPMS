@@ -1,4 +1,4 @@
-import { employees as defaultEmployees } from "../../database/employeedata.js";
+import { initEmployees, getAllEmployees, getEmployeeDepartment, getEmployeeFullName, getEmployeeID, getEmployeeJobTitle, getEmployeeStatusLabel } from "../../database/employeedata.js";
 
 const EMPLOYEES_KEY = "EMPLOYEES";
 const PAGE_SIZE = 10;
@@ -11,13 +11,11 @@ let currentSearchKeyword = "";
 let currentPage = 1;
 
 function initEmployeeData() {
-  if (!localStorage.getItem(EMPLOYEES_KEY)) {
-    localStorage.setItem(EMPLOYEES_KEY, JSON.stringify(defaultEmployees));
-  }
+  initEmployees();
 }
 
 function getEmployees() {
-  return JSON.parse(localStorage.getItem(EMPLOYEES_KEY)) || [];
+  return getAllEmployees();
 }
 
 function filterEmployeesByName(employees, keyword) {
@@ -28,7 +26,7 @@ function filterEmployeesByName(employees, keyword) {
   }
 
   return (Array.isArray(employees) ? employees : []).filter((employee) =>
-    String(employee.HoTen || "").toLowerCase().includes(query),
+    String(getEmployeeFullName(employee) || "").toLowerCase().includes(query),
   );
 }
 
@@ -200,15 +198,15 @@ function renderEmployee() {
     tr.className = "bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium";
 
     tr.innerHTML = `
-      <td scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">${employee.MaNhanVien}</td>
-      <td class="px-6 py-4">${employee.HoTen}</td>
-      <td class="px-6 py-4">${employee.PhongBan}</td>
-      <td class="px-6 py-4">${employee.ChucVu}</td>
+      <td scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">${getEmployeeID(employee)}</td>
+      <td class="px-6 py-4">${getEmployeeFullName(employee)}</td>
+      <td class="px-6 py-4">${getEmployeeDepartment(employee)}</td>
+      <td class="px-6 py-4">${getEmployeeJobTitle(employee)}</td>
       <td class="px-6 py-4">
         <div class="flex items-center">
           <div>
             ${
-              employee.TrangThai === "Hoạt động"
+              getEmployeeStatusLabel(employee) === "Hoạt động"
                 ? `<span class="h-2.5 w-2.5 rounded-full text-green-500 me-2">● Hoạt động</span>`
                 : `<span class="h-2.5 w-2.5 rounded-full text-red-500 me-2">● Ngưng hoạt động</span>`
             }
@@ -218,7 +216,7 @@ function renderEmployee() {
       <td class="px-6 py-4">
         <div class="flex">
           <div class="relative group" data-role="admin">
-            <a href="../accountedit/AccountEdit.html?maNV=${employee.MaNhanVien}" class="text-blue-500">
+            <a href="../accountedit/AccountEdit.html?employeeID=${getEmployeeID(employee)}" class="text-blue-500">
               <svg
                 class="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -244,7 +242,7 @@ function renderEmployee() {
           </div>
 
           <div class="relative group">
-            <a href="../accountedit/accountview.html?maNV=${employee.MaNhanVien}" class="text-blue-500">
+            <a href="../accountedit/accountview.html?employeeID=${getEmployeeID(employee)}" class="text-blue-500">
               <svg
                 class="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"

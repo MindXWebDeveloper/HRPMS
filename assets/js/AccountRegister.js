@@ -14,7 +14,7 @@ const fieldIds = [
     "GioiTinh",
     "SoCccd",
     "QuocTich",
-    "MaNhanVien",
+    "employeeID",
     "Level",
     "PhongBan",
     "DCTtru",
@@ -167,7 +167,7 @@ const NoiCap1 = document.getElementById('NoiCap').value;
 const GioiTinh1 = document.getElementById('GioiTinh').value;
 const SoCccd1 = document.getElementById('SoCccd').value;
 const QuocTich1 = document.getElementById('QuocTich').value;
-const MaNhanVien1 = document.getElementById('MaNhanVien').value;
+const employeeID1 = document.getElementById('employeeID').value;
 const Level1 = document.getElementById('Level').value;
 const PhongBan1 = document.getElementById('PhongBan').value;
 const DCTtru1 = document.getElementById('DCTtru').value;
@@ -194,7 +194,7 @@ document.getElementById('Re_NoiCap').textContent = NoiCap1 || "Chưa nhập";
 document.getElementById('Re_GioiTinh').textContent = GioiTinh1 || "Chưa nhập";
 document.getElementById('Re_SoCccd').textContent = SoCccd1 || "Chưa nhập";
 document.getElementById('Re_QuocTich').textContent = QuocTich1 || "Chưa nhập";
-document.getElementById('Re_MaNhanVien').textContent = MaNhanVien1 || "Chưa nhập";
+document.getElementById('Re_employeeID').textContent = employeeID1 || "Chưa nhập";
 document.getElementById('Re_Level').textContent = Level1 || "Chưa nhập";
 document.getElementById('Re_PhongBan').textContent = PhongBan1 || "Chưa nhập";
 document.getElementById('Re_DCTtru').textContent = DCTtru1 || "Chưa nhập";

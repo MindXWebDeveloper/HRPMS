@@ -2,7 +2,7 @@ import { PROJECTS, PROJECT_TASKS, EMPLOYEES, TASKS } from "../../assets/js/commo
 import { getAll, initProjects } from "../../database/project.js";
 import { getAllTasks, initTasks } from "../../database/task.js";
 import { initProjectTasks, getAllProjectTasks, getProjectByTaskId } from "../../database/projet_task.js";
-import { initEmployees } from "../../database/employeedata.js";
+import { initEmployees, getEmployeeAvatarUrl, getEmployeeFullName, getEmployeeJobTitle, getEmployeePoints, getEmployeeID } from "../../database/employeedata.js";
 const tbody = document.getElementById("ProjectTableBody");
 const tbodytask = document.getElementById("TaskTableBody");
 const PROJECTS_KEY = "PROJECTS";
@@ -155,14 +155,14 @@ function renderTopEmployees() {
     const employees = JSON.parse(localStorage.getItem(EMPLOYEES)) || [];
 
     const topEmployees = [...employees]
-        .sort((a, b) => (b.Points || 0) - (a.Points || 0))
+        .sort((a, b) => getEmployeePoints(b) - getEmployeePoints(a))
         .slice(0, 5);
 
 
-    const maxPoint = topEmployees.length ? topEmployees[0].Points : 1;
+    const maxPoint = topEmployees.length ? getEmployeePoints(topEmployees[0]) : 1;
 
     container.innerHTML = topEmployees.map((emp, index) => {
-        const percent = Math.max((emp.Points / maxPoint) * 100, 5);
+        const percent = Math.max((getEmployeePoints(emp) / maxPoint) * 100, 5);
 
         return `
             <div class="flex items-center gap-4 py-3">
@@ -172,16 +172,16 @@ function renderTopEmployees() {
                 </div>
 
                 <img
-                    src="${emp.Avatar}"
+                    src="${getEmployeeAvatarUrl(emp)}"
                     class="w-10 h-10 rounded-full object-cover"
                 >
 
                 <div class="w-40">
                     <p class="font-semibold text-sm text-slate-900">
-                        ${emp.HoTen}
+                        ${getEmployeeFullName(emp)}
                     </p>
                     <p class="text-xs text-slate-500">
-                        ${emp.ChucVu || ""}
+                        ${getEmployeeJobTitle(emp) || ""}
                     </p>
                 </div>
 
@@ -193,7 +193,7 @@ function renderTopEmployees() {
                 </div>
 
                 <div class="w-24 text-right text-sm font-medium text-slate-700">
-                    ${(emp.Points || 0).toLocaleString()} điểm
+                    ${getEmployeePoints(emp).toLocaleString()} điểm
                 </div>
 
             </div>
@@ -217,7 +217,7 @@ function renderEmployeeWorkload() {
 
     const workloadList = employees.map(emp => ({
         ...emp,
-        workload: workloadMap[emp.MaNhanVien] 
+        workload: workloadMap[getEmployeeID(emp)] 
     }));
 
     workloadList.sort((a, b) => b.workload - a.workload);
@@ -239,17 +239,17 @@ function renderEmployeeWorkload() {
                 </div>
 
                 <img
-                    src="${emp.Avatar}"
+                    src="${getEmployeeAvatarUrl(emp)}"
                     class="w-11 h-11 rounded-full object-cover"
                 >
 
                 <div class="w-44">
                     <p class="font-semibold text-sm text-slate-800">
-                        ${emp.HoTen}
+                        ${getEmployeeFullName(emp)}
                     </p>
 
                     <p class="text-xs text-slate-500">
-                        ${emp.ChucVu}
+                        ${getEmployeeJobTitle(emp)}
                     </p>
                 </div>
 

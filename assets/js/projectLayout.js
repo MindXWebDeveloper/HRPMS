@@ -3,7 +3,7 @@
   renderProjects,
   createNewProject,
 } from "./services/projectService.js";
-import { getAllEmployees } from "../../database/employeedata.js";
+import { getAllEmployees, getEmployeeFullName, getEmployeeID } from "../../database/employeedata.js";
 import { upsertProjectEmployee } from "../../database/project-employees.js";
 import { CURRENT_USER } from "./common/storageKeys.js";
 
@@ -229,7 +229,7 @@ function handleCreateProject(event) {
     return;
   }
 
-  const isValidLead = employees.some((employee) => employee.MaNhanVien === leadCode);
+  const isValidLead = employees.some((employee) => getEmployeeID(employee) === leadCode);
 
   if (!isValidLead) {
     alert("Tên quản lý không hợp lệ.");
@@ -319,7 +319,7 @@ function getCurrentUserEmployeeCode() {
     const currentUser = JSON.parse(rawCurrentUser);
 
     return String(
-      currentUser?.employeeCode || currentUser?.MaNhanVien || currentUser?.maNhanVien || "",
+      currentUser?.employeeID || currentUser?.employeeCode || "",
     ).trim();
   } catch {
     return "";
@@ -374,7 +374,7 @@ function showLeadNameSuggestions(keyword) {
         return true;
       }
 
-      return normalizeKeyword(employee.HoTen).includes(query);
+      return normalizeKeyword(getEmployeeFullName(employee)).includes(query);
     })
     .slice(0, 8);
 
@@ -390,11 +390,11 @@ function showLeadNameSuggestions(keyword) {
       <button
         type="button"
         class="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-gray-50"
-        data-lead-code="${escapeHtml(employee.MaNhanVien)}"
-        data-lead-name="${escapeHtml(employee.HoTen)}"
+        data-lead-code="${escapeHtml(getEmployeeID(employee))}"
+        data-lead-name="${escapeHtml(getEmployeeFullName(employee))}"
       >
-        <span>${escapeHtml(employee.HoTen)}</span>
-        <span class="text-xs text-gray-500">${escapeHtml(employee.MaNhanVien)}</span>
+        <span>${escapeHtml(getEmployeeFullName(employee))}</span>
+        <span class="text-xs text-gray-500">${escapeHtml(getEmployeeID(employee))}</span>
       </button>
     `,
     )

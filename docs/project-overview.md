@@ -1,9 +1,8 @@
-# <span>**Human Resource & Project Management System (HRPMS)**</span>
+# Human Resource & Project Management System (HRPMS)
 
 A web-based system for managing employees, skills, certifications, projects, and workforce allocation.
 
-Technologies:
-
+## Technologies
 - HTML
 - CSS
 - Tailwind CSS

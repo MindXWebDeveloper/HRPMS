@@ -1,11 +1,11 @@
 import { PROJECT_EMPLOYEES } from "../assets/js/common/storageKeys.js";
-import { getAllEmployees } from "./employeedata.js";
+import { getAllEmployees, getEmployeeID, getEmployeeFullName, getEmployeeAvatarUrl, getEmployeeJobLevel } from "./employeedata.js";
 let employees = getAllEmployees();
 const DEFAULT_PROJECT_EMPLOYEES = [
   {
     id: "pem-001",
     projectId: "prj-001",
-    employeeCode: "EMP001",
+    employeeCode: "thanhlv",
     role: "Developer",
     createdAt: "2026-07-10T09:00:00",
     updatedAt: "2026-07-10T09:00:00",
@@ -13,7 +13,7 @@ const DEFAULT_PROJECT_EMPLOYEES = [
   {
     id: "pem-002",
     projectId: "prj-001",
-    employeeCode: "EMP003",
+    employeeCode: "cuonglm",
     role: "Team Lead",
     createdAt: "2026-07-10T09:00:00",
     updatedAt: "2026-07-10T09:00:00",
@@ -21,7 +21,7 @@ const DEFAULT_PROJECT_EMPLOYEES = [
   {
     id: "pem-003",
     projectId: "prj-002",
-    employeeCode: "EMP002",
+    employeeCode: "linhnh",
     role: "Tester",
     createdAt: "2026-07-10T09:00:00",
     updatedAt: "2026-07-10T09:00:00",
@@ -56,7 +56,7 @@ function findProjectEmployeesByProjectId(projectId) {
 
 function addProjectEmployee(projectId, employeeCode, role = "Member") {
   const allLinks = getAllProjectEmployees();
-  const employeeExists = employees.some((employee) => employee.MaNhanVien === employeeCode);
+  const employeeExists = employees.some((employee) => getEmployeeID(employee) === employeeCode);
 
   if (!employeeExists) {
     return null;
@@ -88,7 +88,7 @@ function addProjectEmployee(projectId, employeeCode, role = "Member") {
 
 function upsertProjectEmployee(projectId, employeeCode, role = "Member") {
   const allLinks = getAllProjectEmployees();
-  const employeeExists = employees.some((employee) => employee.MaNhanVien === employeeCode);
+  const employeeExists = employees.some((employee) => getEmployeeID(employee) === employeeCode);
 
   if (!employeeExists) {
     return null;
@@ -129,7 +129,7 @@ function removeProjectEmployee(projectId, employeeCode) {
 }
 
 function getEmployeeByCode(employeeCode) {
-  return employees.find((employee) => employee.MaNhanVien === employeeCode) || null;
+  return employees.find((employee) => getEmployeeID(employee) === employeeCode) || null;
 }
 
 function getProjectEmployeeDetails(projectId) {
@@ -143,9 +143,9 @@ function getProjectEmployeeDetails(projectId) {
 
       return {
         employeeCode: link.employeeCode,
-        role: link.role || employee.Level || "Member",
-        fullName: employee.HoTen,
-        avatar: employee.Avatar || "../../assets/images/account-icon.png",
+        role: link.role || getEmployeeJobLevel(employee) || "Member",
+        fullName: getEmployeeFullName(employee),
+        avatar: getEmployeeAvatarUrl(employee) || "../../assets/images/account-icon.png",
       };
     })
     .filter(Boolean);

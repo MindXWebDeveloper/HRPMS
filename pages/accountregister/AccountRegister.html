@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Function</title>
     <link href="style.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/account-form.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body data-base-path="../../">
-<div data-layout="sidebar" class="fixed w-64 h-screen"></div>
+<body data-base-path="../../" class="management-page account-form-page">
+<div data-layout="sidebar"></div>
 
-<div class="ml-64 min-h-screen">
-<div class="px-[20px] flex justify-between content-center items-center">
+<div>
+<div class="page-header px-[20px] flex flex-wrap justify-between content-center items-center">
     <div class="ScreenName h-[80px]">
-    <p class="font-bold text-blue-900 text-[20px]"> Đăng ký nhân viên </p>
+    <p class="font-bold text-blue-900 text-[20px] sm:text-[24px]"> Đăng ký nhân viên </p>
     <p> Đăng ký mới thông tin nhân viên </p>
     </div>
     <div class="user-info flex items-center content-center gap-[8px]">
@@ -25,7 +27,7 @@
     </div>
 </div>
 
- <div class="InfoTab h-[40px] px-[20px] flex justify-start">
+ <div class="InfoTab min-h-[40px] px-[20px] flex flex-wrap justify-start gap-2">
     <div class="text-bold text-blue-600 px-[20px] border-2 border-b-4 border-b-blue-900 content-center text-center">
     <p> Thông tin cá nhân </p>
     </div>
@@ -41,8 +43,8 @@
 
 </div>
 
-<div class="TopInfo w-ml-64 px-[20px] flex gap-[10px] my-[25px] justify-between">
-    <div class="InfoBox my-[5px] w-[70%]">
+<div class="TopInfo px-[20px] flex flex-col xl:flex-row gap-[10px] my-[25px] justify-between">
+    <div class="InfoBox my-[5px] w-full xl:w-[70%]">
         <div class="flex gap-[2px]">
         <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin cá nhân </p>
@@ -63,8 +65,8 @@
                 <input id="NgayCap" type="date" placeholder="   dd/mm/yyyy" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 <div>
-                <p class="font-bold text-blue-900"> Mã Nhân viên </p>
-                <input id="MaNhanVien" type="text" placeholder="   Nhập mã nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
+                <p class="font-bold text-blue-900"> Employee ID </p>
+                <input id="employeeID" type="text" placeholder="   Nhập employee id" class="mb-[10px] border rounded-full border-slate-400 w-[250px]">
                 </div>
                 </div>
 
@@ -124,7 +126,7 @@
         </div>
     </div>
 
-    <div class="AvatarBox w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
+    <div class="AvatarBox w-full xl:w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
         <div class="flex gap-[2px]">
         <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Ảnh đại diện </p>
@@ -142,7 +144,7 @@
 </div>
 
 <div class="flex justify-center px-[20px]">
-    <div class="BottomInfo w-[100%] grid grid-cols-3 gap-[20px]"> 
+    <div class="BottomInfo w-[100%] grid grid-cols-1 xl:grid-cols-3 gap-[20px]"> 
     <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
     <div class="flex mb-[5px] gap-[5px]">
         <img src="../../assets/images/contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
@@ -171,7 +173,7 @@
     </div>
     <div>
         <p class="font-bold text-blue-900"> Địa chỉ </p>
-        <input id="DCNgLienHe" type="text" placeholder="   Nhập địa chỉ" class="mb-[10px] border rounded-full border-slate-400 w-[20vw]">
+        <input id="DCNgLienHe" type="text" placeholder="   Nhập địa chỉ" class="mb-[10px] border rounded-full border-slate-400 w-full">
     </div>
     </div>
       
@@ -248,7 +250,7 @@
     </div>
     </div>
 </div>
-<div class="ButtonRow1 flex bottom-[100px] my-[100px] flex justify-center gap-[20px] ml-[20px]">
+<div class="ButtonRow1 flex bottom-[100px] my-[100px] justify-center gap-[20px] ml-[20px]">
     <div> 
         <img>
         <button id="btnHuy" class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500"> Hủy bỏ </button>
@@ -265,8 +267,8 @@
   <div class="modal-content bg-white p-[20px] border border-2 rounded-xl w-[80%]">
     <h3 class="text-2xl text-center text-blue-500 font-bold">Xác nhận thông tin đã nhập</h3>
     <div>
-      <div class="TopInfo w-ml-64 px-[20px] flex gap-[10px] my-[25px] justify-between">
-    <div class="InfoBox my-[5px] w-[70%]">
+            <div class="TopInfo px-[20px] flex flex-col xl:flex-row gap-[10px] my-[25px] justify-between">
+        <div class="InfoBox my-[5px] w-full xl:w-[70%]">
         <div class="flex gap-[2px]">
         <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Thông tin cá nhân </p>
@@ -288,7 +290,7 @@
                 </div>
                 <div>
                 <p class="font-bold text-blue-900"> Mã Nhân viên </p>
-                <p class="font-bold"><span id="Re_MaNhanVien"></span></p>
+                <p class="font-bold"><span id="Re_employeeID"></span></p>
                 </div>
                 </div>
 
@@ -344,7 +346,7 @@
         </div>
     </div>
 
-    <div class="AvatarBox w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
+    <div class="AvatarBox w-full xl:w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
         <div class="flex gap-[2px]">
         <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
         <p class="text-lg font-bold text-blue-900"> Ảnh đại diện </p>
@@ -357,7 +359,7 @@
 </div>
 
 <div class="flex justify-center px-[20px]">
-    <div class="BottomInfo w-[100%] grid grid-cols-3 gap-[20px]"> 
+    <div class="BottomInfo w-[100%] grid grid-cols-1 xl:grid-cols-3 gap-[20px]"> 
     <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
     <div class="flex mb-[5px] gap-[5px]">
         <img src="../../assets/images/contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">

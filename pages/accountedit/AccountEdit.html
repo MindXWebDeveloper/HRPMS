@@ -10,20 +10,22 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel ="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/account-form.css">
+    <link rel="stylesheet" href="../../assets/css/account-detail-layout.css">
 </head>
-<body data-base-path="../../">
-<div data-layout="sidebar" class="fixed w-64 h-screen"></div>
+<body data-base-path="../../" class="management-page account-edit-page account-form-page">
+<div data-layout="sidebar"></div>
 
-<div class="ml-64 min-h-screen">
-<div class="px-[20px] flex justify-between content-center items-center">
+<div>
+<div class="page-header px-[20px] flex flex-wrap justify-between content-center items-center">
     <div class="ScreenName h-[80px]">
-    <p class="font-bold text-blue-900 text-[20px]"> Cập nhật nhân viên </p>
+    <p class="font-bold text-blue-900 text-[20px] sm:text-[24px]"> Cập nhật nhân viên </p>
     <p> Thay đổi thông tin nhân viên </p>
     </div>
    
 </div>
 
- <div class="InfoTab h-[40px] px-[20px] flex justify-start">
+ <div class="InfoTab min-h-[40px] px-[20px] flex flex-wrap justify-start gap-2">
     <div class="text-bold text-blue-600 px-[20px] border-2 border-b-4 border-b-blue-900 content-center text-center">
     <p> Thông tin cá nhân </p>
     </div>
@@ -33,11 +35,14 @@
     <div class="text-bold text-slate-600 px-[20px] border-2 content-center text-center">
     <p> Tổng hợp</p>
     </div>
+    <div class="save-action ml-auto flex items-center">
+        <button id="btnTiepTuc" class="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 sm:w-auto"> Lưu </button>
+    </div>
 
 </div>
 
-<div class="TopInfo w-ml-64 px-[20px] flex gap-[10px] my-[25px] justify-between">
-    <div class="InfoBox my-[5px] w-[70%]">
+<div class="TopInfo top-row px-[20px] flex flex-col xl:flex-row gap-[10px] my-[25px] justify-between">
+    <div class="InfoBox my-[5px] w-full xl:w-[70%]">
         <div class="flex gap-[2px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1641a7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
         <p class="text-lg font-bold text-blue-900"> Thông tin cá nhân </p>
@@ -110,7 +115,7 @@
         </div>
     </div>
 
-    <div class="AvatarBox w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
+    <div class="AvatarBox w-full xl:w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
         <div class="flex gap-[2px]">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1641a7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera-icon lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></svg>
         <p class="text-lg font-bold text-blue-900"> Ảnh đại diện </p>
@@ -127,8 +132,7 @@
 
 </div>
 
-<div class="flex justify-center px-[20px] w-[100%]">
-    <div class="BottomInfo grid grid-cols-3 gap-[20px]"> 
+<div class="BottomInfo px-[20px] w-full grid grid-cols-1 xl:grid-cols-3 gap-[20px]"> 
     <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
     <div class="flex mb-[5px] gap-[5px]">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1641a7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-contact-round-icon lucide-contact-round"><path d="M16 2v2"/><path d="M17.915 21a6 6 0 10-12 0"/><path d="M8 2v2"/><circle cx="12" cy="11" r="4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
@@ -168,8 +172,8 @@
         </div>
         <div class="grid grid-cols-2 grid-rows-3 my-[5px]">
             <div>
-                <p class="font-bold text-blue-900"> Mã Nhân viên </p>
-                <input id="MaNhanVien" type="text" placeholder="   Nhập mã nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
+                <p class="font-bold text-blue-900"> Employee ID </p>
+                <input id="employeeID" type="text" placeholder="   Nhập mã nhân viên" class="mb-[10px] border rounded-full border-slate-400 w-[85%]">
             </div>
             <div>
                 <p class="font-bold text-blue-900"> Cấp bậc </p>
@@ -222,193 +226,19 @@
             <p class="font-bold text-blue-900"> Ghi chú</p>
             <input id="GhiChu" type="text" placeholder="Nhập ghi chú" class="mb-[10px] border rounded-full border-slate-400 w-[90%]">
         </div>
-    </div>
-    </div>
-</div>
-<div class="ButtonRow1 flex bottom-[100px] my-[100px] flex justify-center gap-[20px] ml-[20px]">
-    <div> 
-        <img>
-        <button id="btnHuy" class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500"> Hủy bỏ </button>
-    </div>
-
-    <div> 
-        <img>
-        <button id="btnTiepTuc" class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500"> Tiếp tục </button>
-    </div>
 </div>
 </div>
 
 <div id="confirmationModal" class="modal fixed z-999 top-0 left-0 w-[100%] h-[100%] bg-sky-50/50 flex justify-center items-center" style="display: none;">
-  <div class="modal-content bg-white p-[20px] border border-2 rounded-xl w-[80%]">
-    <h3 class="text-2xl text-center text-blue-500 font-bold">Xác nhận thông tin đã nhập</h3>
-    <div>
-      <div class="TopInfo w-ml-64 px-[20px] flex gap-[10px] my-[25px] justify-between">
-    <div class="InfoBox my-[5px] w-[70%]">
-        <div class="flex gap-[2px]">
-        <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
-        <p class="text-lg font-bold text-blue-900"> Thông tin cá nhân </p>
+    <div class="modal-content bg-white p-[20px] border border-2 rounded-xl w-[80%] max-w-[520px]">
+        <h3 class="text-2xl text-center text-blue-500 font-bold">Bạn xác nhận lưu thông tin này</h3>
+        <p class="mt-[12px] text-center text-slate-600">Nhấn xác nhận để lưu thay đổi, hoặc hủy bỏ để quay lại chỉnh sửa.</p>
+        <div class="modal-actions flex justify-center mt-[28px] gap-[20px]">
+            <button id="btnBack" type="button" class="border border-4 rounded-xl border-blue-500 px-[40px] py-[16px] font-bold text-blue-500">Hủy bỏ</button>
+            <button id="btnConfirm" type="button" class="border border-4 rounded-xl border-blue-500 bg-blue-500 px-[40px] py-[16px] font-bold text-white">Xác nhận</button>
         </div>
-        <div class="flex">
-            <div class="InfoGrid justify-center grid grid-cols-3 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] w-[100%] p-[10px]">
-                <div class="Infocol1">
-                <div>
-                 <p class="font-bold text-blue-900"> Họ và tên </p>
-                 <p class="font-bold"><span id="Re_HoTen"></span></p>
-                </div>
-                <div>
-                 <p class="font-bold text-blue-900"> Số điện thoại </p>
-                 <p class="font-bold"><span id="Re_SoDienThoai"></span></p>
-                </div>
-                <div>
-                <p class="font-bold text-blue-900"> Ngày cấp </p>
-                <p class="font-bold"><span id="Re_NgayCap"></span></p>
-                </div>
-               
-                </div>
-
-                <div class="Infocol2"> 
-                <div>
-                <p class="font-bold text-blue-900"> Ngày sinh </p>
-                <p class="font-bold"><span id="Re_NgaySinh"></span></p>
-                </div>
-                <div>
-                <p class="font-bold text-blue-900"> Email  </p>
-                <p class="font-bold"><span id="Re_DcEmail"></span></p>
-                </div>
-                <div>
-                <p class="font-bold text-blue-900"> Nơi cấp</p>
-                <p class="font-bold"><span id="Re_NoiCap"></span></p>
-                </div>
-              
-                </div>
-
-                <div class="Infocol3 items-end">
-                <div>
-                    <p class="font-bold text-blue-900"> Giới tính </p>
-                    <p class="font-bold"><span id="Re_GioiTinh"></span></p>
-                </div>
-                <div>
-                    <p class="font-bold text-blue-900"> Số CCCD  </p>
-                    <p class="font-bold"><span id="Re_SoCccd"></span></p>
-                </div>
-                <div>
-                    <p class="font-bold text-blue-900"> Quốc tịch</p>
-                    <p class="font-bold"><span id="Re_QuocTich"></span></p>
-                </div>
-        
-                </div>
-            </div>
-        </div>
-        <div class="AddressBox grid grid-cols-2 border-2 rounded-xl border-slate-300 my-[20px] py-[30px] p-[10px] w-[25]">
-            <div>
-             <p class="font-bold text-blue-900 mb-[5px]"> Địa chỉ thường trú </p>
-             <p class="font-bold"><span id="Re_DCTtru"></span></p>
-            </div>
-
-            <div>
-            <p class="font-bold text-blue-900 mb-[5px]"> Địa chỉ hiện tại </p>
-            <p class="font-bold"><span id="Re_DCHtai"></span></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="AvatarBox w-[30%] border-2 rounded-xl border-slate-300 my-[20px] py-[30px] flex flex-col">
-        <div class="flex gap-[2px]">
-        <img src="../../assets/images/iconPI.png" class="text-blue-900 object-contain">
-        <p class="text-lg font-bold text-blue-900"> Ảnh đại diện </p>
-        </div>
-        <div class="my-[15px] h-[60%] w-[80%] mx-auto">
-        <img id="Re_Avatar" class="h-[100%] w-[100%] border rounded-full object-cover"/>
-        </div>
-    </div>
-
-</div>
-
-<div class="flex justify-center px-[20px]">
-    <div class="BottomInfo w-[100%] grid grid-cols-3 gap-[20px]"> 
-    <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
-    <div class="flex mb-[5px] gap-[5px]">
-        <img src="../../assets/images/contact-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
-        <p class="text-lg font-bold text-blue-900"> Thông tin liên hệ khẩn cấp </p>
-    </div>
-    <div class="flex gap-[10px]">
-        <div>
-            <p class="font-bold text-blue-900"> Họ tên người liên hệ </p>
-            <p class="font-bold"><span id="Re_NgLienHe"></span></p>    
-        </div>
-        <div>
-            <p class="font-bold text-blue-900"> Số điện thoại </p>
-            <p class="font-bold"><span id="Re_SDTNgLienHe"></span></p>    
-        </div>
-    </div>
-    <div>
-        <p class="font-bold text-blue-900"> Mối quan hệ </p>
-        <p class="font-bold"><span id="Re_QuanHe"></span></p>
-    </div>
-    <div>
-        <p class="font-bold text-blue-900"> Địa chỉ </p>
-        <p class="font-bold"><span id="Re_DCNgLienHe"></span></p>    
-    </div>
-    </div>
-      
-    <div class="border border-2 rounded-xl border-slate-300 px-[20px]">
-        <div class="flex mb-[5px] gap-[5px] my-[10px]">
-            <img src="../../assets/images/account-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
-            <p class="text-lg font-bold text-blue-900"> Thông tin công việc </p>
-        </div>
-        <div class="grid grid-cols-2 grid-rows-2 my-[5px]">
-            <div>
-                <p class="font-bold text-blue-900"> Mã Nhân viên </p>
-                <p class="font-bold"><span id="Re_MaNhanVien"></span></p>
-            </div>
-            <div>
-                <p class="font-bold text-blue-900"> Chức vụ </p>
-                <p class="font-bold"><span id="Re_Level"></span></p>
-            </div>
-             <div>
-                    <p class="font-bold text-blue-900"> Phòng ban </p>
-                    <p class="font-bold"><span id="Re_PhongBan"></span></p>
-            </div>
-            <div>
-                <p class="font-bold text-blue-900">Trạng thái: </p>
-                <p class="font-bold"><span id="Re_TrangThai"></span></p>    
-            </div>
-        </div>
-    </div>
-    <div class="border border-2 rounded-xl border-slate-300 p-[10px]">
-        <div class="flex mb-[5px] gap-[5px] my-[10px]">
-            <img src="../../assets/images/information-icon.png" class="w-[30px] h-[30px] border rounded-xl object-contain">
-            <p class="text-lg font-bold text-blue-900"> Thông tin bổ sung </p>
-        </div>
-        <div class="grid grid-cols-2">
-            <div>
-                <p class="font-bold text-blue-900"> Trình độ học vấn </p>
-                <p class="font-bold"><span id="Re_HocVan"></span></p>
-            </div>
-            <div>
-                <p class="font-bold text-blue-900"> Ngoại ngữ </p>
-                <p class="font-bold"><span id="Re_NgoaiNgu"></span></p>    
-            </div>
-        </div>
-        <div>
-            <p class="font-bold text-blue-900"> Kỹ năng </p>
-            <p class="font-bold"><span id="Re_KyNang"></span></p>    
-        </div>
-        <div>
-            <p class="font-bold text-blue-900"> Ghi chú</p>
-            <p class="font-bold"><span id="Re_GhiChu"></span></p>    
-        </div>
-    </div>
     </div>
 </div>
-     </div>
-    <div class="modal-actions flex justify-center mt-[50px gap-[20px]">
-      <button id="btnBack" type="button" class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500">Quay lại sửa</button>
-      <button id="btnConfirm" type="button" class="border border-4 rounded-xl border-blue-500 px-[40px] py-[20px] font-bold text-blue-500">Xác nhận gửi</button>
-    </div>
-  </div>
-</div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 <script type = "module" src="../../assets/js/AccountEdit.js"></script>

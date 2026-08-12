@@ -16,7 +16,7 @@ import {
   removeProjectTaskByTaskId,
   updateProjectTaskByTaskId,
 } from "../../database/projet_task.js";
-import { getAllEmployees } from "../../database/employeedata.js";
+import { getAllEmployees, getEmployeeID, getEmployeeFullName, getEmployeeJobLevel, getEmployeeAvatarUrl } from "../../database/employeedata.js";
 import { getAll } from "../../database/user.js";
 import {
   addProjectEmployee,
@@ -31,6 +31,7 @@ let currentProjectDetail = null;
 let pendingDeleteEmployeeCode = "";
 let employees = getAllEmployees();
 let users     = getAll();
+const collapsedPhaseIds = new Set();
 document.addEventListener("DOMContentLoaded", initializeProjectDetailPage);
 
 function initializeProjectDetailPage() {
@@ -62,10 +63,6 @@ function initializeProjectDetailPage() {
   if (canCreateWork) {
     bindCreatePhaseModal();
     bindCreateTaskModal();
-  }
-
-  if (canViewTask) {
-    bindViewTaskModal();
   }
 
   if (canManageEmployees) {
@@ -495,13 +492,13 @@ function showEmployeeSuggestions(keyword) {
 
   const query = normalizeKeyword(keyword);
   const matchedEmployees = employees
-    .filter((employee) => !currentCodes.has(employee.MaNhanVien))
+    .filter((employee) => !currentCodes.has(getEmployeeID(employee)))
     .filter((employee) => {
       if (!query) {
         return true;
       }
 
-      return normalizeKeyword(employee.HoTen).includes(query);
+      return normalizeKeyword(getEmployeeFullName(employee)).includes(query);
     })
     .slice(0, 8);
 
@@ -517,12 +514,12 @@ function showEmployeeSuggestions(keyword) {
       <button
         type="button"
         class="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-gray-50"
-        data-employee-code="${escapeHtml(employee.MaNhanVien)}"
-        data-employee-name="${escapeHtml(employee.HoTen)}"
-        data-employee-role="${escapeHtml(employee.Level || "Member")}" 
+        data-employee-code="${escapeHtml(getEmployeeID(employee))}"
+        data-employee-name="${escapeHtml(getEmployeeFullName(employee))}"
+        data-employee-role="${escapeHtml(getEmployeeJobLevel(employee) || "Member")}" 
       >
-        <span>${escapeHtml(employee.HoTen)}</span>
-        <span class="text-xs text-gray-500">${escapeHtml(employee.MaNhanVien)}</span>
+        <span>${escapeHtml(getEmployeeFullName(employee))}</span>
+        <span class="text-xs text-gray-500">${escapeHtml(getEmployeeID(employee))}</span>
       </button>
     `,
     )
@@ -843,7 +840,7 @@ function bindEditProjectModal() {
     }
 
     const leadIsValid = employees.some(
-      (employee) => employee.MaNhanVien === leadCode,
+      (employee) => getEmployeeID(employee) === leadCode,
     );
 
     if (!leadIsValid) {
@@ -905,15 +902,15 @@ function fillEditProjectForm(project) {
   }
 
   const matchedLead =
-    employees.find((employee) => employee.MaNhanVien === project.leadId) ||
+    employees.find((employee) => getEmployeeID(employee) === String(project.leadId || "").trim()) ||
     employees.find(
       (employee) =>
-        normalizeKeyword(employee.HoTen) === normalizeKeyword(project.leadName),
+        normalizeKeyword(getEmployeeFullName(employee)) === normalizeKeyword(project.leadName),
     );
 
   nameInput.value = project.projectName || "";
-  leadInput.value = matchedLead?.HoTen || project.leadName || "";
-  leadCodeInput.value = project.leadId || matchedLead?.MaNhanVien || "";
+  leadInput.value = getEmployeeFullName(matchedLead) || project.leadName || "";
+  leadCodeInput.value = project.leadId || getEmployeeID(matchedLead) || "";
   createdAtInput.value = formatDateForInput(project.createdAt);
   endDateInput.value = formatDateForInput(project.endDate);
   progressPreviewInput.value = `${normalizeProgress(project.progress)}%`;
@@ -936,7 +933,7 @@ function showProjectManagerSuggestions(keyword) {
         return true;
       }
 
-      return normalizeKeyword(employee.HoTen).includes(query);
+      return normalizeKeyword(getEmployeeFullName(employee)).includes(query);
     })
     .slice(0, 8);
 
@@ -952,11 +949,11 @@ function showProjectManagerSuggestions(keyword) {
       <button
         type="button"
         class="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-gray-50"
-        data-lead-code="${escapeHtml(employee.MaNhanVien)}"
-        data-lead-name="${escapeHtml(employee.HoTen)}"
+        data-lead-code="${escapeHtml(getEmployeeID(employee))}"
+        data-lead-name="${escapeHtml(getEmployeeFullName(employee))}"
       >
-        <span>${escapeHtml(employee.HoTen)}</span>
-        <span class="text-xs text-gray-500">${escapeHtml(employee.MaNhanVien)}</span>
+        <span>${escapeHtml(getEmployeeFullName(employee))}</span>
+        <span class="text-xs text-gray-500">${escapeHtml(getEmployeeID(employee))}</span>
       </button>
     `,
     )
@@ -1304,402 +1301,6 @@ function hideTaskAssigneeSuggestions() {
   suggestBox.classList.add("hidden");
 }
 
-function bindViewTaskModal() {
-  const modal = document.getElementById("view-task-modal");
-  const closeButton = document.getElementById("view-task-close-btn");
-  const cancelButton = document.getElementById("view-task-cancel-btn");
-  const form = document.getElementById("view-task-form");
-  const assigneeInput = document.getElementById("viewTaskAssigneeInput");
-  const assigneeCodeInput = document.getElementById(
-    "viewTaskAssigneeCodeInput",
-  );
-
-  if (
-    !modal ||
-    !closeButton ||
-    !cancelButton ||
-    !form ||
-    !assigneeInput ||
-    !assigneeCodeInput
-  ) {
-    return;
-  }
-
-  const closeModal = () => {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-    hideEditableTaskAssigneeSuggestions();
-  };
-
-  closeButton.addEventListener("click", closeModal);
-  cancelButton.addEventListener("click", closeModal);
-
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      closeModal();
-    }
-  });
-
-  assigneeInput.addEventListener("focus", () => {
-    if (!currentProjectDetail) {
-      return;
-    }
-
-    showEditableTaskAssigneeSuggestions(
-      currentProjectDetail.id,
-      assigneeInput.value,
-    );
-  });
-
-  assigneeInput.addEventListener("input", () => {
-    if (!currentProjectDetail) {
-      return;
-    }
-
-    assigneeCodeInput.value = "";
-    showEditableTaskAssigneeSuggestions(
-      currentProjectDetail.id,
-      assigneeInput.value,
-    );
-  });
-
-  document.addEventListener("click", (event) => {
-    const suggestBox = document.getElementById(
-      "view-task-assignee-suggest-list",
-    );
-
-    if (!suggestBox) {
-      return;
-    }
-
-    if (event.target === assigneeInput || suggestBox.contains(event.target)) {
-      return;
-    }
-
-    hideEditableTaskAssigneeSuggestions();
-  });
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    if (!currentProjectDetail) {
-      return;
-    }
-
-    const taskId = String(form.getAttribute("data-task-id") || "").trim();
-    const title = String(
-      document.getElementById("viewTaskTitleInput")?.value || "",
-    ).trim();
-    const assigneeName = String(
-      document.getElementById("viewTaskAssigneeInput")?.value || "",
-    ).trim();
-    const assigneeCode = String(
-      document.getElementById("viewTaskAssigneeCodeInput")?.value || "",
-    ).trim();
-    const phaseId = String(
-      document.getElementById("viewTaskPhaseInput")?.value || "",
-    ).trim();
-    const priority = String(
-      document.getElementById("viewTaskPriorityInput")?.value || "medium",
-    ).trim();
-    const status = String(
-      document.getElementById("viewTaskStatusInput")?.value || "todo",
-    ).trim();
-    const description = String(
-      document.getElementById("viewTaskDescriptionInput")?.value || "",
-    ).trim();
-
-    if (!taskId || !title || !phaseId) {
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "error",
-        title: "Vui lòng nhập tên task và chọn giai đoạn.",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-      return;
-    }
-
-    if (!assigneeCode || !assigneeName) {
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "error",
-        title: "Vui lòng chọn người phụ trách từ danh sách nhân viên của dự án.",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-      return;
-    }
-
-    const validAssignee = getProjectEmployeeDetails(
-      currentProjectDetail.id,
-    ).some((employee) => employee.employeeCode === assigneeCode);
-
-    if (!validAssignee) {
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "error",
-        title: "Người phụ trách không thuộc dự án hiện tại.",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-      return;
-    }
-
-    const selectedPhase = findProjectPhaseById(phaseId);
-
-    if (!selectedPhase || selectedPhase.projectId !== currentProjectDetail.id) {
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "error",
-        title: "Giai đoạn không hợp lệ cho dự án hiện tại.",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-      return;
-    }
-
-    const updatedTask = updateTask(taskId, {
-      title,
-      description,
-      assigneeCode,
-      assigneeName,
-      priority,
-      status,
-      phaseId,
-    });
-
-    if (!updatedTask) {
-      Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "error",
-        title: "Không cập nhật được task.",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-      return;
-    }
-
-    updateProjectTaskByTaskId(taskId, {
-      phaseId,
-      phaseName: selectedPhase.phaseName,
-    });
-
-    closeModal();
-    refreshCurrentProjectAndRender();
-    Swal.fire({
-        toast: true,
-        position: "top-end",
-        icon: "success",
-        title: "Cập nhật task thành công",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-      });
-  });
-}
-
-function bindTaskViewButtons() {
-  document.querySelectorAll("[data-view-task-id]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const taskId = String(button.getAttribute("data-view-task-id") || "");
-
-      if (
-        !taskId ||
-        !currentProjectDetail ||
-        !Array.isArray(currentProjectDetail.tasks)
-      ) {
-        return;
-      }
-
-      const task = currentProjectDetail.tasks.find(
-        (item) => item.id === taskId,
-      );
-
-      if (!task) {
-        return;
-      }
-
-      openViewTaskModal(task);
-    });
-  });
-}
-
-function openViewTaskModal(task) {
-  const modal = document.getElementById("view-task-modal");
-  const form = document.getElementById("view-task-form");
-
-  if (!modal || !form) {
-    return;
-  }
-
-  const phase = findProjectPhaseById(task.phaseId);
-  const assigneeCode =
-    task.assigneeCode || findEmployeeCodeByName(task.assigneeName);
-
-  form.setAttribute("data-task-id", task.id || "");
-  setInputValue("viewTaskTitleInput", task.title || "");
-  setInputValue("viewTaskAssigneeInput", task.assigneeName || "");
-  setInputValue("viewTaskAssigneeCodeInput", assigneeCode || "");
-  fillEditableTaskPhaseOptions(currentProjectDetail?.id, task.phaseId);
-  setSelectValue("viewTaskPriorityInput", task.priority || "medium");
-  setSelectValue("viewTaskStatusInput", task.status || "todo");
-  setTextareaValue("viewTaskDescriptionInput", task.description || "");
-
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-}
-
-function setInputValue(elementId, value) {
-  const element = document.getElementById(elementId);
-
-  if (!element) {
-    return;
-  }
-
-  element.value = value;
-}
-
-function setTextareaValue(elementId, value) {
-  const element = document.getElementById(elementId);
-
-  if (!element) {
-    return;
-  }
-
-  element.value = value;
-}
-
-function setSelectValue(elementId, value) {
-  const element = document.getElementById(elementId);
-
-  if (!element) {
-    return;
-  }
-
-  element.value = value;
-}
-
-function fillEditableTaskPhaseOptions(projectId, selectedPhaseId) {
-  const phaseSelect = document.getElementById("viewTaskPhaseInput");
-
-  if (!phaseSelect) {
-    return;
-  }
-
-  const phases = findProjectPhasesByProjectId(projectId);
-
-  if (phases.length === 0) {
-    phaseSelect.innerHTML = `<option value="">Chưa có giai đoạn</option>`;
-    return;
-  }
-
-  phaseSelect.innerHTML = phases
-    .map(
-      (phase) =>
-        `<option value="${escapeHtml(phase.id)}" ${phase.id === selectedPhaseId ? "selected" : ""}>${escapeHtml(phase.phaseName)}</option>`,
-    )
-    .join("");
-}
-
-function showEditableTaskAssigneeSuggestions(projectId, keyword) {
-  const suggestBox = document.getElementById("view-task-assignee-suggest-list");
-  const assigneeInput = document.getElementById("viewTaskAssigneeInput");
-  const assigneeCodeInput = document.getElementById(
-    "viewTaskAssigneeCodeInput",
-  );
-
-  if (!suggestBox || !assigneeInput || !assigneeCodeInput) {
-    return;
-  }
-
-  const query = normalizeKeyword(keyword);
-  const projectEmployees = getProjectEmployeeDetails(projectId)
-    .filter((employee) => {
-      if (!query) {
-        return true;
-      }
-
-      return normalizeKeyword(employee.fullName).includes(query);
-    })
-    .slice(0, 8);
-
-  if (projectEmployees.length === 0) {
-    suggestBox.innerHTML = `<div class="px-3 py-2 text-sm text-gray-500">Không có nhân viên phù hợp trong dự án.</div>`;
-    suggestBox.classList.remove("hidden");
-    return;
-  }
-
-  suggestBox.innerHTML = projectEmployees
-    .map(
-      (employee) => `
-      <button
-        type="button"
-        class="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-gray-50"
-        data-employee-code="${escapeHtml(employee.employeeCode)}"
-        data-employee-name="${escapeHtml(employee.fullName)}"
-      >
-        <span>${escapeHtml(employee.fullName)}</span>
-        <span class="text-xs text-gray-500">${escapeHtml(employee.employeeCode)}</span>
-      </button>
-    `,
-    )
-    .join("");
-
-  suggestBox.classList.remove("hidden");
-
-  suggestBox
-    .querySelectorAll("button[data-employee-code]")
-    .forEach((button) => {
-      button.addEventListener("click", () => {
-        const selectedCode = String(
-          button.getAttribute("data-employee-code") || "",
-        );
-        const selectedName = String(
-          button.getAttribute("data-employee-name") || "",
-        );
-
-        assigneeCodeInput.value = selectedCode;
-        assigneeInput.value = selectedName;
-        hideEditableTaskAssigneeSuggestions();
-      });
-    });
-}
-
-function hideEditableTaskAssigneeSuggestions() {
-  const suggestBox = document.getElementById("view-task-assignee-suggest-list");
-
-  if (!suggestBox) {
-    return;
-  }
-
-  suggestBox.classList.add("hidden");
-}
-
-function findEmployeeCodeByName(employeeName) {
-  const normalizedName = normalizeKeyword(employeeName);
-
-  if (!normalizedName || !currentProjectDetail) {
-    return "";
-  }
-
-  const employee = getProjectEmployeeDetails(currentProjectDetail.id).find(
-    (item) => normalizeKeyword(item.fullName) === normalizedName,
-  );
-
-  return employee?.employeeCode || "";
-}
-
 function fillTaskPhaseOptions(projectId) {
   const phaseSelect = document.getElementById("taskPhaseInput");
 
@@ -1762,13 +1363,48 @@ function renderProjectPhases(projectDetail) {
   phaseListElement.innerHTML = phases
     .map((phase, index) => {
       const phaseTasks = tasks.filter((task) => task.phaseId === phase.id);
-      return createPhaseCard(phase, phaseTasks, index + 1, canViewTask);
+      return createPhaseCard(
+        phase,
+        phaseTasks,
+        index + 1,
+        canViewTask,
+        projectDetail.id,
+      );
     })
     .join("");
 
-  if (canViewTask) {
-    bindTaskViewButtons();
-  }
+  bindPhaseToggleButtons();
+}
+
+function bindPhaseToggleButtons() {
+  document.querySelectorAll("[data-phase-toggle-id]").forEach((header) => {
+    header.addEventListener("click", () => {
+      const phaseId = String(header.getAttribute("data-phase-toggle-id") || "").trim();
+
+      if (!phaseId) {
+        return;
+      }
+
+      const content = document.querySelector(`[data-phase-content-id="${phaseId}"]`);
+      const icon = header.querySelector("[data-phase-chevron]");
+
+      if (!content) {
+        return;
+      }
+
+      const isCollapsed = content.classList.toggle("hidden");
+
+      if (isCollapsed) {
+        collapsedPhaseIds.add(phaseId);
+      } else {
+        collapsedPhaseIds.delete(phaseId);
+      }
+
+      if (icon) {
+        icon.classList.toggle("rotate-180", !isCollapsed);
+      }
+    });
+  });
 }
 
 function getVisibleTasksByRole(tasks) {
@@ -1788,7 +1424,7 @@ function getVisibleTasksByRole(tasks) {
 
   const currentEmployee = employees.find(
     (employee) =>
-      String(employee.MaNhanVien || "").trim() === currentEmployeeCode,
+      getEmployeeID(employee) === currentEmployeeCode,
   );
   const currentEmployeeName = normalizeKeyword(currentEmployee?.HoTen || "");
 
@@ -1804,10 +1440,14 @@ function getVisibleTasksByRole(tasks) {
   });
 }
 
-function createPhaseCard(phase, tasks, orderNumber, canViewTask) {
+function createPhaseCard(phase, tasks, orderNumber, canViewTask, projectId) {
   const progress = calculatePhaseProgress(tasks);
   const totalTasks = tasks.length;
   const colorClasses = getPhaseColorClasses(phase.color);
+  const phaseId = String(phase.id || "").trim();
+  const isCollapsed = collapsedPhaseIds.has(phaseId);
+  const contentClass = isCollapsed ? "hidden" : "";
+  const chevronClass = isCollapsed ? "" : "rotate-180";
 
   const taskTable = totalTasks
     ? `
@@ -1826,7 +1466,16 @@ function createPhaseCard(phase, tasks, orderNumber, canViewTask) {
             .map(
               (task) => `
             <tr class="border-b last:border-b-0">
-              <td class="px-5 py-4">${escapeHtml(task.title || "N/A")}</td>
+              <td class="px-5 py-4">${
+                canViewTask
+                  ? `<a
+                  href="${getTaskDetailUrl(task.id, projectId)}"
+                  class="font-medium text-blue-700 hover:text-blue-800 hover:underline"
+                >
+                  ${escapeHtml(task.title || "N/A")}
+                </a>`
+                  : `<span class="font-medium text-gray-800">${escapeHtml(task.title || "N/A")}</span>`
+              }</td>
               <td class="text-center">${escapeHtml(task.assigneeName || "-")}</td>
               <td class="text-center">
                 <span class="rounded-full px-3 py-1 text-xs ${priorityBadgeClass(task.priority)}">
@@ -1840,13 +1489,12 @@ function createPhaseCard(phase, tasks, orderNumber, canViewTask) {
               </td>
               <td class="text-center">${
                 canViewTask
-                  ? `<button
-                  type="button"
+                  ? `<a
+                  href="${getTaskDetailUrl(task.id, projectId)}"
                   class="rounded-md border border-blue-200 px-3 py-1 text-xs font-medium text-blue-600 hover:bg-blue-50"
-                  data-view-task-id="${escapeHtml(task.id || "")}" 
                 >
                   View
-                </button>`
+                </a>`
                   : "-"
               }</td>
             </tr>
@@ -1862,7 +1510,7 @@ function createPhaseCard(phase, tasks, orderNumber, canViewTask) {
 
   return `
     <div class="overflow-hidden rounded-xl border">
-      <div class="flex items-center justify-between border-b bg-gray-50 px-5 py-4">
+      <div class="flex cursor-pointer items-center justify-between border-b bg-gray-50 px-5 py-4" data-phase-toggle-id="${escapeHtml(phaseId)}">
         <div class="flex items-center gap-3">
           <span class="h-3 w-3 rounded-full ${colorClasses.dotClass}"></span>
           <h3 class="font-bold">
@@ -1875,11 +1523,23 @@ function createPhaseCard(phase, tasks, orderNumber, canViewTask) {
           <div class="h-2 w-24 rounded-full bg-gray-200">
             <div class="h-2 rounded-full ${colorClasses.barClass}" style="width:${progress}%"></div>
           </div>
+          <svg class="h-4 w-4 transform transition-transform ${chevronClass}" data-phase-chevron viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
       </div>
-      ${taskTable}
+      <div class="${contentClass}" data-phase-content-id="${escapeHtml(phaseId)}">
+        ${taskTable}
+      </div>
     </div>
   `;
+}
+
+function getTaskDetailUrl(taskId, projectId) {
+  const encodedTaskId = encodeURIComponent(String(taskId || "").trim());
+  const encodedProjectId = encodeURIComponent(String(projectId || "").trim());
+
+  return `./task-detail.html?taskId=${encodedTaskId}&projectId=${encodedProjectId}`;
 }
 
 function calculatePhaseProgress(tasks) {
@@ -2021,9 +1681,8 @@ function getCurrentUserEmployeeCode() {
     const currentUser = JSON.parse(rawCurrentUser);
 
     return String(
+      currentUser?.employeeID ||
       currentUser?.employeeCode ||
-        currentUser?.MaNhanVien ||
-        currentUser?.maNhanVien ||
         "",
     ).trim();
   } catch {

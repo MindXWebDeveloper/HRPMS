@@ -1,32 +1,48 @@
+import { updateEmployee } from "./employeedata.js";
+
 function RegisterEmployee() {
 
     const employee = {
-
-        HoTen: document.getElementById("Re_HoTen").textContent,
-        NgaySinh: document.getElementById("Re_NgaySinh").textContent,
-        SoDienThoai: document.getElementById("Re_SoDienThoai").textContent,
-        NgayCap: document.getElementById("Re_NgayCap").textContent,
-        DcEmail: document.getElementById("Re_DcEmail").textContent,
-        NoiCap: document.getElementById("Re_NoiCap").textContent,
-        GioiTinh: document.getElementById("Re_GioiTinh").textContent,
-        SoCccd: document.getElementById("Re_SoCccd").textContent,
-        QuocTich: document.getElementById("Re_QuocTich").textContent,
-        MaNhanVien: document.getElementById("Re_MaNhanVien").textContent,
-        Level: document.getElementById("Re_Level").textContent,
-        PhongBan: document.getElementById("Re_PhongBan").textContent,
-        DCTtru: document.getElementById("Re_DCTtru").textContent,
-        DCHtai: document.getElementById("Re_DCHtai").textContent,
-        NgLienHe: document.getElementById("Re_NgLienHe").textContent,
-        SDTNgLienHe: document.getElementById("Re_SDTNgLienHe").textContent,
-        QuanHe: document.getElementById("Re_QuanHe").textContent,
-        DCNgLienHe: document.getElementById("Re_DCNgLienHe").textContent,
-        TenDangNhap: document.getElementById("Re_TenDangNhap").textContent,
-        EmailDangNhap: document.getElementById("Re_EmailDangNhap").textContent,
-        HocVan: document.getElementById("Re_HocVan").textContent,
-        NgoaiNgu: document.getElementById("Re_NgoaiNgu").textContent,
-        KyNang: document.getElementById("Re_KyNang").textContent,
-        GhiChu: document.getElementById("Re_GhiChu").textContent,
+        job: {
+            employeeID: document.getElementById("Re_employeeID").textContent,
+            jobLevel: document.getElementById("Re_Level").textContent,
+            department: document.getElementById("Re_PhongBan").textContent,
+            jobTitle: document.getElementById("Re_Level").textContent,
+            status: "active",
+        },
+        profile: {
+            fullName: document.getElementById("Re_HoTen").textContent,
+            dob: document.getElementById("Re_NgaySinh").textContent,
+            phone: document.getElementById("Re_SoDienThoai").textContent,
+            idIssueDate: document.getElementById("Re_NgayCap").textContent,
+            email: document.getElementById("Re_DcEmail").textContent,
+            idIssuePlace: document.getElementById("Re_NoiCap").textContent,
+            gender: document.getElementById("Re_GioiTinh").textContent,
+            idNumber: document.getElementById("Re_SoCccd").textContent,
+            nationality: document.getElementById("Re_QuocTich").textContent,
+            permanentAddress: document.getElementById("Re_DCTtru").textContent,
+            currentAddress: document.getElementById("Re_DCHtai").textContent,
+            avatarUrl: document.getElementById("Re_Avatar").src,
+        },
+        emergencyContact: {
+            name: document.getElementById("Re_NgLienHe").textContent,
+            phone: document.getElementById("Re_SDTNgLienHe").textContent,
+            relationship: document.getElementById("Re_QuanHe").textContent,
+            address: document.getElementById("Re_DCNgLienHe").textContent,
+        },
+        education: {
+            degree: document.getElementById("Re_HocVan").textContent,
+            foreignLanguage: document.getElementById("Re_NgoaiNgu").textContent,
+            skills: document.getElementById("Re_KyNang").textContent,
+            notes: document.getElementById("Re_GhiChu").textContent,
+        },
+        meta: {
+            points: 0,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+        },
     };
-    console.log(employee);
+
+    updateEmployee(employee);
     alert("Đăng ký nhân viên thành công!");
 }

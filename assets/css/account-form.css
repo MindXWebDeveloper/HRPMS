@@ -1,0 +1,208 @@
+/* Shared styles for account form pages: register/edit/view */
+.account-form-page .page-header,
+.account-form-page .InfoTab,
+.account-form-page .TopInfo,
+.account-form-page .BottomInfo,
+.account-form-page .ButtonRow1 {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.account-form-page .ScreenName p:last-child {
+    color: var(--text-muted);
+    margin-top: 0.125rem;
+}
+
+.account-edit-page .ScreenName {
+    height: auto !important;
+}
+
+.account-form-page .InfoTab > div {
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--card-border) !important;
+    border-bottom-width: 1px !important;
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+}
+
+.account-form-page .InfoTab > div:first-of-type {
+    background: var(--brand-50);
+    border-color: var(--brand-600) !important;
+    color: var(--brand-600);
+}
+
+.account-form-page .InfoTab > .save-action {
+    background: transparent !important;
+    border: 0 !important;
+    min-height: 0;
+    padding: 0 !important;
+}
+
+.account-form-page .InfoBox,
+.account-form-page .AvatarBox,
+.account-form-page .BottomInfo > div {
+    border: 1px solid var(--card-border) !important;
+    border-radius: var(--radius-lg);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-soft);
+    padding: 1rem 1.25rem;
+}
+
+.account-form-page .InfoGrid,
+.account-form-page .AddressBox {
+    border: 0 !important;
+    margin: 0.75rem 0 0 !important;
+    padding: 0 !important;
+}
+
+.account-form-page p.font-bold.text-blue-900 {
+    color: var(--text-strong);
+    margin-bottom: 0.325rem;
+}
+
+.account-form-page input,
+.account-form-page select {
+    width: 100% !important;
+    min-height: 42px;
+    border: 1px solid var(--input-border) !important;
+    border-radius: var(--radius-md) !important;
+    background: #fff;
+    padding: 0 0.75rem !important;
+}
+
+.account-form-page .AddressBox input {
+    min-height: 44px;
+}
+
+.account-form-page .ButtonRow1 {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.account-form-page .ButtonRow1 button {
+    border-width: 1px !important;
+    border-radius: var(--radius-md) !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600;
+}
+
+.account-form-page #btnTiepTuc {
+    min-height: 40px;
+    border-width: 0 !important;
+    border-color: var(--brand-600) !important;
+    color: #fff;
+    background: var(--brand-600);
+}
+
+.account-form-page #btnTiepTuc:hover {
+    background: var(--brand-700);
+    border-color: var(--brand-700) !important;
+}
+
+.account-form-page #AvatarUploadBtn {
+    width: auto;
+    min-width: 112px;
+    height: 42px;
+    border-width: 1px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+}
+
+@media (min-width: 1280px) {
+    .account-edit-page [data-layout="sidebar"] + div {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .account-form-page .page-header {
+        margin-bottom: 0.25rem;
+    }
+
+    .account-form-page .InfoTab {
+        margin-top: 0.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .account-form-page .InfoTab > div {
+        min-height: 38px;
+        padding: 0 0.85rem;
+    }
+
+    .account-form-page .TopInfo {
+        margin-top: 0.35rem !important;
+        margin-bottom: 0.35rem !important;
+        gap: 0.5rem;
+    }
+
+    .account-form-page .InfoBox,
+    .account-form-page .AvatarBox,
+    .account-form-page .BottomInfo > div {
+        padding: 0.75rem 1rem;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .account-form-page .InfoGrid,
+    .account-form-page .AddressBox {
+        margin-top: 0.25rem !important;
+        gap: 0.5rem;
+    }
+
+    .account-form-page p.font-bold.text-blue-900 {
+        margin-bottom: 0.2rem;
+    }
+
+    .account-form-page input,
+    .account-form-page select {
+        min-height: 36px;
+    }
+
+    .account-form-page .AddressBox input {
+        min-height: 38px;
+    }
+
+    .account-form-page .AvatarBox {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .account-form-page .AvatarBox .w-\[90\%\] {
+        width: 82% !important;
+        height: auto;
+        margin: 0.5rem auto 0;
+        padding: 0.75rem 0.5rem;
+    }
+
+    .account-form-page .BottomInfo {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.45rem !important;
+        margin-top: 0.35rem !important;
+        margin-bottom: 0.35rem !important;
+        width: 100%;
+    }
+
+    .account-form-page .ButtonRow1 {
+        margin-top: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+}
+
+@media (max-width: 1279px) {
+    .account-form-page .page-header,
+    .account-form-page .InfoTab,
+    .account-form-page .TopInfo,
+    .account-form-page .BottomInfo,
+    .account-form-page .ButtonRow1 {
+        max-width: 100%;
+    }
+
+    .account-form-page .InfoTab > div {
+        flex: 1 1 180px;
+    }
+}

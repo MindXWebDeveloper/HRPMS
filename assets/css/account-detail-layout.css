@@ -1,0 +1,33 @@
+/* Layout tuning for account edit/view detail pages */
+.account-edit-page .ButtonRow1,
+.account-view-page .ButtonRow1 {
+    margin-top: 2rem;
+    margin-bottom: 2.25rem;
+}
+
+@media (min-width: 1280px) {
+    .account-edit-page .top-row,
+    .account-view-page .top-row {
+        flex-wrap: nowrap !important;
+        align-items: stretch;
+    }
+
+    .account-edit-page .top-row .InfoBox,
+    .account-view-page .top-row .InfoBox {
+        width: calc(70% - 0.5rem) !important;
+    }
+
+    .account-edit-page .top-row .InfoBox,
+    .account-edit-page .top-row .AvatarBox,
+    .account-view-page .top-row .InfoBox,
+    .account-view-page .top-row .AvatarBox {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .account-edit-page .top-row .AvatarBox,
+    .account-view-page .top-row .AvatarBox {
+        width: calc(30% - 0.5rem) !important;
+        height: auto;
+    }
+}

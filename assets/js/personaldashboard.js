@@ -63,11 +63,11 @@ function renderProjects() {
     const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
     if (!currentUser) return;
 
-    const maNV = currentUser.MaNhanVien;
+    const employeeID = currentUser.employeeID;
 
     const projects = getAll()
         .filter(project => {
-            return project.leadId?.includes(maNV);
+            return project.leadId?.includes(employeeID);
         })
         .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
         .slice(0, 5);
@@ -120,10 +120,10 @@ function renderTask() {
      const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
     if (!currentUser) return;
 
-    const maNV = currentUser.MaNhanVien;
+    const employeeID = currentUser.employeeID;
     const tasks =getAllTasks()
     .filter(task => {
-        return task.assigneeCode?.includes(maNV);
+        return task.assigneeCode?.includes(employeeID);
     })
     .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
         .slice(0, 5);;

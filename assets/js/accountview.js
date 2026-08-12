@@ -1,45 +1,81 @@
-import { initEmployees, getAllEmployees } from "../../database/employeedata.js";
-const EMPLOYEES_KEY ="EMPLOYEES";
+import {
+    findEmployeeByEmployeeID,
+    getAllEmployees,
+    getEmployeeAvatarUrl,
+    getEmployeeDepartment,
+    getEmployeeEducation,
+    getEmployeeEmergencyContact,
+    getEmployeeFullName,
+    getEmployeeID,
+    getEmployeeJobLevel,
+    getEmployeeJobTitle,
+    getEmployeeProfile,
+    getEmployeeStatusLabel,
+    initEmployees,
+} from "../../database/employeedata.js";
+
 const CURRENT_USER_KEY = "CURRENT_USER";
 const params = new URLSearchParams(window.location.search);
 
+function setTextContent(elementId, value) {
+    const element = document.getElementById(elementId);
+
+    if (element) {
+        element.textContent = value ?? "";
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     initEmployees();
-    let maNV = params.get("maNV");
-    if (!maNV) {
-    const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
 
-    if (currentUser) {
-    maNV = currentUser.MaNhanVien;
-    }}
-    const employees = getAllEmployees();
-    const employee = employees.find(emp => emp.MaNhanVien === maNV);
+    const requestedEmployeeID = params.get("employeeID");
+    const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY) || "null");
+    const employeeID = requestedEmployeeID || currentUser?.employeeID || "";
+    const employee = getAllEmployees().find((item) => getEmployeeID(item) === employeeID) || findEmployeeByEmployeeID(employeeID);
 
-    document.getElementById('Re_MaNhanVien').textContent = employee.MaNhanVien;        
-    document.getElementById('Re_HoTen').textContent = employee.HoTen;
-    document.getElementById('Re_NgaySinh').textContent = employee.NgaySinh;
-    document.getElementById('Re_SoDienThoai').textContent = employee.SoDienThoai;
-    document.getElementById('Re_NgayCap').textContent = employee.NgayCap;
-    document.getElementById('Re_DcEmail').textContent = employee.DcEmail;
-    document.getElementById('Re_NoiCap').textContent = employee.NoiCap;
-    document.getElementById('Re_GioiTinh').textContent = employee.GioiTinh;
-    document.getElementById('Re_SoCccd').textContent = employee.SoCccd;
-    document.getElementById('Re_QuocTich').textContent = employee.QuocTich;
-    document.getElementById('Re_ChucVu').textContent = employee.Level;
-    document.getElementById('Re_PhongBan').textContent = employee.PhongBan;
-    document.getElementById('Re_TrangThai').textContent = employee.TrangThai;
-    document.getElementById('Re_DCTtru').textContent = employee.DCTtru;
-    document.getElementById('Re_DCHtai').textContent = employee.DCHtai;
-    document.getElementById('Re_NgLienHe').textContent = employee.NgLienHe;
-    document.getElementById('Re_SDTNgLienHe').textContent = employee.SDTNgLienHe;
-    document.getElementById('Re_QuanHe').textContent = employee.QuanHe;
-    document.getElementById('Re_DCNgLienHe').textContent = employee.DCNgLienHe;
-    document.getElementById('Re_HocVan').textContent = employee.HocVan;
-    document.getElementById('Re_NgoaiNgu').textContent = employee.NgoaiNgu;
-    document.getElementById('Re_KyNang').textContent = employee.KyNang;
-    document.getElementById('Re_GhiChu').textContent = employee.GhiChu;
-    document.getElementById('Re_Avatar').src = employee.Avatar;
-})    
-    
-document.getElementById("btnBack").addEventListener("click", () => {
-    history.back()});
+    if (!employee) {
+        return;
+    }
+
+    const profile = getEmployeeProfile(employee);
+    const emergencyContact = getEmployeeEmergencyContact(employee);
+    const education = getEmployeeEducation(employee);
+
+    setTextContent("Re_employeeID", getEmployeeID(employee));
+    setTextContent("Re_HoTen", getEmployeeFullName(employee));
+    setTextContent("Re_NgaySinh", profile.dob);
+    setTextContent("Re_SoDienThoai", profile.phone);
+    setTextContent("Re_NgayCap", profile.idIssueDate);
+    setTextContent("Re_DcEmail", profile.email);
+    setTextContent("Re_NoiCap", profile.idIssuePlace);
+    setTextContent("Re_GioiTinh", profile.gender);
+    setTextContent("Re_SoCccd", profile.idNumber);
+    setTextContent("Re_QuocTich", profile.nationality);
+    setTextContent("Re_ChucVu", getEmployeeJobTitle(employee));
+    setTextContent("Re_PhongBan", getEmployeeDepartment(employee));
+    setTextContent("Re_TrangThai", getEmployeeStatusLabel(employee));
+    setTextContent("Re_DCTtru", profile.permanentAddress);
+    setTextContent("Re_DCHtai", profile.currentAddress);
+    setTextContent("Re_NgLienHe", emergencyContact.name);
+    setTextContent("Re_SDTNgLienHe", emergencyContact.phone);
+    setTextContent("Re_QuanHe", emergencyContact.relationship);
+    setTextContent("Re_DCNgLienHe", emergencyContact.address);
+    setTextContent("Re_HocVan", education.degree);
+    setTextContent("Re_NgoaiNgu", education.foreignLanguage);
+    setTextContent("Re_KyNang", Array.isArray(education.skills) ? education.skills.join(", ") : "");
+    setTextContent("Re_GhiChu", education.notes);
+
+    const avatarElement = document.getElementById("Re_Avatar");
+
+    if (avatarElement) {
+        avatarElement.src = getEmployeeAvatarUrl(employee);
+    }
+});
+
+const btnBack = document.getElementById("btnBack");
+
+if (btnBack) {
+    btnBack.addEventListener("click", () => {
+        history.back();
+    });
+}

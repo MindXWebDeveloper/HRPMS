@@ -1,46 +1,55 @@
-const EMPLOYEES_KEY = "EMPLOYEES";
+import { getAllEmployees, getEmployeeAvatarUrl, getEmployeeDepartment, getEmployeeEducation, getEmployeeEmergencyContact, getEmployeeFullName, getEmployeeID, getEmployeeJobLevel, getEmployeeJobTitle, getEmployeeProfile, getEmployeeStatus, getEmployeeStatusLabel, initEmployees, updateEmployee } from "../../database/employeedata.js";
+
 const CURRENT_USER_KEY = "CURRENT_USER";
 const params = new URLSearchParams(window.location.search);
-let maNV = params.get("maNV");
+let employeeID = params.get("employeeID");
 
 
-if (!maNV) {
+if (!employeeID) {
     const currentUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
 
     if (currentUser) {
-        maNV = currentUser.MaNhanVien;
+        employeeID = currentUser.employeeID;
     }
 }
-const employees = JSON.parse(localStorage.getItem(EMPLOYEES_KEY)) || [];
-const employee = employees.find(emp => emp.MaNhanVien === maNV);
+initEmployees();
+const employees = getAllEmployees();
+const employee = employees.find(emp => getEmployeeID(emp) === employeeID);
 
-document.getElementById('MaNhanVien').value = employee.MaNhanVien;        
-document.getElementById('HoTen').value = employee.HoTen;
-document.getElementById('NgaySinh').value = employee.NgaySinh;
-document.getElementById('SoDienThoai').value = employee.SoDienThoai;
-document.getElementById('NgayCap').value = employee.NgayCap;
-document.getElementById('DcEmail').value = employee.DcEmail;
-document.getElementById('NoiCap').value = employee.NoiCap;
-document.getElementById('GioiTinh').value = employee.GioiTinh;
-document.getElementById('SoCccd').value = employee.SoCccd;
-document.getElementById('QuocTich').value = employee.QuocTich;
-document.getElementById('Level').value = employee.Level;
-document.getElementById('PhongBan').value = employee.PhongBan;
-document.getElementById('ChucVu').value = employee.ChucVu || "";
-document.getElementById('TrangThai').value = employee.TrangThai;
-document.getElementById('DCTtru').value = employee.DCTtru;
-document.getElementById('DCHtai').value = employee.DCHtai;
-document.getElementById('NgLienHe').value = employee.NgLienHe;
-document.getElementById('SDTNgLienHe').value = employee.SDTNgLienHe;
-document.getElementById('QuanHe').value = employee.QuanHe;
-document.getElementById('DCNgLienHe').value = employee.DCNgLienHe;
-document.getElementById('HocVan').value = employee.HocVan;
-document.getElementById('NgoaiNgu').value = employee.NgoaiNgu;
-document.getElementById('KyNang').value = employee.KyNang;
-document.getElementById('GhiChu').value = employee.GhiChu;
-document.getElementById('AvatarPreview').src = employee.Avatar;
+if (!employee) {
+    throw new Error("Không tìm thấy nhân viên để chỉnh sửa.");
+}
+
+document.getElementById('employeeID').value = getEmployeeID(employee);
+const profile = getEmployeeProfile(employee);
+const emergencyContact = getEmployeeEmergencyContact(employee);
+const education = getEmployeeEducation(employee);
+
+document.getElementById('HoTen').value = getEmployeeFullName(employee);
+document.getElementById('NgaySinh').value = profile.dob;
+document.getElementById('SoDienThoai').value = profile.phone;
+document.getElementById('NgayCap').value = profile.idIssueDate;
+document.getElementById('DcEmail').value = profile.email;
+document.getElementById('NoiCap').value = profile.idIssuePlace;
+document.getElementById('GioiTinh').value = profile.gender;
+document.getElementById('SoCccd').value = profile.idNumber;
+document.getElementById('QuocTich').value = profile.nationality;
+document.getElementById('Level').value = getEmployeeJobLevel(employee);
+document.getElementById('PhongBan').value = getEmployeeDepartment(employee);
+document.getElementById('ChucVu').value = getEmployeeJobTitle(employee) || "";
+document.getElementById('TrangThai').value = getEmployeeStatus(employee) === "active" ? "Hoạt động" : "Ngưng hoạt động";
+document.getElementById('DCTtru').value = profile.permanentAddress;
+document.getElementById('DCHtai').value = profile.currentAddress;
+document.getElementById('NgLienHe').value = emergencyContact.name;
+document.getElementById('SDTNgLienHe').value = emergencyContact.phone;
+document.getElementById('QuanHe').value = emergencyContact.relationship;
+document.getElementById('DCNgLienHe').value = emergencyContact.address;
+document.getElementById('HocVan').value = education.degree;
+document.getElementById('NgoaiNgu').value = education.foreignLanguage;
+document.getElementById('KyNang').value = Array.isArray(education.skills) ? education.skills.join(", ") : "";
+document.getElementById('GhiChu').value = education.notes;
+document.getElementById('AvatarPreview').src = getEmployeeAvatarUrl(employee);
 const btnTiepTuc = document.getElementById('btnTiepTuc');
-const btnHuy = document.getElementById('btnHuy');
 const modal = document.getElementById('confirmationModal');
 const btnBack = document.getElementById('btnBack');
 const btnConfirm = document.getElementById('btnConfirm');
@@ -56,7 +65,7 @@ const fieldIds = [
     "GioiTinh",
     "SoCccd",
     "QuocTich",
-    "MaNhanVien",
+    "employeeID",
     "Level",
     "PhongBan",
     "ChucVu",
@@ -72,11 +81,53 @@ const fieldIds = [
     "KyNang",
     "GhiChu"
 ];
-btnHuy.addEventListener("click", () => {
-    history.back()});
-
 let avatarUrl ="";
 let isValid = true;
+
+function getFormEmployeePayload() {
+    const currentAvatar = avatarUrl || getEmployeeAvatarUrl(employee);
+    const skillsValue = document.getElementById('KyNang').value.trim();
+
+    return {
+        id: employee.id,
+        job: {
+            employeeID: document.getElementById('employeeID').value.trim(),
+            jobLevel: document.getElementById('Level').value,
+            department: document.getElementById('PhongBan').value,
+            jobTitle: document.getElementById('ChucVu').value,
+            status: document.getElementById('TrangThai').value === "Hoạt động" ? "active" : "inactive",
+        },
+        profile: {
+            fullName: document.getElementById('HoTen').value,
+            dob: document.getElementById('NgaySinh').value,
+            phone: document.getElementById('SoDienThoai').value,
+            idIssueDate: document.getElementById('NgayCap').value,
+            email: document.getElementById('DcEmail').value,
+            idIssuePlace: document.getElementById('NoiCap').value,
+            gender: document.getElementById('GioiTinh').value,
+            idNumber: document.getElementById('SoCccd').value,
+            nationality: document.getElementById('QuocTich').value,
+            permanentAddress: document.getElementById('DCTtru').value,
+            currentAddress: document.getElementById('DCHtai').value,
+            avatarUrl: currentAvatar,
+        },
+        emergencyContact: {
+            name: document.getElementById('NgLienHe').value,
+            phone: document.getElementById('SDTNgLienHe').value,
+            relationship: document.getElementById('QuanHe').value,
+            address: document.getElementById('DCNgLienHe').value,
+        },
+        education: {
+            degree: document.getElementById('HocVan').value,
+            foreignLanguage: document.getElementById('NgoaiNgu').value,
+            skills: skillsValue ? skillsValue.split(',').map((item) => item.trim()).filter(Boolean) : [],
+            notes: document.getElementById('GhiChu').value,
+        },
+        meta: {
+            updatedAt: new Date().toISOString(),
+        },
+    };
+}
 const togglePasswordBtn = document.querySelector('button[aria-label="Hiện mật khẩu"]');
     if (togglePasswordBtn) {
         togglePasswordBtn.addEventListener('click', function() {
@@ -233,59 +284,7 @@ btnTiepTuc.addEventListener ('click',()=>
     }
     if (!validateForm()) return;
     
-
-    {modal.style.display = "flex";
-const HoTen1 = document.getElementById('HoTen').value; 
-const SoDienThoai1 = document.getElementById('SoDienThoai').value;
-const NgayCap1 = document.getElementById('NgayCap').value;
-const NgaySinh1 = document.getElementById('NgaySinh').value;
-const DcEmail1 = document.getElementById('DcEmail').value;
-const NoiCap1 = document.getElementById('NoiCap').value;
-const GioiTinh1 = document.getElementById('GioiTinh').value;
-const SoCccd1 = document.getElementById('SoCccd').value;
-const QuocTich1 = document.getElementById('QuocTich').value;
-const MaNhanVien1 = document.getElementById('MaNhanVien').value;
-const Level1 = document.getElementById('Level').value;
-const PhongBan1 = document.getElementById('PhongBan').value;
-const ChucVu1 = document.getElementById('ChucVu').value;
-const TrangThai1 = document.getElementById('TrangThai').value;
-const DCTtru1 = document.getElementById('DCTtru').value;
-const DCHtai1 = document.getElementById('DCHtai').value;
-const NgLienHe1 = document.getElementById('NgLienHe').value;
-const SDTNgLienHe1 = document.getElementById('SDTNgLienHe').value;
-const QuanHe1 = document.getElementById('QuanHe').value;
-const DCNgLienHe1 = document.getElementById('DCNgLienHe').value;
-const HocVan1 = document.getElementById('HocVan').value;
-const NgoaiNgu1 = document.getElementById('NgoaiNgu').value;
-const KyNang1 = document.getElementById('KyNang').value;
-const GhiChu1 = document.getElementById('GhiChu').value;
-
-document.getElementById('Re_HoTen').textContent = HoTen1 || "Chưa nhập";
-document.getElementById('Re_NgaySinh').textContent = NgaySinh1 || "Chưa nhập";
-document.getElementById('Re_SoDienThoai').textContent = SoDienThoai1 || "Chưa nhập";
-document.getElementById('Re_NgayCap').textContent = NgayCap1 || "Chưa nhập";
-document.getElementById('Re_DcEmail').textContent = DcEmail1 || "Chưa nhập";
-document.getElementById('Re_NoiCap').textContent = NoiCap1 || "Chưa nhập";
-document.getElementById('Re_GioiTinh').textContent = GioiTinh1 || "Chưa nhập";
-document.getElementById('Re_SoCccd').textContent = SoCccd1 || "Chưa nhập";
-document.getElementById('Re_QuocTich').textContent = QuocTich1 || "Chưa nhập";
-document.getElementById('Re_MaNhanVien').textContent = MaNhanVien1 || "Chưa nhập";
-document.getElementById('Re_Level').textContent = Level1 || "Chưa nhập";
-document.getElementById('Re_PhongBan').textContent = PhongBan1 || "Chưa nhập";
-document.getElementById('Re_TrangThai').textContent = TrangThai1 || "Chưa nhập";
-document.getElementById('Re_DCTtru').textContent = DCTtru1 || "Chưa nhập";
-document.getElementById('Re_DCHtai').textContent = DCHtai1 || "Chưa nhập";
-document.getElementById('Re_NgLienHe').textContent = NgLienHe1 || "Chưa nhập";
-document.getElementById('Re_SDTNgLienHe').textContent = SDTNgLienHe1 || "Chưa nhập";
-document.getElementById('Re_QuanHe').textContent = QuanHe1 || "Chưa nhập";
-document.getElementById('Re_DCNgLienHe').textContent = DCNgLienHe1 || "Chưa nhập";
-document.getElementById('Re_HocVan').textContent = HocVan1 || "Chưa nhập";
-document.getElementById('Re_NgoaiNgu').textContent = NgoaiNgu1 || "Chưa nhập";
-document.getElementById('Re_KyNang').textContent = KyNang1 || "Chưa nhập";
-document.getElementById('Re_GhiChu').textContent = GhiChu1 || "Chưa nhập";
-document.getElementById('Re_Avatar').src = avatarUrl || "Chưa có avatar";
-
-}
+    modal.style.display = "flex";
 });
 
 btnBack.addEventListener('click',()=>{
@@ -293,41 +292,7 @@ btnBack.addEventListener('click',()=>{
     modal.style.display= "none";});
 
 btnConfirm.addEventListener('click',() =>{
-    const updatedEmployee ={
-        ...employee,
-        HoTen: document.getElementById("Re_HoTen").textContent,
-        NgaySinh: document.getElementById("Re_NgaySinh").textContent,
-        SoDienThoai: document.getElementById("Re_SoDienThoai").textContent,
-        NgayCap: document.getElementById("Re_NgayCap").textContent,
-        DcEmail: document.getElementById("Re_DcEmail").textContent,
-        NoiCap: document.getElementById("Re_NoiCap").textContent,
-        GioiTinh: document.getElementById("Re_GioiTinh").textContent,
-        SoCccd: document.getElementById("Re_SoCccd").textContent,
-        QuocTich: document.getElementById("Re_QuocTich").textContent,
-        Level: document.getElementById("Re_Level").textContent,
-        PhongBan: document.getElementById("Re_PhongBan").textContent,
-        ChucVu: document.getElementById("ChucVu").value,
-        TrangThai: document.getElementById("Re_TrangThai").textContent,
-        DCTtru: document.getElementById("Re_DCTtru").textContent,
-        DCHtai: document.getElementById("Re_DCHtai").textContent,
-        NgLienHe: document.getElementById("Re_NgLienHe").textContent,
-        SDTNgLienHe: document.getElementById("Re_SDTNgLienHe").textContent,
-        QuanHe: document.getElementById("Re_QuanHe").textContent,
-        DCNgLienHe: document.getElementById("Re_DCNgLienHe").textContent,
-        HocVan: document.getElementById("Re_HocVan").textContent,
-        NgoaiNgu: document.getElementById("Re_NgoaiNgu").textContent,
-        KyNang: document.getElementById("Re_KyNang").textContent,
-        GhiChu: document.getElementById("Re_GhiChu").textContent,
-
-        Avatar: avatarUrl || employee.Avatar
-    };
-let employees = JSON.parse(localStorage.getItem(EMPLOYEES_KEY)) || [];
-const index = employees.findIndex(
-        emp => emp.MaNhanVien === updatedEmployee.MaNhanVien
-);
-employees[index] = updatedEmployee;
-localStorage.setItem(EMPLOYEES_KEY,JSON.stringify(employees)
-        );
+    updateEmployee(getFormEmployeePayload());
     Swal.fire({
                 toast: true,
                 position: "top-end",

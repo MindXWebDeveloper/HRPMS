@@ -1,0 +1,81 @@
+﻿null
+{
+  "generatedAt": "2026-08-10T05:55:08.741Z",
+  "total": 12,
+  "pass": 11,
+  "fail": 1,
+  "results": [
+    {
+      "testId": "WB-LOGIN-001",
+      "title": "findUserSignin tra ve user active dung thong tin",
+      "status": "PASS",
+      "details": "actual=thanhlv"
+    },
+    {
+      "testId": "WB-LOGIN-002",
+      "title": "findUserSignin khong cho user inactive dang nhap",
+      "status": "PASS",
+      "details": "actual=null"
+    },
+    {
+      "testId": "WB-AUTH-001",
+      "title": "saveCurrentUser + getCurrentUser luu va doc du lieu hien tai",
+      "status": "PASS",
+      "details": "actual={\"id\":\"ad001\",\"account\":\"thanhlv\",\"fullName\":\"L╞░╞íng V─ân Thanh\",\"role\":\"project_manager\",\"MaNhanVien\":\"thanhlv\"}"
+    },
+    {
+      "testId": "WB-AUTH-002",
+      "title": "clearCurrentUser xoa du lieu current user",
+      "status": "PASS",
+      "details": "actual=null"
+    },
+    {
+      "testId": "WB-ROLE-001",
+      "title": "canAccess cho phep HR_MANAGER truy cap route ADMIN alias",
+      "status": "PASS",
+      "details": "expected=true for ADMIN alias"
+    },
+    {
+      "testId": "WB-ROLE-002",
+      "title": "canAccess chan EMPLOYEE truy cap route PROJECT_MANAGER",
+      "status": "PASS",
+      "details": "expected=false"
+    },
+    {
+      "testId": "WB-TASK-001",
+      "title": "insertTask tao task moi va auto sinh taskCode",
+      "status": "PASS",
+      "details": "actual={\"id\":\"task-1786341308740\",\"taskCode\":\"TSK007\",\"phaseId\":\"phase-001\",\"title\":\"tmp task\",\"description\":\"tmp\",\"assigneeCode\":\"cuonglm\",\"assigneeName\":\"Le Minh Cuong\",\"priority\":\"High\",\"status\":\"To do\",\"createdAt\":\"2026-08-10T05:55:08.739Z\",\"updatedAt\":\"2026-08-10T05:55:08.739Z\"}"
+    },
+    {
+      "testId": "WB-TASK-002",
+      "title": "updateTask cap nhat task theo id",
+      "status": "PASS",
+      "details": "actual={\"id\":\"task-1786341308740\",\"taskCode\":\"TSK007\",\"phaseId\":\"phase-001\",\"title\":\"tmp task\",\"description\":\"tmp\",\"assigneeCode\":\"cuonglm\",\"assigneeName\":\"Le Minh Cuong\",\"priority\":\"High\",\"status\":\"Done\",\"createdAt\":\"2026-08-10T05:55:08.739Z\",\"updatedAt\":\"2026-08-10T05:55:08.741Z\"}"
+    },
+    {
+      "testId": "WB-TASK-003",
+      "title": "deleteTask xoa task ton tai",
+      "status": "PASS",
+      "details": "actual=true"
+    },
+    {
+      "testId": "WB-TASK-004",
+      "title": "deleteTask tra ve false khi task khong ton tai",
+      "status": "PASS",
+      "details": "actual=false"
+    },
+    {
+      "testId": "WB-PE-001",
+      "title": "addProjectEmployee chan duplicate employee trong cung project",
+      "status": "FAIL",
+      "details": "first=null, duplicate=null"
+    },
+    {
+      "testId": "WB-PE-002",
+      "title": "addProjectEmployee tra ve null neu employeeCode khong ton tai",
+      "status": "PASS",
+      "details": "actual=null"
+    }
+  ]
+}

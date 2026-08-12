@@ -3,7 +3,7 @@ import { initTasks } from "./task.js";
 import { initProjectTasks, getTasksByProjectId } from "./projet_task.js";
 import { initProjectPhases } from "./project_phase.js";
 import { initProjectEmployees, getAllProjectEmployees } from "./project-employees.js";
-import { getAllEmployees } from "./employeedata.js";
+import { getAllEmployees, getEmployeeID, getEmployeeFullName } from "./employeedata.js";
 import { CURRENT_USER } from "../assets/js/common/storageKeys.js";
 
 let employees = getAllEmployees();
@@ -455,8 +455,8 @@ function normalizeProjectRecord(project) {
   const createdAt = project.createdAt || new Date().toISOString();
   const endDate = project.endDate || addDays(createdAt, 30);
   const matchedLead = findLeadEmployee(project.leadId, project.leadName);
-  const normalizedLeadId = String(matchedLead?.MaNhanVien || project.leadId || "").trim();
-  const normalizedLeadName = String(matchedLead?.HoTen || project.leadName || "").trim();
+  const normalizedLeadId = String(getEmployeeID(matchedLead) || project.leadId || "").trim();
+  const normalizedLeadName = String(getEmployeeFullName(matchedLead) || project.leadName || "").trim();
   const createdByEmployeeCode = String(
     project.createdByEmployeeCode || normalizedLeadId || "",
   ).trim();
@@ -496,7 +496,7 @@ function findLeadEmployee(leadId, leadName) {
 
   if (normalizedLeadId) {
     const byId = employees.find(
-      (employee) => String(employee.MaNhanVien || "").trim() === normalizedLeadId,
+      (employee) => getEmployeeID(employee) === normalizedLeadId,
     );
 
     if (byId) {
@@ -530,7 +530,7 @@ function getCurrentUserRoleLower(currentUser) {
 
 function getCurrentUserEmployeeCode(currentUser) {
   return String(
-    currentUser?.employeeCode || currentUser?.MaNhanVien || currentUser?.maNhanVien || "",
+    currentUser?.employeeID || currentUser?.employeeCode || "",
   ).trim();
 }
 

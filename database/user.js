@@ -9,7 +9,7 @@ let defaultUsers = [
         password: "admin1234567",
         role: "project_manager",
         status: "active",
-        MaNhanVien: "thanhlv",
+        employeeID: "thanhlv",
         resetPass: false,
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
@@ -21,7 +21,7 @@ let defaultUsers = [
         password: "V@nth@nh10041999",
         role: "hr_manager",
         status: "active",
-        MaNhanVien: "linhnh",
+        employeeID: "linhnh",
         resetPass: false,
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
@@ -30,10 +30,10 @@ let defaultUsers = [
         id: "us003",
         account: "cuonglm",
         email: "cuong.le@company.com",
-        password: "user1234567",
+        password: "V@nth@nh10041999",
         role: "employee",
         status: "active",
-        MaNhanVien: "cuonglm",
+        employeeID: "cuonglm",
         resetPass: false,
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
@@ -45,7 +45,7 @@ let defaultUsers = [
         password: "user1234567",
         role: "employee",
         status: "active",
-        MaNhanVien: "hapt",
+        employeeID: "hapt",
         resetPass: false,
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
@@ -57,45 +57,45 @@ let defaultUsers = [
         password: "user1234567",
         role: "employee",
         status: "inactive",
-        MaNhanVien: "viethq",
+        employeeID: "viethq",
         resetPass: false,       
         createdAt: "2026-07-10T09:00:00",
         updatedAt: "2026-07-10T09:00:00"
     }
 ];
 
+function normalizeUserRecord(user) {
+    const employeeID = String(user?.employeeID || user?.account || "").trim();
+
+    return {
+        ...user,
+        employeeID,
+        role: String(user?.role || "").toLowerCase() === "admin"
+            ? "project_manager"
+            : user?.role,
+    };
+}
+
 // Khởi tạo data
 function initUsers() {
     const storedUsers = getAll();
 
     if (!Array.isArray(storedUsers) || storedUsers.length === 0) {
-        localStorage.setItem(USERS, JSON.stringify(defaultUsers));
+        localStorage.setItem(USERS, JSON.stringify(defaultUsers.map(normalizeUserRecord)));
         return;
     }
 
     const nextUsers = storedUsers.map((user) => {
-        const normalizedRole = String(user?.role || "").toLowerCase() === "admin"
-            ? "project_manager"
-            : user?.role;
-
-        if (user?.email) {
-            return {
-                ...user,
-                role: normalizedRole
-            };
-        }
-
         const matchedDefault = defaultUsers.find((item) =>
             item.id === user?.id ||
             item.account === user?.account ||
-            item.MaNhanVien === user?.MaNhanVien
+            item.employeeID === user?.employeeID
         );
 
-        return {
+        return normalizeUserRecord({
             ...user,
-            role: normalizedRole,
-            email: matchedDefault?.email || ""
-        };
+            email: user?.email || matchedDefault?.email || ""
+        });
     });
 
     saveUsers(nextUsers);
@@ -103,12 +103,16 @@ function initUsers() {
 
 //Lấy all data từ localStorage
 function getAll() {
-    return JSON.parse(localStorage.getItem(USERS));
+    const users = JSON.parse(localStorage.getItem(USERS));
+
+    return Array.isArray(users) ? users.map(normalizeUserRecord) : users;
 }
 
 //save new user
 function saveUsers(users) {
-    return localStorage.setItem(USERS, JSON.stringify(users));
+    const nextUsers = Array.isArray(users) ? users.map(normalizeUserRecord) : [];
+
+    return localStorage.setItem(USERS, JSON.stringify(nextUsers));
 }
 
 //sigin

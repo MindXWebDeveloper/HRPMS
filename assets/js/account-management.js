@@ -1,5 +1,5 @@
 import { initUsers, getAll } from "../../database/user.js";
-import { findEmployeeByMaNV, initEmployees, getAllEmployees } from "../../database/employeedata.js";
+import { findEmployeeByEmployeeID, initEmployees, getAllEmployees, getEmployeeFullName, updateEmployee } from "../../database/employeedata.js";
 import { USERS, EMPLOYEES } from "../../assets/js/common/storageKeys.js";
 import { sendPasswordUpdateMail } from "./services/sendMail.js";
 
@@ -38,8 +38,9 @@ function renderAccounts() {
     tbody.innerHTML = "";
 
   visibleUsers.forEach(user => {
-      const employee = findEmployeeByMaNV(user.MaNhanVien);
-      const fullName = employee?.HoTen || user.MaNhanVien || "-";
+      const employeeID = user.employeeID;
+      const employee = findEmployeeByEmployeeID(employeeID);
+      const fullName = getEmployeeFullName(employee) || employeeID || "-";
 
         const tr = document.createElement("tr");
         tr.className = "bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium";
@@ -255,8 +256,8 @@ function filterUsersByName(users, keyword) {
   }
 
   return (users || []).filter((user) => {
-    const employee = findEmployeeByMaNV(user.MaNhanVien);
-    const fullName = String(employee?.HoTen || "").toLowerCase();
+    const employee = findEmployeeByEmployeeID(user.employeeID);
+    const fullName = String(getEmployeeFullName(employee) || "").toLowerCase();
 
     return fullName.includes(searchKeyword);
   });
@@ -348,7 +349,7 @@ function bindAddAccountModal() {
       password: "User123456712389!",
       role,
       status: "active",
-      MaNhanVien: account,
+      employeeID: account,
       resetPass: true,
       createdAt: now,
       updatedAt: now,
@@ -358,8 +359,19 @@ function bindAddAccountModal() {
     localStorage.setItem(USERS, JSON.stringify(users));
 
     const employeeData = getAllEmployees() || [];
-    employeeData.push(createEmployeeSkeleton(fullName, email, account, newUser.status));
-    localStorage.setItem(EMPLOYEES, JSON.stringify(employeeData));
+    updateEmployee({
+      job: {
+        employeeID: account,
+        status: mapUserStatusToEmployeeStatus(newUser.status),
+      },
+      profile: {
+        fullName,
+        email,
+      },
+      meta: {
+        updatedAt: now,
+      },
+    });
 
     closeModal();
     renderAccounts();
@@ -443,11 +455,11 @@ function bindEditAccountModal() {
       return;
     }
 
-    const employee = findEmployeeByMaNV(user.MaNhanVien);
+    const employee = findEmployeeByEmployeeID(user.employeeID);
 
     if (accountIdInput) accountIdInput.value = user.account || "";
     if (accountNameInput) accountNameInput.value = String(user.account || "").toUpperCase();
-    if (fullNameInput) fullNameInput.value = employee?.HoTen || user.MaNhanVien || "";
+    if (fullNameInput) fullNameInput.value = getEmployeeFullName(employee) || user.employeeID || "";
     if (emailInput) emailInput.value = user.email || "";
     if (roleInput) roleInput.value = user.role || "employee";
     //if (passwordInput) passwordInput.value = user.password|| "";
@@ -605,7 +617,7 @@ function bindEditAccountModal() {
    
     localStorage.setItem(USERS, JSON.stringify(users));
 
-    upsertEmployeeData(currentUser.MaNhanVien, fullName, email, status);
+    upsertEmployeeData(currentUser.employeeID, fullName, email, status);
 
     closeModal();
     renderAccounts();
@@ -646,59 +658,23 @@ function isValidPassword(password) {
   return /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=\S+$).{12,}$/.test(String(password || ""));
 }
 
-function upsertEmployeeData(maNhanVien, fullName, email, userStatus) {
-  const employeeCode = String(maNhanVien || "").trim();
-  const employees = getAllEmployees() || [];
-  const employeeIndex = employees.findIndex(
-    (item) => String(item?.MaNhanVien || "").trim() === employeeCode,
-  );
+function upsertEmployeeData(employeeID, fullName, email, userStatus) {
+  const employeeCode = String(employeeID || "").trim();
   const mappedStatus = mapUserStatusToEmployeeStatus(userStatus);
 
-  if (employeeIndex >= 0) {
-    employees[employeeIndex] = {
-      ...employees[employeeIndex],
-      HoTen: fullName,
-      DcEmail: email,
-      TrangThai: mappedStatus,
-    };
-  } else {
-    employees.push(createEmployeeSkeleton(fullName, email, employeeCode, userStatus));
-  }
-
-  localStorage.setItem(EMPLOYEES, JSON.stringify(employees));
-}
-
-function createEmployeeSkeleton(fullName, email, maNhanVien, userStatus = "active") {
-  return {
-    HoTen: fullName,
-    NgaySinh: "",
-    SoDienThoai: "",
-    NgayCap: "",
-    DcEmail: email,
-    NoiCap: "",
-    GioiTinh: "",
-    SoCccd: "",
-    QuocTich: "",
-    MaNhanVien: maNhanVien,
-    Level: "",
-    PhongBan: "",
-    DCTtru: "",
-    DCHtai: "",
-    NgLienHe: "",
-    SDTNgLienHe: "",
-    QuanHe: "",
-    DCNgLienHe: "",
-    TenDangNhap: "",
-    EmailDangNhap: "",
-    HocVan: "",
-    NgoaiNgu: "",
-    KyNang: "",
-    GhiChu: "",
-    Avatar: "",
-    Vaitro: "",
-    ChucVu: "",
-    TrangThai: mapUserStatusToEmployeeStatus(userStatus),
-  };
+  updateEmployee({
+    job: {
+      employeeID: employeeCode,
+      status: mappedStatus,
+    },
+    profile: {
+      fullName,
+      email,
+    },
+    meta: {
+      updatedAt: new Date().toISOString(),
+    },
+  });
 }
 
 function mapUserStatusToEmployeeStatus(userStatus) {

@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chi tiết task</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <link rel="stylesheet" href="../../assets/css/dashboard.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body data-base-path="../../" class="management-page">
+    <div data-layout="sidebar"></div>
+
+    <div class="p-4 xl:ml-64 min-h-full">
+      <div class="mb-4 flex flex-wrap items-start justify-between gap-3 sm:mb-6 sm:items-center">
+        <div>
+          <p class="text-sm text-slate-500">Task Detail</p>
+          <h1 id="task-detail-title" class="text-xl font-bold leading-tight break-words sm:text-2xl">Chi tiết task</h1>
+        </div>
+
+        <div class="flex flex-wrap gap-2 sm:gap-3">
+          <button
+            id="task-back-project-btn"
+            class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+            type="button"
+          >
+            Quay lại dự án
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4 rounded-xl border bg-white p-4 shadow-sm sm:mb-6 sm:p-6">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <p class="text-sm text-gray-400">Mã task</p>
+            <p id="task-detail-code" class="font-semibold text-slate-800">N/A</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-400">Ưu tiên</p>
+            <span id="task-detail-priority" class="inline-flex rounded-full px-3 py-1 text-xs">N/A</span>
+          </div>
+          <div>
+            <p class="text-sm text-gray-400">Trạng thái</p>
+            <span id="task-detail-status" class="inline-flex rounded-full px-3 py-1 text-xs">N/A</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
+        <div class="rounded-xl border bg-white p-4 shadow-sm sm:p-5 xl:col-span-2">
+          <h2 class="mb-4 text-lg font-semibold">Chỉnh sửa task</h2>
+
+          <form id="task-edit-form" class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div class="md:col-span-2">
+              <label for="task-edit-title-input" class="mb-1 block text-sm font-medium text-slate-700">Tiêu đề task</label>
+              <input
+                id="task-edit-title-input"
+                type="text"
+                required
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                placeholder="Nhập tiêu đề task"
+              />
+            </div>
+
+            <div>
+              <label for="task-edit-assignee-select" class="mb-1 block text-sm font-medium text-slate-700">Người phụ trách</label>
+              <select
+                id="task-edit-assignee-select"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              ></select>
+            </div>
+
+            <div>
+              <label for="task-edit-priority-select" class="mb-1 block text-sm font-medium text-slate-700">Ưu tiên</label>
+              <select
+                id="task-edit-priority-select"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              >
+                <option value="high">Cao</option>
+                <option value="medium">Trung bình</option>
+                <option value="low">Thấp</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="task-edit-status-select" class="mb-1 block text-sm font-medium text-slate-700">Trạng thái</label>
+              <select
+                id="task-edit-status-select"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              >
+                <option value="todo">Chưa làm</option>
+                <option value="in_progress">Đang làm</option>
+                <option value="blocked">Tạm dừng</option>
+                <option value="done">Hoàn thành</option>
+              </select>
+            </div>
+
+            <div class="md:col-span-2">
+              <label for="task-edit-description-input" class="mb-1 block text-sm font-medium text-slate-700">Mô tả</label>
+              <textarea
+                id="task-edit-description-input"
+                rows="5"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm leading-6 focus:border-blue-500 focus:outline-none"
+                placeholder="Mô tả công việc"
+              ></textarea>
+            </div>
+
+            <div class="md:col-span-2 flex items-center justify-end">
+              <button
+                id="task-save-btn"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+                type="submit"
+              >
+                Lưu thay đổi
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6 border-t pt-5">
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <h3 class="text-base font-semibold">Subtask</h3>
+              <button
+                id="task-add-subtask-btn"
+                type="button"
+                class="rounded-lg border border-blue-200 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-50"
+              >
+                + Tạo subtask
+              </button>
+            </div>
+            <p id="task-subtask-stats" class="mb-3 text-xs text-slate-500">0/0 hoàn thành</p>
+            <div id="task-detail-checklist" class="space-y-3"></div>
+          </div>
+
+          <div class="mt-6 border-t pt-5">
+            <h3 class="mb-3 text-base font-semibold">Comments</h3>
+
+            <form id="task-comment-form" class="mb-4 rounded-lg border border-slate-200 p-3">
+              <label for="task-comment-input" class="mb-2 block text-xs font-medium text-slate-600">Thêm comment</label>
+              <textarea
+                id="task-comment-input"
+                rows="3"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm leading-6 focus:border-blue-500 focus:outline-none"
+                placeholder="Viết comment cho task..."
+              ></textarea>
+              <div class="mt-2 flex justify-end">
+                <button
+                  type="submit"
+                  class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+                >
+                  Bình luận
+                </button>
+              </div>
+            </form>
+
+            <div id="task-comment-list" class="space-y-4"></div>
+          </div>
+        </div>
+
+        <div class="rounded-xl border bg-white p-4 shadow-sm sm:p-5">
+          <h2 class="mb-3 text-lg font-semibold">Kế hoạch</h2>
+          <div class="space-y-3 text-sm">
+            <div>
+              <label for="task-plan-start-date-input" class="mb-1 block text-gray-400">Ngày bắt đầu</label>
+              <input
+                id="task-plan-start-date-input"
+                type="date"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label for="task-plan-due-date-input" class="mb-1 block text-gray-400">Ngày kết thúc</label>
+              <input
+                id="task-plan-due-date-input"
+                type="date"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label class="mb-1 block text-gray-400">Estimate</label>
+              <div class="flex items-center gap-2">
+                <input
+                  id="task-plan-estimate-value-input"
+                  type="number"
+                  min="0"
+                  step="1"
+                  class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                  placeholder="Nhập estimate"
+                />
+                <select
+                  id="task-plan-estimate-unit-select"
+                  class="w-24 rounded-lg border border-gray-300 px-2 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                >
+                  <option value="h">h</option>
+                  <option value="d">d</option>
+                  <option value="w">w</option>
+                </select>
+              </div>
+              <p id="task-plan-estimate-display" class="mt-1 text-xs text-slate-500">N/A</p>
+            </div>
+            <div>
+              <label for="task-plan-requester-input" class="mb-1 block text-gray-400">Người yêu cầu</label>
+              <input
+                id="task-plan-requester-input"
+                type="text"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+                placeholder="Nhập người yêu cầu"
+              />
+            </div>
+            <div>
+              <label for="task-plan-point-select" class="mb-1 block text-gray-400">Point (Fibonacci)</label>
+              <select
+                id="task-plan-point-select"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              >
+                <option value="">Chọn point</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="8">8</option>
+                <option value="13">13</option>
+                <option value="21">21</option>
+                <option value="34">34</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="subtask-modal"
+      class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4"
+    >
+      <div class="w-full max-w-2xl rounded-xl bg-white shadow-xl">
+        <div class="flex items-center justify-between border-b px-5 py-4">
+          <h3 id="subtask-modal-title" class="text-lg font-semibold">Tạo subtask</h3>
+          <button
+            id="subtask-modal-close-btn"
+            class="rounded-md p-1 text-gray-500 hover:bg-gray-100"
+            type="button"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+              <path
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <form id="subtask-form" class="grid grid-cols-1 gap-4 px-5 py-5 md:grid-cols-2">
+          <div class="md:col-span-2">
+            <label for="subtask-title-input" class="mb-1 block text-sm font-medium text-slate-700">Tiêu đề</label>
+            <input
+              id="subtask-title-input"
+              type="text"
+              required
+              class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+              placeholder="Nhập tiêu đề subtask"
+            />
+          </div>
+
+          <div>
+            <label for="subtask-assignee-select" class="mb-1 block text-sm font-medium text-slate-700">Người phụ trách</label>
+            <select
+              id="subtask-assignee-select"
+              class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            ></select>
+          </div>
+
+          <div>
+            <label for="subtask-priority-select" class="mb-1 block text-sm font-medium text-slate-700">Ưu tiên</label>
+            <select
+              id="subtask-priority-select"
+              class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            >
+              <option value="high">Cao</option>
+              <option value="medium" selected>Trung bình</option>
+              <option value="low">Thấp</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="subtask-due-date-input" class="mb-1 block text-sm font-medium text-slate-700">Ngày kết thúc</label>
+            <input
+              id="subtask-due-date-input"
+              type="date"
+              class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label for="subtask-status-select" class="mb-1 block text-sm font-medium text-slate-700">Trạng thái</label>
+            <select
+              id="subtask-status-select"
+              class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+            >
+              <option value="todo">Chưa làm</option>
+              <option value="in_progress">Đang làm</option>
+              <option value="blocked">Tạm dừng</option>
+              <option value="done">Hoàn thành</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <label for="subtask-description-input" class="mb-1 block text-sm font-medium text-slate-700">Mô tả</label>
+            <textarea
+              id="subtask-description-input"
+              rows="4"
+              class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm leading-6 focus:border-blue-500 focus:outline-none"
+              placeholder="Mô tả chi tiết subtask"
+            ></textarea>
+          </div>
+
+          <div class="md:col-span-2 flex items-center justify-end gap-3 pt-2">
+            <button
+              id="subtask-modal-cancel-btn"
+              type="button"
+              class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+            >
+              Hủy
+            </button>
+            <button
+              type="submit"
+              class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+            >
+              Lưu subtask
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="../../assets/js/layout.js"></script>
+    <script type="module" src="../../assets/js/taskDetailLayout.js"></script>
+  </body>
+</html>

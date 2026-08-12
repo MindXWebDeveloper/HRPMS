@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chi tiết dự án</title>
     <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <link rel="stylesheet" href="../../assets/css/dashboard.css" />
 
     <link
       href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
@@ -13,20 +14,81 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      @media (max-width: 1279px) {
+        .project-detail-shell {
+          padding-top: 3.5rem;
+          padding-left: 0.75rem;
+          padding-right: 0.75rem;
+        }
+      }
+
+      @media (min-width: 1280px) {
+        html,
+        body {
+          height: 100%;
+          overflow: hidden;
+        }
+
+        .project-detail-shell {
+          height: 100vh;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+        }
+
+        .project-detail-header,
+        .project-detail-summary {
+          flex-shrink: 0;
+        }
+
+        .project-detail-content {
+          flex: 1;
+          min-height: 0;
+        }
+
+        .member-panel,
+        .task-panel {
+          height: 100%;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .member-panel-body,
+        .task-panel-body {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
+        }
+      }
+
+      #detail-project-employee-table-body td,
+      #detail-phase-list td,
+      #detail-phase-list th {
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+
+      #detail-phase-list {
+        overflow-x: auto;
+      }
+    </style>
   </head>
-  <body data-base-path="../../">
+  <body data-base-path="../../" class="management-page">
     <div data-layout="sidebar"></div>
-    <div class="p-4 sm:ml-64 min-h-full">
+    <div class="project-detail-shell p-4 xl:ml-64 min-h-full">
       <!-- HEADER -->
-      <div class="flex items-center justify-between mb-6">
+      <div class="project-detail-header mb-4 flex flex-wrap items-start justify-between gap-3 sm:mb-6 sm:items-center">
         <div class="flex items-center gap-4">
-          <h1 class="text-2xl font-bold">Thông tin dự án</h1>
+          <h1 class="text-xl font-bold leading-tight break-words sm:text-2xl">Thông tin dự án</h1>
         </div>
 
         <div class="flex gap-3">
           <button
             id="detail-edit-project-btn"
-            class="flex items-center gap-2 px-5 py-2 border rounded-lg bg-white"
+            class="inline-flex items-center gap-2 rounded-lg border bg-white px-3 py-2 text-sm sm:px-5"
           >
             <!-- edit icon -->
             <svg
@@ -61,14 +123,14 @@
 
       <!-- PROJECT HEADER CARD -->
 
-      <div class="bg-white rounded-xl border shadow-sm p-8 mb-6">
-        <div class="flex gap-8">
+      <div class="project-detail-summary mb-6 rounded-xl border bg-white p-4 shadow-sm sm:p-6 lg:p-8">
+        <div class="flex flex-col gap-4 sm:flex-row sm:gap-6 lg:gap-8">
           <!-- folder icon -->
           <div
-            class="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center"
+            class="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-blue-100 sm:h-24 sm:w-24"
           >
             <svg
-              class="w-12 h-12 text-blue-600"
+              class="h-10 w-10 text-blue-600 sm:h-12 sm:w-12"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -84,50 +146,50 @@
             </svg>
           </div>
 
-          <div>
-            <div class="flex gap-4 items-center">
-              <h2 id="detail-project-name" class="text-2xl font-bold">
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2 sm:gap-4">
+              <h2 id="detail-project-name" class="min-w-0 break-words text-xl font-bold leading-tight sm:text-2xl">
                 HRPMS - Hệ thống quản lý nhân sự
               </h2>
 
               <span
                 id="detail-project-status-pill"
-                class="bg-green-100 text-green-600 px-4 py-1 rounded-full text-sm"
+                class="whitespace-nowrap rounded-full bg-green-100 px-3 py-1 text-xs text-green-600 sm:px-4 sm:text-sm"
               >
                 Đang thực hiện
               </span>
             </div>
 
-            <p id="detail-project-description" class="mt-4 text-gray-500">
+            <p id="detail-project-description" class="mt-3 break-words text-sm text-gray-500 sm:mt-4 sm:text-base">
               Xây dựng hệ thống quản lý nhân sự và dự án cho doanh nghiệp.
             </p>
           </div>
         </div>
 
-        <div class="grid grid-cols-6 gap-8 mt-10">
-          <div>
+        <div class="mt-6 grid grid-cols-1 gap-4 text-sm sm:grid-cols-2 sm:gap-5 sm:text-base lg:grid-cols-3 xl:mt-10 xl:grid-cols-6 xl:gap-8">
+          <div class="min-w-0">
             <p class="text-gray-400">Mã dự án</p>
 
-            <b id="detail-project-code">PJ001</b>
+            <b id="detail-project-code" class="break-words">PJ001</b>
           </div>
 
-          <div>
+          <div class="min-w-0">
             <p class="text-gray-400">Quản lý dự án</p>
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-start gap-2">
               <img
-                class="w-8 h-8 rounded-full"
+                class="h-8 w-8 rounded-full"
                 src="../../assets/images/account-icon.png"
               />
 
-              <span id="detail-project-manager">Thanh</span>
+              <span id="detail-project-manager" class="break-words">Thanh</span>
             </div>
           </div>
 
-          <div>
+          <div class="min-w-0">
             <p class="text-gray-400">Ngày bắt đầu</p>
 
-            <div class="flex gap-2">
+            <div class="flex items-start gap-2">
               <!-- calendar -->
               <svg
                 class="w-5 h-5"
@@ -142,14 +204,14 @@
                 />
               </svg>
 
-              <span id="detail-project-start-date">01/07/2026</span>
+              <span id="detail-project-start-date" class="break-words">01/07/2026</span>
             </div>
           </div>
 
-          <div>
+          <div class="min-w-0">
             <p class="text-gray-400">Ngày kết thúc</p>
 
-            <div class="flex gap-2">
+            <div class="flex items-start gap-2">
               <svg
                 class="w-5 h-5"
                 viewBox="0 0 24 24"
@@ -163,15 +225,15 @@
                 />
               </svg>
 
-              <span id="detail-project-end-date">10/08/2026</span>
+              <span id="detail-project-end-date" class="break-words">10/08/2026</span>
             </div>
           </div>
 
-          <div>
+          <div class="min-w-0">
             <p class="text-gray-400">Tiến độ</p>
 
             <div class="flex items-center gap-2">
-              <div class="w-32 bg-gray-200 rounded">
+              <div class="w-24 rounded bg-gray-200 sm:w-32">
                 <div id="detail-project-progress-bar" class="h-2 rounded bg-blue-600 w-[75%]"></div>
               </div>
 
@@ -179,28 +241,28 @@
             </div>
           </div>
 
-          <div>
+          <div class="min-w-0">
             <p class="text-gray-400">Trạng thái</p>
 
-            <span id="detail-project-status-inline" class="text-green-600"> ● Đang thực hiện </span>
+            <span id="detail-project-status-inline" class="break-words text-green-600"> ● Đang thực hiện </span>
           </div>
         </div>
       </div>
 
       <!-- CONTENT -->
 
-      <div class="grid grid-cols-5 gap-6">
+      <div class="project-detail-content grid grid-cols-1 gap-4 lg:gap-6 xl:grid-cols-5">
         <!-- MEMBER LIST -->
 
-        <div class="col-span-2 bg-white rounded-xl border shadow-sm">
-          <div class="flex justify-between items-center p-5 border-b">
-            <h2 id="detail-project-member-count" class="font-bold text-xl">Danh sách nhân viên (8)</h2>
+        <div class="member-panel rounded-xl border bg-white shadow-sm xl:col-span-2">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b p-4 sm:p-5">
+            <h2 id="detail-project-member-count" class="text-lg font-bold leading-tight sm:text-xl">Danh sách nhân viên (8)</h2>
 
             <button
               id="detail-add-employee-btn"
-              class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg"
+              class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white sm:gap-2 sm:px-4 sm:py-2"
             >
-              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+              <svg class="h-4 w-4 sm:h-5 sm:w-5" viewBox="0 0 24 24" fill="none">
                 <path
                   stroke="currentColor"
                   stroke-width="2"
@@ -213,14 +275,15 @@
             </button>
           </div>
 
-          <div class="p-5">
+          <div class="member-panel-body p-4 sm:p-5">
             <input
               id="detail-employee-search-input"
-              class="w-full border rounded-lg px-4 py-3 mb-4"
+              class="mb-4 w-full rounded-lg border px-3 py-2.5 text-sm sm:px-4 sm:py-3"
               placeholder="Tìm kiếm nhân viên..."
             />
 
-            <table class="w-full">
+            <div class="overflow-x-auto">
+            <table class="w-full min-w-[420px] text-sm">
               <tr class="border-b text-gray-500">
                 <th class="py-3 text-left">Nhân viên</th>
 
@@ -230,27 +293,28 @@
               </tr>
               <tbody id="detail-project-employee-table-body"></tbody>
             </table>
+            </div>
           </div>
         </div>
         <!-- ================= TASK LIST ================= -->
 
-        <div class="col-span-3 bg-white rounded-xl border shadow-sm">
+        <div class="task-panel rounded-xl border bg-white shadow-sm xl:col-span-3">
           <!-- TASK HEADER -->
 
-          <div class="flex items-center justify-between p-5 border-b">
-            <h2 class="text-xl font-bold">Công việc của dự án</h2>
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b p-4 sm:p-5">
+            <h2 class="text-lg font-bold leading-tight sm:text-xl">Công việc của dự án</h2>
 
-            <div class="flex gap-3">
+            <div class="flex flex-wrap gap-2 sm:gap-3">
               <!-- CREATE PHASE -->
 
               <button
                 id="detail-create-phase-btn"
-                class="flex items-center gap-2 border px-4 py-2 rounded-lg hover:bg-gray-50"
+                class="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm hover:bg-gray-50 sm:gap-2 sm:px-4 sm:py-2"
               >
                 <!-- plus icon -->
 
                 <svg
-                  class="w-5 h-5"
+                  class="h-4 w-4 sm:h-5 sm:w-5"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -270,10 +334,10 @@
 
               <button
                 id="detail-create-task-btn"
-                class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 sm:gap-2 sm:px-4 sm:py-2"
               >
                 <svg
-                  class="w-5 h-5"
+                  class="h-4 w-4 sm:h-5 sm:w-5"
                   fill="none"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
@@ -293,7 +357,7 @@
 
           <!-- PHASE CONTAINER -->
 
-          <div id="detail-phase-list" class="p-5 space-y-5"></div>
+          <div id="detail-phase-list" class="task-panel-body space-y-4 p-4 sm:space-y-5 sm:p-5"></div>
           </div>
         </div>
       </div>
@@ -708,115 +772,6 @@
         </div>
       </div>
 
-      <div
-        id="view-task-modal"
-        class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4"
-      >
-        <div class="w-full max-w-xl rounded-xl bg-white shadow-xl">
-          <div class="flex items-center justify-between border-b px-5 py-4">
-            <h3 class="text-lg font-semibold">View task</h3>
-            <button
-              id="view-task-close-btn"
-              class="rounded-md p-1 text-gray-500 hover:bg-gray-100"
-              type="button"
-            >
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                <path
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-
-          <form id="view-task-form" class="grid grid-cols-1 gap-4 px-5 py-5 md:grid-cols-2">
-            <div class="md:col-span-2">
-              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskTitleInput">Tên task</label>
-              <input
-                id="viewTaskTitleInput"
-                type="text"
-                required
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
-              />
-            </div>
-
-            <div class="relative">
-              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskAssigneeInput">Người phụ trách</label>
-              <input
-                id="viewTaskAssigneeInput"
-                type="text"
-                autocomplete="off"
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
-              />
-              <input id="viewTaskAssigneeCodeInput" type="hidden" />
-              <div
-                id="view-task-assignee-suggest-list"
-                class="absolute z-10 mt-1 hidden max-h-56 w-full overflow-auto rounded-lg border bg-white shadow"
-              ></div>
-            </div>
-
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskPhaseInput">Giai đoạn</label>
-              <select
-                id="viewTaskPhaseInput"
-                required
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
-              ></select>
-            </div>
-
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskPriorityInput">Ưu tiên</label>
-              <select
-                id="viewTaskPriorityInput"
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
-              >
-                <option value="high">Cao</option>
-                <option value="medium">Trung bình</option>
-                <option value="low">Thấp</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskStatusInput">Trạng thái</label>
-              <select
-                id="viewTaskStatusInput"
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
-              >
-                <option value="todo">Chưa làm</option>
-                <option value="in_progress">Đang làm</option>
-                <option value="done">Hoàn thành</option>
-              </select>
-            </div>
-
-            <div class="md:col-span-2">
-              <label class="mb-1 block text-sm font-medium text-gray-700" for="viewTaskDescriptionInput">Mô tả</label>
-              <textarea
-                id="viewTaskDescriptionInput"
-                rows="3"
-                class="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:border-blue-500 focus:outline-none"
-              ></textarea>
-            </div>
-
-            <div class="md:col-span-2 flex items-center justify-end gap-3 pt-2">
-              <button
-                id="view-task-cancel-btn"
-                type="button"
-                class="rounded-lg border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
-              >
-                Hủy
-              </button>
-              <button
-                type="submit"
-                class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
-              >
-                Lưu
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
     <script type="module" src="../../assets/js/layout.js"></script>
     <script type="module" src="../../assets/js/projectDetailLayout.js"></script>

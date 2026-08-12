@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản lý dự án</title>
     <link rel="icon" type="image/png" href="../../assets/images/logo.png" />
+    <link rel="stylesheet" href="../../assets/css/dashboard.css" />
 
     <link
       href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css"
@@ -19,19 +20,19 @@
       }
     </style>
   </head>
-  <body data-base-path="../../">
+  <body data-base-path="../../" class="management-page">
     <div data-layout="sidebar"></div>
 
-    <div class="p-4 sm:ml-64 min-h-full">
+    <div class="min-h-full p-3 pt-14 sm:p-4 xl:ml-64 xl:pt-4">
       <div
         class="relative min-h-full overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default grid-rows-9 gap-4"
       >
-        <div class="mx-8 my-2 font-bold text-xl row-span-2">Danh sách dự án</div>
+        <div class="row-span-2 mx-4 my-2 text-xl font-bold sm:mx-8">Danh sách dự án</div>
 
-        <div class="p-4 flex items-center justify-between space-x-4 row-span-2">
+        <div class="row-span-2 flex flex-col gap-3 p-4 lg:flex-row lg:items-center lg:justify-between">
           <label for="input-group-1" class="sr-only">Search</label>
-          <div class="flex items-center gap-2">
-            <div class="relative">
+          <div class="flex w-full flex-col gap-2 sm:flex-row sm:items-center lg:w-auto">
+            <div class="relative w-full sm:w-auto">
               <div
                 class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
               >
@@ -55,14 +56,14 @@
               <input
                 type="text"
                 id="input-group-1"
-                class="block w-full max-w-96 ps-9 pe-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+                class="block w-full ps-9 pe-3 py-2 text-sm bg-neutral-secondary-medium border border-default-medium text-heading rounded-base shadow-xs placeholder:text-body focus:ring-brand focus:border-brand sm:min-w-[18rem]"
                 placeholder="Search"
               />
             </div>
             <button
               id="project-search-btn"
               type="button"
-              class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"            >
+              class="w-full rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 sm:w-auto"            >
               Tìm kiếm
             </button>
           </div>
@@ -71,7 +72,7 @@
           <button
             data-modal-target="add-project"
             data-modal-toggle="add-project"
-            class="flex items-center text-white bg-blue-500 rounded-md text-[14px] sm:text-sm text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            class="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 sm:w-auto"
             type="button"
           >
             <svg
@@ -253,7 +254,7 @@
         <div
           class="relative min-h-[70vh] overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default"
         >
-          <table class="w-full text-sm text-left rtl:text-right text-body">
+          <table class="w-full min-w-[860px] text-sm text-left rtl:text-right text-body">
             <thead
               class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium"
             >

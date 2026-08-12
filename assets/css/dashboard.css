@@ -1,31 +1,305 @@
-@media (max-width: 1024px) {
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --surface-bg: #f1f5f9;
+    --surface-alt: #e2e8f0;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --input-border: #cbd5e1;
+    --text-muted: #64748b;
+    --text-strong: #0f172a;
+    --brand-50: #eff6ff;
+    --brand-600: #1d4ed8;
+    --brand-700: #1e40af;
+    --focus-ring: rgba(29, 78, 216, 0.18);
+    --shadow-soft: 0 18px 45px -32px rgba(15, 23, 42, 0.55);
+    --radius-md: 12px;
+    --radius-lg: 16px;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    background: radial-gradient(circle at top right, #f8fbff 0%, var(--surface-bg) 42%);
+}
+
+[data-layout="sidebar"] {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 40;
+    width: 16rem;
+}
+
+[data-layout="sidebar"] + div {
+    margin-left: 0;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    padding: 1.25rem 1rem 2rem;
+    transition: margin-left 0.2s ease;
+}
+
+@media (min-width: 1280px) {
+    [data-layout="sidebar"] + div {
+        margin-left: 16rem;
+        width: calc(100vw - 16rem);
+        max-width: calc(100vw - 16rem);
+        padding: 1.5rem 1.25rem 2rem;
+    }
+}
+
+/* Shared visual language for management/list/detail app pages */
+.management-page {
+    color: var(--text-strong);
+    font-family: "Segoe UI", "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.management-page [data-layout="sidebar"] + div {
+    background: transparent;
+}
+
+.management-page h1,
+.management-page h2,
+.management-page .font-bold {
+    letter-spacing: 0.01em;
+    color: var(--text-strong);
+}
+
+.management-page .rounded-base,
+.management-page .rounded-xl {
+    border-radius: var(--radius-lg) !important;
+}
+
+.management-page .border {
+    border-color: var(--card-border) !important;
+}
+
+.management-page .shadow-sm,
+.management-page .shadow-xs {
+    box-shadow: var(--shadow-soft) !important;
+}
+
+.management-page .bg-white,
+.management-page .bg-neutral-secondary-medium,
+.management-page .InfoBox,
+.management-page .AvatarBox,
+.management-page .BottomInfo > div,
+.management-page .ListProject,
+.management-page .ListTask,
+.management-page .TopEmployee,
+.management-page .ProductivityTable,
+.management-page .RecentActivities,
+.management-page .PromotionLadder,
+.management-page .ProductivityChart {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+}
+
+.management-page input,
+.management-page select {
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--input-border) !important;
+    background: #fff;
+}
+
+.management-page input:focus,
+.management-page select:focus {
+    border-color: var(--brand-600) !important;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+    outline: none;
+}
+
+.management-page .text-body {
+    color: var(--text-muted) !important;
+}
+
+.management-page .text-heading {
+    color: var(--text-strong) !important;
+}
+
+.management-page table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.management-page th {
+    color: #334155;
+    font-weight: 600;
+    background: #f8fafc;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.management-page td {
+    color: #334155;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.management-page tbody tr:nth-child(odd) {
+    background: #fcfdff;
+}
+
+.management-page tbody tr:hover {
+    background: #f1f5ff;
+}
+
+.management-page button {
+    transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.InfoCards,
+.ListProjectTask,
+.BottomTable {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.InfoCards {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+}
+
+.ListProjectTask {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.BottomTable {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.TopInfo,
+.ButtonRow1 {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.BottomInfo {
+    display: grid;
+    gap: 1rem;
+}
+
+.TopInfo {
+    align-items: flex-start;
+}
+
+.InfoGrid,
+.AddressBox {
+    display: grid;
+    gap: 1rem;
+}
+
+.InfoGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.AddressBox {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.InfoBox,
+.AvatarBox,
+.BottomInfo > div,
+.ListProject,
+.ListTask,
+.TopEmployee,
+.ProductivityTable,
+.RecentActivities,
+.PromotionLadder,
+.ProductivityChart {
+    min-width: 0;
+}
+
+.InfoGrid input,
+.InfoGrid select,
+.AddressBox input,
+.BottomInfo input,
+.BottomInfo select,
+.ButtonRow1 button {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+.InfoCards > div {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.ListProject,
+.ListTask {
+    overflow-x: auto;
+}
+
+.ListProject table,
+.ListTask table {
+    width: 100% !important;
+    table-layout: fixed;
+}
+
+.ListProject th,
+.ListProject td,
+.ListTask th,
+.ListTask td {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 1279px) {
+    .management-page [data-layout="sidebar"] + div {
+        padding-top: 3.5rem;
+    }
+
+    [data-layout="sidebar"] + div {
+        margin-left: 0 !important;
+        padding: 3.5rem 0.75rem 1.5rem;
+    }
+
+    .InfoCards {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .ListProjectTask,
+    .BottomTable {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
     .InfoCards {
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
+
     .ListProjectTask {
-        display: flex !important;
-        flex-direction: column;
-        gap: 20px;
+        grid-template-columns: 1fr !important;
     }
+
     .BottomTable {
-        display: flex !important;
-        flex-direction: column;
-        gap: 20px;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
+
     .TopInfo {
-        display: flex;
-        flex-direction: column-reverse
-      
+        flex-direction: column;
     }
-    .AvatarBox, .InfoBox {
-        width: 95%
+
+    .AvatarBox,
+    .InfoBox {
+        width: 100% !important;
     }
 
     .BottomInfo {
-        display: flex !important;
-        flex-direction: column;
-        width: 95%
+        grid-template-columns: 1fr;
+        width: 100% !important;
     }
+
+    .ListProject table,
+    .ListTask table {
+        font-size: 0.75rem;
+    }
+
 }
 
 @media (max-width: 768px) {
@@ -33,32 +307,47 @@
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
 
-    .ListProjectTask {
-        display: flex !important;
-        flex-direction: column;
-        gap: 20px
-    }
     .BottomTable {
-        display: flex !important;
-        flex-direction: column;
-        gap: 20px
-    }
-    .mana1, .mana2 {
-        display: none
-    }
-    .TopInfo {
-        display: flex;
-        flex-direction: column-reverse
-      
-    }
-    .AvatarBox, .InfoBox {
-        width: 95%
+        grid-template-columns: 1fr !important;
     }
 
-    .BottomInfo {
-        display: flex !important;
-        flex-direction: column;
-        width: 95%
+    .InfoGrid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .AddressBox {
+        grid-template-columns: 1fr !important;
+    }
+
+    .ButtonRow1 {
+        flex-direction: column !important;
+    }
+
+    .ButtonRow1 button {
+        width: 100% !important;
     }
 }
+
+@media (max-width: 640px) {
+    [data-layout="sidebar"] + div {
+        padding: 3.25rem 0.75rem 1.25rem;
+    }
+
+    .InfoCards {
+        grid-template-columns: 1fr !important;
+    }
+
+    .InfoTab {
+        height: auto !important;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .InfoTab > * {
+        width: 100%;
+    }
+
+    .ScreenName p:first-child {
+        font-size: 1.25rem !important;
+    }
 }
